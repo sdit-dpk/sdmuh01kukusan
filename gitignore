@@ -1,0 +1,23 @@
+# ── Sistem Operasi ──────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# ── Editor ──────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ── File sementara ───────────────────────────
+*.log
+*.tmp
+*.bak
+*~
+
+# ── Aset besar (upload manual, jangan di-commit) ──
+# Hapus baris ini jika foto/logo ingin ikut di repo
+# assets/foto/
+# assets/logo/

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Beranda — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-950: #071E4A;
+      --blue-900: #0D3172;
+      --blue-700: #1A4FB5;
+      --blue-500: #3070D8;
+      --blue-200: #AECBF4;
+      --blue-100: #D5E7FB;
+      --blue-50:  #EBF3FD;
+      --gold:     #C89A18;
+      --white:    #FFFFFF;
+      --surface:  #F6F9FD;
+      --gray-200: #E2E8F0;
+      --gray-400: #94A3B8;
+      --gray-600: #475569;
+      --gray-800: #1E293B;
+      --serif:    'Crimson Pro', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
+      --radius:   10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); font-size: 15px; color: var(--gray-800); background: var(--white); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* TOPBAR */
+    .topbar { background: var(--blue-950); color: rgba(255,255,255,.7); font-size: 12.5px; padding: 8px 0; }
+    .topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-left { display: flex; gap: 22px; align-items: center; }
+    .topbar-left span { display: flex; align-items: center; gap: 6px; }
+    .topbar-right { font-size: 12px; color: rgba(255,255,255,.5); }
+
+    /* HEADER */
+    .header { background: var(--white); border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; z-index: 99; box-shadow: 0 2px 10px rgba(13,49,114,.06); }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; gap: 16px; height: 74px; }
+    .logo-area { display: flex; align-items: center; gap: 14px; }
+    .logo-mark { width: 50px; height: 50px; border-radius: 50%; background: var(--blue-900); border: 3px solid var(--blue-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-mark svg { width: 26px; height: 26px; fill: white; }
+    .logo-text { line-height: 1.25; }
+    .logo-text strong { font-family: var(--serif); font-size: 16.5px; font-weight: 700; color: var(--blue-900); display: block; }
+    .logo-text small { font-size: 11.5px; color: var(--gray-400); }
+    nav { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+    nav a { font-size: 13.5px; font-weight: 500; color: var(--gray-600); padding: 6px 13px; border-radius: 6px; transition: background .15s, color .15s; }
+    nav a:hover, nav a.active { background: var(--blue-50); color: var(--blue-700); }
+    .btn-ppdb { margin-left: 8px; background: var(--blue-700) !important; color: white !important; padding: 8px 18px !important; border-radius: 6px; font-weight: 600 !important; }
+    .btn-ppdb:hover { background: var(--blue-900) !important; }
+
+    /* HERO */
+    .hero { position: relative; height: 540px; background: var(--blue-950); overflow: hidden; }
+    .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .2; }
+    .hero-geo  { position: absolute; right: -60px; top: -60px; width: 500px; height: 500px; border-radius: 50%; border: 80px solid rgba(255,255,255,.04); }
+    .hero-geo2 { position: absolute; right: 120px; bottom: -100px; width: 320px; height: 320px; border-radius: 50%; border: 50px solid rgba(255,255,255,.03); }
+    .hero-inner { position: relative; max-width: 1200px; margin: 0 auto; padding: 0 28px; height: calc(100% - 80px); display: flex; align-items: center; }
+    .hero-content { max-width: 580px; }
+    .hero-badge { display: inline-flex; align-items: center; background: rgba(200,154,24,.15); border: 1px solid rgba(200,154,24,.5); color: #F0C84A; font-size: 12px; font-weight: 600; letter-spacing: .5px; padding: 5px 14px; border-radius: 20px; margin-bottom: 18px; }
+    .hero-content h2 { font-family: var(--serif); font-size: 46px; font-weight: 700; color: white; line-height: 1.2; margin-bottom: 14px; }
+    .hero-content p { color: rgba(255,255,255,.72); font-size: 15px; line-height: 1.75; max-width: 460px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-hero-primary { background: var(--blue-500); color: white; padding: 11px 26px; border-radius: 7px; font-weight: 600; font-size: 14px; border: 2px solid var(--blue-500); display: inline-block; transition: background .15s; }
+    .btn-hero-primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
+    .btn-hero-ghost { color: white; padding: 11px 26px; border-radius: 7px; font-weight: 500; font-size: 14px; border: 2px solid rgba(255,255,255,.35); display: inline-block; transition: border-color .15s; }
+    .btn-hero-ghost:hover { border-color: rgba(255,255,255,.7); }
+    .stats-bar { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(7,30,74,.75); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,.08); }
+    .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat-item { padding: 18px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,.08); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: var(--serif); font-size: 32px; font-weight: 700; color: white; line-height: 1; }
+    .stat-label { font-size: 11.5px; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .6px; margin-top: 4px; }
+
+    /* SECTION */
+    .section { padding: 64px 0; }
+    .section-alt { background: var(--surface); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    .section-tag { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue-700); margin-bottom: 8px; }
+    .section-heading { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--blue-950); line-height: 1.2; }
+    .section-rule { width: 36px; height: 3px; background: var(--gold); border-radius: 2px; margin-top: 10px; }
+    .section-header { margin-bottom: 36px; }
+    .section-header.centered { text-align: center; }
+    .section-header.centered .section-rule { margin-left: auto; margin-right: auto; }
+
+    /* SAMBUTAN */
+    .sambutan-grid { display: grid; grid-template-columns: 280px 1fr; gap: 52px; align-items: start; }
+    .kepsek-card { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--blue-100); background: var(--blue-50); }
+    .kepsek-img-wrap { aspect-ratio: 3/4; background: var(--blue-100); overflow: hidden; }
+    .kepsek-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .kepsek-info { padding: 16px; text-align: center; border-top: 1px solid var(--blue-100); }
+    .kepsek-info .nm { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--blue-900); line-height: 1.2; }
+    .kepsek-info .jbt { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--blue-700); margin-top: 4px; }
+    .kepsek-info .nip { font-size: 11.5px; color: var(--gray-400); margin-top: 3px; }
+    .sambutan-body blockquote { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--blue-900); line-height: 1.6; border-left: 3px solid var(--gold); padding-left: 20px; margin-bottom: 22px; }
+    .sambutan-body p { color: var(--gray-600); font-size: 14.5px; line-height: 1.8; margin-bottom: 14px; }
+    .read-more { display: inline-flex; align-items: center; gap: 6px; color: var(--blue-700); font-weight: 600; font-size: 13.5px; margin-top: 4px; }
+    .read-more:hover { color: var(--blue-900); }
+
+    /* BERITA & PENGUMUMAN */
+    .news-wrap { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
+    .sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .subsection-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--blue-950); }
+    .link-all { font-size: 13px; color: var(--blue-700); font-weight: 500; }
+    .link-all:hover { color: var(--blue-900); }
+    .berita-list { display: flex; flex-direction: column; gap: 18px; }
+    .berita-card { display: grid; grid-template-columns: 155px 1fr; background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden; transition: box-shadow .2s; }
+    .berita-card:hover { box-shadow: 0 4px 16px rgba(13,49,114,.1); }
+    .berita-thumb { overflow: hidden; aspect-ratio: 4/3; background: var(--blue-100); }
+    .berita-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .berita-body { padding: 16px; display: flex; flex-direction: column; }
+    .berita-cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--blue-700); margin-bottom: 6px; }
+    .berita-title { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--gray-800); line-height: 1.3; margin-bottom: 8px; flex: 1; }
+    .berita-excerpt { font-size: 13px; color: var(--gray-400); line-height: 1.6; margin-bottom: 10px; }
+    .berita-meta { font-size: 12px; color: var(--gray-400); display: flex; gap: 14px; }
+    .pengumuman-panel { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden; }
+    .panel-head { background: var(--blue-900); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .panel-head h3 { font-family: var(--serif); font-size: 17px; font-weight: 700; }
+    .panel-head a { font-size: 12px; color: rgba(255,255,255,.65); }
+    .panel-head a:hover { color: white; }
+    .pengumuman-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border-bottom: 1px solid var(--gray-200); }
+    .pengumuman-item:last-child { border-bottom: none; }
+    .pengumuman-date { flex-shrink: 0; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 7px; padding: 5px 8px; text-align: center; min-width: 46px; }
+    .pengumuman-date .d { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--blue-700); line-height: 1; }
+    .pengumuman-date .m { font-size: 10px; color: var(--blue-500); text-transform: uppercase; letter-spacing: .3px; }
+    .pengumuman-text .pt { font-size: 13.5px; font-weight: 600; color: var(--gray-800); line-height: 1.35; margin-bottom: 3px; }
+    .pengumuman-text .pd { font-size: 12px; color: var(--gray-400); }
+    .badge-new { display: inline-block; background: #DCFCE7; color: #166534; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 4px; margin-left: 5px; vertical-align: middle; }
+
+    /* PORTAL */
+    .portal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .portal-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .portal-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(13,49,114,.12); }
+    .portal-top { padding: 26px 24px 18px; border-bottom: 1px solid var(--gray-200); }
+    .portal-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
+    .ic-siswa { background: var(--blue-50); }
+    .ic-ortu  { background: #FFF9EC; }
+    .ic-guru  { background: #F0FDF4; }
+    .portal-top h3 { font-family: var(--serif); font-size: 21px; font-weight: 700; color: var(--blue-950); margin-bottom: 6px; }
+    .portal-top p { font-size: 13px; color: var(--gray-400); line-height: 1.55; }
+    .portal-links { padding: 16px 20px; display: flex; flex-direction: column; gap: 9px; }
+    .portal-link { display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--blue-700); padding: 8px 12px; border-radius: 7px; background: var(--blue-50); border: 1px solid var(--blue-100); transition: background .15s; }
+    .portal-link:hover { background: var(--blue-100); }
+    .portal-link .arrow { font-size: 14px; color: var(--blue-500); }
+
+    /* AGENDA */
+    .agenda-wrap { display: grid; grid-template-columns: 1fr 310px; gap: 32px; }
+    .agenda-list { display: flex; flex-direction: column; gap: 12px; }
+    .agenda-item { display: flex; gap: 18px; align-items: flex-start; padding: 16px; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); border-left: 3px solid var(--blue-700); }
+    .agenda-date { flex-shrink: 0; text-align: center; min-width: 48px; }
+    .agenda-date .day { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--blue-700); line-height: 1; }
+    .agenda-date .mon { font-size: 11px; color: var(--gray-400); text-transform: uppercase; }
+    .agenda-info .at { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 3px; }
+    .agenda-info .ad { font-size: 12.5px; color: var(--gray-400); }
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 4px; margin-top: 7px; }
+    .tag-ujian { background: #FEF9C3; color: #713F12; }
+    .tag-libur { background: #DBEAFE; color: #1E3A8A; }
+    .tag-acara { background: #DCFCE7; color: #14532D; }
+
+    /* MINI KALENDER */
+    .mini-cal { background: white; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--gray-200); }
+    .cal-top { background: var(--blue-700); color: white; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .cal-top h4 { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+    .cal-nav { background: none; border: none; color: rgba(255,255,255,.8); font-size: 18px; cursor: pointer; padding: 0 4px; }
+    .cal-body { padding: 14px; }
+    .cal-dow { display: grid; grid-template-columns: repeat(7,1fr); margin-bottom: 8px; }
+    .cal-dow span { text-align: center; font-size: 10.5px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; }
+    .cal-cells { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+    .cal-day { text-align: center; font-size: 12.5px; color: var(--gray-600); height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; transition: background .1s; position: relative; }
+    .cal-day:hover { background: var(--blue-50); color: var(--blue-700); }
+    .cal-day.prev-month { color: var(--gray-200); }
+    .cal-day.today { background: var(--blue-700); color: white; font-weight: 700; }
+    .cal-day.has-event { color: var(--blue-700); font-weight: 700; }
+    .cal-day.has-event::after { content: ''; position: absolute; bottom: 3px; width: 4px; height: 4px; background: var(--blue-500); border-radius: 50%; }
+    .cal-legend { margin-top: 14px; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px 16px; }
+    .cal-legend-title { font-size: 11.5px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .legend-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--gray-600); margin-bottom: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* FOOTER */
+    .footer { background: var(--blue-950); padding: 54px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.3fr; gap: 40px; padding-bottom: 40px; }
+    .footer-brand .logo-text strong { color: white; font-size: 17px; }
+    .footer-brand .logo-text small  { color: rgba(255,255,255,.4); }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.75; margin-top: 14px; max-width: 280px; }
+    .footer-col h5 { font-family: var(--serif); font-size: 16px; font-weight: 700; color: white; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col li a { font-size: 13px; color: rgba(255,255,255,.55); }
+    .footer-col li a:hover { color: white; }
+    .footer-contact { display: flex; flex-direction: column; gap: 9px; }
+    .fc-row { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: rgba(255,255,255,.55); }
+    .fc-row .icon { flex-shrink: 0; margin-top: 1px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 16px 0; display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,.35); }
+    .footer-bottom a { color: rgba(255,255,255,.35); }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left" id="topbar-kontak"></div>
+      <div class="topbar-right" id="topbar-ta"></div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo-area">
+        <div class="logo-mark">
+          <svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg>
+        </div>
+        <div class="logo-text">
+          <strong id="header-nama"></strong>
+          <small id="header-tagline"></small>
+        </div>
+      </a>
+      <nav id="nav-menu"></nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-photo" id="hero-photo"></div>
+    <div class="hero-geo"></div>
+    <div class="hero-geo2"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge" id="hero-badge"></div>
+        <h2 id="hero-judul"></h2>
+        <p id="hero-deskripsi"></p>
+        <div class="hero-actions" id="hero-actions"></div>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stats-inner" id="stats-inner"></div>
+    </div>
+  </section>
+
+  <!-- SAMBUTAN -->
+  <section class="section">
+    <div class="container">
+      <div class="sambutan-grid">
+        <div class="kepsek-card">
+          <div class="kepsek-img-wrap">
+            <img id="kepsek-foto" src="" alt="Kepala Sekolah">
+          </div>
+          <div class="kepsek-info">
+            <div class="nm"  id="kepsek-nama"></div>
+            <div class="jbt" id="kepsek-jabatan"></div>
+            <div class="nip" id="kepsek-nip"></div>
+          </div>
+        </div>
+        <div class="sambutan-body">
+          <div class="section-tag">Sambutan</div>
+          <h2 class="section-heading">Sambutan Kepala Sekolah</h2>
+          <div class="section-rule" style="margin-bottom:26px;"></div>
+          <blockquote id="kepsek-kutipan"></blockquote>
+          <div id="kepsek-sambutan"></div>
+          <a href="/profil" class="read-more">Baca selengkapnya &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BERITA & PENGUMUMAN -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Informasi Terkini</div>
+        <h2 class="section-heading">Berita &amp; Pengumuman</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="news-wrap">
+        <div>
+          <div class="sub-header">
+            <h3 class="subsection-title">Berita Terbaru</h3>
+            <a href="/berita" class="link-all">Lihat semua berita &rarr;</a>
+          </div>
+          <div class="berita-list" id="berita-list"></div>
+        </div>
+        <div class="pengumuman-panel">
+          <div class="panel-head">
+            <h3>📢 Pengumuman</h3>
+            <a href="/pengumuman">Lihat semua &rarr;</a>
+          </div>
+          <div id="pengumuman-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTAL -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="section-tag">Akses Cepat</div>
+        <h2 class="section-heading">Portal Pengguna</h2>
+        <div class="section-rule"></div>
+        <p style="color:var(--gray-400);margin-top:12px;font-size:14px;max-width:460px;margin-left:auto;margin-right:auto;">
+          Akses layanan digital sekolah sesuai peran Anda. Login diperlukan untuk beberapa fitur.
+        </p>
+      </div>
+      <div class="portal-grid" id="portal-grid"></div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Agenda Sekolah</div>
+        <h2 class="section-heading">Kegiatan Mendatang</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="agenda-wrap">
+        <div class="agenda-list" id="agenda-list"></div>
+        <div>
+          <div class="mini-cal">
+            <div class="cal-top">
+              <button class="cal-nav" id="cal-prev">&#8249;</button>
+              <h4 id="cal-label"></h4>
+              <button class="cal-nav" id="cal-next">&#8250;</button>
+            </div>
+            <div class="cal-body">
+              <div class="cal-dow">
+                <span>Min</span><span>Sen</span><span>Sel</span>
+                <span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+              </div>
+              <div class="cal-cells" id="cal-cells"></div>
+            </div>
+          </div>
+          <div class="cal-legend">
+            <div class="cal-legend-title">Keterangan</div>
+            <div class="legend-row"><div class="legend-dot" style="background:var(--blue-700)"></div>Hari ini</div>
+            <div class="legend-row"><div class="legend-dot" style="background:var(--blue-500)"></div>Ada agenda sekolah</div>
+            <div class="legend-row"><div class="legend-dot" style="background:#713F12;width:12px;height:6px;border-radius:2px;"></div>Ujian / Penilaian</div>
+            <div class="legend-row"><div class="legend-dot" style="background:#1E3A8A;width:12px;height:6px;border-radius:2px;"></div>Libur Resmi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-mark">
+              <svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg>
+            </div>
+            <div class="logo-text">
+              <strong id="footer-nama"></strong>
+              <small  id="footer-akreditasi"></small>
+            </div>
+          </div>
+          <p id="footer-deskripsi"></p>
+        </div>
+        <div class="footer-col">
+          <h5>Tautan Cepat</h5>
+          <ul id="footer-links-utama"></ul>
+        </div>
+        <div class="footer-col">
+          <h5>Portal</h5>
+          <ul id="footer-links-portal"></ul>
+        </div>
+        <div class="footer-col">
+          <h5>Kontak Kami</h5>
+          <div class="footer-contact" id="footer-kontak"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p id="footer-copy"></p>
+        <p>
+          <a href="/kebijakan-privasi">Kebijakan Privasi</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/sitemap.xml">Sitemap</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LOAD DATA LALU RENDER -->
+  <script src="js/data.js"></script>
+  <script>
+    // ════════════════════════════════════════════════════════════
+    //  RENDER ENGINE
+    //  Jangan edit bagian ini kecuali untuk mengubah struktur
+    //  atau desain template. Untuk update konten → edit data.js
+    // ════════════════════════════════════════════════════════════
+
+    const $ = id => document.getElementById(id);
+    const D = DATA;
+
+    // ── Topbar ─────────────────────────────────────────────────
+    $('topbar-kontak').innerHTML = `
+      <span>📞 ${D.sekolah.telepon}</span>
+      <span>✉ ${D.sekolah.email}</span>
+      <span>📍 ${D.sekolah.alamatPendek}</span>`;
+    $('topbar-ta').textContent = `Tahun Ajaran ${D.sekolah.tahunAjaran}`;
+
+    // ── Header ─────────────────────────────────────────────────
+    $('header-nama').textContent    = D.sekolah.nama;
+    $('header-tagline').textContent = D.sekolah.tagline;
+
+    const nav = $('nav-menu');
+    D.navigasi.forEach(item => {
+      const a = document.createElement('a');
+      a.href = item.href;
+      a.textContent = item.label;
+      if (item.aktif) a.className = 'active';
+      nav.appendChild(a);
+    });
+    const ppdb = document.createElement('a');
+    ppdb.href = D.navPPDB.href;
+    ppdb.textContent = D.navPPDB.label;
+    ppdb.className = 'btn-ppdb';
+    nav.appendChild(ppdb);
+
+    // ── Hero ───────────────────────────────────────────────────
+    $('hero-photo').style.backgroundImage = `url('${D.hero.fotoBg}')`;
+    $('hero-badge').textContent            = `✦ ${D.hero.badge}`;
+    $('hero-judul').innerHTML              = D.hero.judul;
+    $('hero-deskripsi').textContent        = D.hero.deskripsi;
+    $('hero-actions').innerHTML = `
+      <a href="${D.hero.btnUtama.href}" class="btn-hero-primary">${D.hero.btnUtama.label}</a>
+      <a href="${D.hero.btnKedua.href}" class="btn-hero-ghost">${D.hero.btnKedua.label}</a>`;
+
+    // ── Statistik ──────────────────────────────────────────────
+    $('stats-inner').innerHTML = D.statistik.map(s => `
+      <div class="stat-item">
+        <div class="stat-num">${s.angka}</div>
+        <div class="stat-label">${s.label}</div>
+      </div>`).join('');
+
+    // ── Sambutan Kepsek ────────────────────────────────────────
+    const kp = D.kepsek;
+    $('kepsek-foto').src            = kp.foto;
+    $('kepsek-foto').alt            = `Foto ${kp.nama}`;
+    $('kepsek-nama').textContent    = kp.nama;
+    $('kepsek-jabatan').textContent = kp.jabatan;
+    $('kepsek-nip').textContent     = kp.nip;
+    $('kepsek-kutipan').textContent = `"${kp.kutipan}"`;
+    $('kepsek-sambutan').innerHTML  = kp.sambutan.map(p => `<p>${p}</p>`).join('');
+
+    // ── Berita ─────────────────────────────────────────────────
+    $('berita-list').innerHTML = D.berita.slice(0, 3).map(b => `
+      <a href="${b.href}" class="berita-card">
+        <div class="berita-thumb">
+          <img src="${b.foto}" alt="${b.judul}" loading="lazy">
+        </div>
+        <div class="berita-body">
+          <div class="berita-cat">${b.kategori}</div>
+          <h4 class="berita-title">${b.judul}</h4>
+          <p class="berita-excerpt">${b.ringkasan}</p>
+          <div class="berita-meta">
+            <span>📅 ${b.tanggal}</span>
+            <span>👁 ${b.dibaca} dibaca</span>
+          </div>
+        </div>
+      </a>`).join('');
+
+    // ── Pengumuman ─────────────────────────────────────────────
+    $('pengumuman-list').innerHTML = D.pengumuman.slice(0, 5).map(p => `
+      <div class="pengumuman-item">
+        <div class="pengumuman-date">
+          <div class="d">${p.tanggal}</div>
+          <div class="m">${p.bulan}</div>
+        </div>
+        <div class="pengumuman-text">
+          <div class="pt">${p.judul}${p.baru ? '<span class="badge-new">Baru</span>' : ''}</div>
+          <div class="pd">${p.detail}</div>
+        </div>
+      </div>`).join('');
+
+    // ── Portal ─────────────────────────────────────────────────
+    $('portal-grid').innerHTML = D.portal.map(p => `
+      <div class="portal-card">
+        <div class="portal-top">
+          <div class="portal-icon ${p.kelas}">${p.ikon}</div>
+          <h3>${p.judul}</h3>
+          <p>${p.deskripsi}</p>
+        </div>
+        <div class="portal-links">
+          ${p.tautan.map(t => `
+            <a href="${t.href}" class="portal-link">
+              <span>${t.label}</span>
+              <span class="arrow">→</span>
+            </a>`).join('')}
+        </div>
+      </div>`).join('');
+
+    // ── Agenda ─────────────────────────────────────────────────
+    const TAG = { ujian: 'Ujian', libur: 'Libur Resmi', acara: 'Kegiatan' };
+    $('agenda-list').innerHTML = D.agenda.map(a => `
+      <div class="agenda-item">
+        <div class="agenda-date">
+          <div class="day">${a.tanggal}</div>
+          <div class="mon">${a.bulan}</div>
+        </div>
+        <div class="agenda-info">
+          <div class="at">${a.judul}</div>
+          <div class="ad">${a.detail}</div>
+          <span class="tag tag-${a.tipe}">${TAG[a.tipe]}</span>
+        </div>
+      </div>`).join('');
+
+    // ── Kalender Mini ──────────────────────────────────────────
+    const BULAN = ['Januari','Februari','Maret','April','Mei','Juni',
+                   'Juli','Agustus','September','Oktober','November','Desember'];
+    let calYear, calMonth;
+
+    function initCal() {
+      const now = new Date();
+      calYear  = now.getFullYear();
+      calMonth = now.getMonth(); // 0-based
+    }
+
+    function renderCal() {
+      $('cal-label').textContent = `${BULAN[calMonth]} ${calYear}`;
+
+      // Tandai hari yang punya agenda (bulanNum di data.js = 1-based)
+      const eventDays = new Set(
+        D.agenda
+          .filter(a => a.bulanNum === calMonth + 1)
+          .map(a => parseInt(a.tanggal))
+      );
+
+      const today   = new Date();
+      const isToday = d =>
+        calYear  === today.getFullYear() &&
+        calMonth === today.getMonth()    &&
+        d        === today.getDate();
+
+      const firstDay    = new Date(calYear, calMonth, 1).getDay();     // 0=Min
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const prevDays    = new Date(calYear, calMonth, 0).getDate();
+
+      let cells = '';
+
+      // Sisa hari bulan sebelumnya
+      for (let i = firstDay - 1; i >= 0; i--)
+        cells += `<div class="cal-day prev-month">${prevDays - i}</div>`;
+
+      // Hari bulan ini
+      for (let d = 1; d <= daysInMonth; d++) {
+        let cls = 'cal-day';
+        if (isToday(d))       cls += ' today';
+        if (eventDays.has(d)) cls += ' has-event';
+        cells += `<div class="${cls}">${d}</div>`;
+      }
+
+      // Padding akhir (total sel harus kelipatan 7)
+      const total = firstDay + daysInMonth;
+      const rest  = total % 7 === 0 ? 0 : 7 - (total % 7);
+      for (let d = 1; d <= rest; d++)
+        cells += `<div class="cal-day prev-month">${d}</div>`;
+
+      $('cal-cells').innerHTML = cells;
+    }
+
+    initCal();
+    renderCal();
+
+    $('cal-prev').addEventListener('click', () => {
+      if (--calMonth < 0) { calMonth = 11; calYear--; }
+      renderCal();
+    });
+    $('cal-next').addEventListener('click', () => {
+      if (++calMonth > 11) { calMonth = 0; calYear++; }
+      renderCal();
+    });
+
+    // ── Footer ─────────────────────────────────────────────────
+    $('footer-nama').textContent       = D.sekolah.nama;
+    $('footer-akreditasi').textContent = D.sekolah.akreditasi;
+    $('footer-deskripsi').textContent  = D.sekolah.deskripsiFooter;
+
+    $('footer-links-utama').innerHTML = D.footerLinks.utama.map(l =>
+      `<li><a href="${l.href}">${l.label}</a></li>`).join('');
+    $('footer-links-portal').innerHTML = D.footerLinks.portal.map(l =>
+      `<li><a href="${l.href}">${l.label}</a></li>`).join('');
+
+    $('footer-kontak').innerHTML = `
+      <div class="fc-row"><span class="icon">📍</span><span>${D.sekolah.alamat}</span></div>
+      <div class="fc-row"><span class="icon">📞</span><span>${D.sekolah.telepon}</span></div>
+      <div class="fc-row"><span class="icon">✉</span><span>${D.sekolah.email}</span></div>
+      <div class="fc-row"><span class="icon">🕐</span><span>${D.sekolah.jamOperasional}</span></div>`;
+
+    $('footer-copy').innerHTML =
+      `&copy; ${new Date().getFullYear()} ${D.sekolah.nama}. Hak cipta dilindungi.`;
+  </script>
+</body>
+</html>
