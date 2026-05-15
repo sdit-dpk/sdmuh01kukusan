@@ -1,68 +1,57 @@
-# Changelog — Website SD Muhammadiyah 01 Kukusan
+# CHANGELOG
+## Website SD Muhammadiyah 01 Kukusan
 
-Semua perubahan signifikan pada proyek ini didokumentasikan di file ini.
-Format mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/).
-
----
-
-## [v1.1] — 2026-05-15 — Beranda + Setup GitHub
-
-### Ditambahkan
-- `index.html` — Halaman Beranda sebagai template murni (tanpa konten hard-coded)
-- `js/data.js` — File tunggal sumber konten seluruh website
-- `README.md` — Dokumentasi repo: struktur, cara update konten, cara jalankan lokal
-- `CHANGELOG.md` — File ini
-- `.gitignore` — Mengabaikan file sistem & editor
-- Struktur folder lengkap: `js/`, `css/`, `pages/`, `assets/logo/`, `assets/foto/`, `assets/dokumen/`
-
-### Fitur Beranda yang Selesai
-- Topbar (kontak + tahun ajaran)
-- Header sticky + navigasi utama + tombol PPDB
-- Hero banner dengan foto background, badge akreditasi, tagline, 2 tombol CTA
-- Stats bar (4 angka: siswa, guru, ekskul, prestasi)
-- Sambutan Kepala Sekolah (foto, kutipan, paragraf)
-- Berita terbaru (3 kartu dengan thumbnail)
-- Panel Pengumuman (5 item terbaru + badge "Baru")
-- Portal Pengguna (Siswa, Orang Tua, Guru — masing-masing 4 tautan)
-- Agenda Kegiatan Mendatang (daftar + tag tipe)
-- Kalender Mini interaktif (navigasi bulan, highlight hari ini & agenda)
-- Footer 4 kolom (identitas, tautan cepat, portal, kontak)
-
-### Infrastruktur
-- Repo GitHub: `https://github.com/sdit-dpk/sdmuh01kukusan`
-- Branch utama: `main`
-- Semua konten dapat diupdate hanya dengan mengedit `js/data.js`
+Semua perubahan penting pada proyek ini didokumentasikan di sini.
+Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.0.0/).
 
 ---
 
-## [v1.0] — 2026-05-12 — Perencanaan Awal
+## [1.2.0] — 2026-05-15
 
 ### Ditambahkan
-- Dokumen perencanaan awal (handover)
-- Struktur navigasi utama (7 menu)
-- Daftar 29 halaman lengkap dengan slug dan keterangan
-- Daftar 8 aplikasi terintegrasi beserta cara integrasi
-- Daftar konten yang harus dikumpulkan dari sekolah
-- Urutan pengerjaan dalam 5 fase
-- Stack teknologi: WordPress + Hostinger + Elementor
-- Struktur domain: main + subdomain perpustakaan
+- `css/global.css` — stylesheet bersama seluruh halaman
+  - Variabel CSS identik dengan `index.html` (`--blue-950` s.d. `--blue-50`, `--gold`, dll.)
+  - Style untuk topbar, header sticky, navigasi desktop & mobile, footer
+  - Komponen: tombol (`.btn-primary`, `.btn-outline`), badge, tag agenda, read-more link
+  - Responsif: breakpoint 900 px (tablet/mobile) dan 640 px (handphone kecil)
+  - Aksesibilitas: skip-to-content, tombol scroll-to-top
+- `js/components.js` — render komponen bersama dari `DATA`
+  - `renderTopbar()` — mengisi info kontak & tahun ajaran
+  - `renderHeader()` — navigasi + deteksi menu aktif via `data-page` atau URL
+  - `renderFooter()` — brand, tautan, kontak, copyright
+  - `initHamburger()` — toggle menu mobile dengan klik-di-luar-untuk-tutup
+  - `initScrollTop()` — tombol kembali ke atas otomatis
+- `pages/_template.html` — template fondasi halaman baru
+  - Sudah include semua ID wajib untuk `components.js`
+  - Breadcrumb, page header, dan placeholder konten siap diisi
+  - Komentar panduan di setiap bagian
+- `ANTIREGRESI.md` — panduan aturan arsitektur
+
+### Diperbarui
+- `CHANGELOG.md` — entri ini
 
 ---
 
-## Format Entri Berikutnya
-
-```
-## [vX.Y] — YYYY-MM-DD — Judul Sesi
+## [1.1.0] — 2026-05-15
 
 ### Ditambahkan
-- Hal baru yang ditambahkan
+- `index.html` — halaman beranda sebagai template murni
+- `js/data.js` — satu-satunya file untuk update seluruh konten website
+- Struktur folder lengkap (`css/`, `js/`, `pages/`, `assets/logo/`, `assets/foto/`, `assets/dokumen/`)
+- `README.md` — dokumentasi proyek
+- `CHANGELOG.md` — file ini
+- `.gitignore` — konfigurasi git
 
-### Diubah
-- Perubahan dari yang sudah ada
+### Arsitektur
+- Semua konten dikelola dari `js/data.js`
+- `index.html` tidak perlu diedit untuk update konten
 
-### Diperbaiki
-- Bug atau kesalahan yang diperbaiki
+---
 
-### Dihapus
-- Hal yang dihapus dari scope
-```
+## [1.0.0] — 2026-05-12
+
+### Ditambahkan
+- Perencanaan awal proyek
+- Struktur navigasi (7 menu utama)
+- Daftar 29 halaman dengan slug
+- Stack teknologi (GitHub → WordPress/Hostinger + Elementor)
