@@ -1,0 +1,449 @@
+/**
+ * ════════════════════════════════════════════════════════════════
+ *  GLOBAL STYLESHEET — SD Muhammadiyah 01 Kukusan
+ *  Versi: 1.0  |  2026-05-15
+ *
+ *  Dipakai oleh: pages/*.html (dan index.html setelah refactor)
+ *  Cara pakai di pages/:
+ *    <link rel="stylesheet" href="../css/global.css">
+ *  Cara pakai di root (index.html):
+ *    <link rel="stylesheet" href="css/global.css">
+ *
+ *  ISI FILE INI:
+ *    1.  CSS Custom Properties (variabel warna, font, dll.)
+ *    2.  Reset & Base
+ *    3.  Tipografi
+ *    4.  Layout Utilities (.container, .section, .section-header, dll.)
+ *    5.  Komponen Topbar
+ *    6.  Komponen Header + Hamburger (mobile)
+ *    7.  Komponen Footer
+ *    8.  Tombol & Badge
+ *    9.  Responsif (≤ 900 px, ≤ 640 px)
+ *   10.  Aksesibilitas (skip-link, scroll-top)
+ * ════════════════════════════════════════════════════════════════
+ */
+
+/* ── 1. CSS Custom Properties ────────────────────────────────── */
+:root {
+  /* Palet biru — sama persis dengan index.html */
+  --blue-950: #071E4A;
+  --blue-900: #0D3172;
+  --blue-700: #1A4FB5;
+  --blue-500: #3070D8;
+  --blue-200: #AECBF4;
+  --blue-100: #D5E7FB;
+  --blue-50:  #EBF3FD;
+
+  /* Aksen & netral */
+  --gold:     #C89A18;
+  --white:    #FFFFFF;
+  --surface:  #F6F9FD;
+  --gray-200: #E2E8F0;
+  --gray-400: #94A3B8;
+  --gray-600: #475569;
+  --gray-800: #1E293B;
+
+  /* Tipografi */
+  --serif:  'Crimson Pro', Georgia, serif;
+  --sans:   'DM Sans', system-ui, sans-serif;
+
+  /* Ukuran & radius */
+  --radius:    10px;
+  --container: 1200px;
+  --header-h:  74px;    /* tinggi header sticky */
+  --topbar-h:  38px;    /* tinggi topbar */
+
+  /* Bayangan */
+  --shadow-sm: 0 2px 10px rgba(13,49,114,.06);
+  --shadow-md: 0 4px 16px rgba(13,49,114,.10);
+  --shadow-lg: 0 8px 30px rgba(13,49,114,.14);
+}
+
+/* ── 2. Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html  { scroll-behavior: smooth; }
+body  {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--gray-800);
+  background: var(--white);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a   { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+ul  { list-style: none; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ── 3. Tipografi dasar ──────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 { font-family: var(--serif); line-height: 1.25; }
+
+/* ── 4. Layout Utilities ─────────────────────────────────────── */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.section     { padding: 64px 0; }
+.section-alt { background: var(--surface); }
+
+.section-tag {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--blue-700);
+  margin-bottom: 8px;
+}
+.section-heading {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--blue-950);
+  line-height: 1.2;
+}
+.section-rule {
+  width: 36px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin-top: 10px;
+}
+.section-header          { margin-bottom: 36px; }
+.section-header.centered { text-align: center; }
+.section-header.centered .section-rule {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── 5. TOPBAR ───────────────────────────────────────────────── */
+.topbar {
+  background: var(--blue-950);
+  color: rgba(255,255,255,.7);
+  font-size: 12.5px;
+  padding: 8px 0;
+}
+.topbar-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-left          { display: flex; gap: 22px; align-items: center; }
+.topbar-left span     { display: flex; align-items: center; gap: 6px; }
+.topbar-right         { font-size: 12px; color: rgba(255,255,255,.5); }
+
+/* ── 6. HEADER ───────────────────────────────────────────────── */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: var(--shadow-sm);
+}
+.header-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--header-h);
+}
+
+/* Logo */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-mark {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--blue-900);
+  border: 3px solid var(--blue-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 26px; height: 26px; fill: white; }
+.logo-text     { line-height: 1.25; }
+.logo-text strong {
+  font-family: var(--serif);
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--blue-900);
+  display: block;
+}
+.logo-text small { font-size: 11.5px; color: var(--gray-400); }
+
+/* Nav desktop */
+nav#nav-menu {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+nav#nav-menu a {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--gray-600);
+  padding: 6px 13px;
+  border-radius: 6px;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+nav#nav-menu a:hover,
+nav#nav-menu a.active {
+  background: var(--blue-50);
+  color: var(--blue-700);
+}
+.btn-ppdb {
+  margin-left: 8px;
+  background: var(--blue-700) !important;
+  color: white !important;
+  padding: 8px 18px !important;
+  border-radius: 6px;
+  font-weight: 600 !important;
+}
+.btn-ppdb:hover { background: var(--blue-900) !important; }
+
+/* Hamburger — tampil hanya di mobile */
+.hamburger {
+  display: none;
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 6px;
+  color: var(--blue-900);
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ── 7. FOOTER ───────────────────────────────────────────────── */
+.footer { background: var(--blue-950); padding: 54px 0 0; }
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+/* Brand kolom */
+.footer-brand .logo-text strong { color: white; font-size: 17px; }
+.footer-brand .logo-text small  { color: rgba(255,255,255,.4); }
+.footer-brand p {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.75;
+  margin-top: 14px;
+  max-width: 280px;
+}
+
+/* Kolom link & kontak */
+.footer-col h5 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 14px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 8px; }
+.footer-col li a { font-size: 13px; color: rgba(255,255,255,.55); }
+.footer-col li a:hover { color: white; }
+
+.footer-contact { display: flex; flex-direction: column; gap: 9px; }
+.fc-row {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+}
+.fc-row .icon { flex-shrink: 0; margin-top: 1px; }
+
+/* Footer bottom bar */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom p  { font-size: 12px; color: rgba(255,255,255,.35); }
+.footer-bottom a  { color: rgba(255,255,255,.35); }
+.footer-bottom a:hover { color: rgba(255,255,255,.7); }
+
+/* ── 8. Tombol & Badge ───────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 22px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: background .15s, color .15s, border-color .15s;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--blue-700);
+  color: white;
+  border-color: var(--blue-700);
+}
+.btn-primary:hover { background: var(--blue-900); border-color: var(--blue-900); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--blue-700);
+  border-color: var(--blue-700);
+}
+.btn-outline:hover { background: var(--blue-50); }
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: .02em;
+}
+.badge-new  { background: #DCFCE7; color: #166534; }
+.badge-info { background: var(--blue-50); color: var(--blue-700); }
+
+/* read-more link */
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue-700);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.read-more:hover { color: var(--blue-900); }
+
+/* tag agenda */
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 4px; margin-top: 7px; }
+.tag-ujian { background: #FEF9C3; color: #713F12; }
+.tag-libur { background: #DBEAFE; color: #1E3A8A; }
+.tag-acara { background: #DCFCE7; color: #14532D; }
+
+/* ── 9. Responsif ────────────────────────────────────────────── */
+
+/* Tablet / mobile (≤ 900 px) */
+@media (max-width: 900px) {
+
+  /* Sembunyikan topbar di layar sempit */
+  .topbar { display: none; }
+
+  /* Hamburger muncul */
+  .hamburger { display: flex; }
+
+  /* Nav desktop disembunyikan secara default */
+  nav#nav-menu { display: none; }
+
+  /* Nav panel mobile — aktif saat .is-open */
+  nav#nav-menu.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 12px 16px 20px;
+    box-shadow: var(--shadow-lg);
+    border-top: 2px solid var(--blue-100);
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+    z-index: 98;
+  }
+  nav#nav-menu.is-open a {
+    padding: 10px 14px;
+    border-radius: 7px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  nav#nav-menu.is-open a:last-child { border-bottom: none; }
+  nav#nav-menu.is-open .btn-ppdb {
+    margin-left: 0;
+    margin-top: 8px;
+    text-align: center;
+    padding: 10px 14px !important;
+  }
+
+  /* Footer: 2 kolom */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .footer-brand p { max-width: 100%; }
+}
+
+/* Handphone kecil (≤ 640 px) */
+@media (max-width: 640px) {
+  .container { padding: 0 16px; }
+  .section   { padding: 44px 0; }
+  .section-heading { font-size: 26px; }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+}
+
+/* ── 10. Aksesibilitas ───────────────────────────────────────── */
+
+/* Skip-to-content */
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 16px;
+  background: var(--blue-900);
+  color: white;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  z-index: 999;
+}
+.skip-link:focus { top: 8px; }
+
+/* Scroll-to-top button */
+#scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  background: var(--blue-700);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .2s, transform .2s;
+  z-index: 90;
+}
+#scroll-top.visible { opacity: 1; transform: none; }
+#scroll-top:hover   { background: var(--blue-900); }

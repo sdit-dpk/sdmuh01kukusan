@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    ════════════════════════════════════════════════════════
+    TEMPLATE HALAMAN — SD Muhammadiyah 01 Kukusan
+    ════════════════════════════════════════════════════════
+
+    CARA PAKAI:
+    1. Duplikat file ini, simpan di folder pages/
+       Contoh: cp _template.html profil.html
+
+    2. Ganti 3 hal ini:
+       a. <title>          → judul halaman
+       b. data-page=""     → slug halaman (mis. "profil", "akademik")
+       c. Isi #page-content → konten spesifik halaman
+
+    3. Jangan ubah bagian topbar, header, footer — sudah
+       diisi otomatis oleh js/components.js dari data.js
+
+    PENTING: Script dimuat di urutan:
+      1. css/global.css     ← style bersama
+      2. js/data.js         ← sumber semua data/konten
+      3. js/components.js   ← render topbar, header, footer
+      4. script halaman ini ← render konten spesifik (opsional)
+    ════════════════════════════════════════════════════════
+  -->
+
+  <!-- [GANTI] Judul tab browser -->
+  <title>Nama Halaman — SD Muhammadiyah 01 Kukusan</title>
+
+  <!-- Fonts (sama dengan index.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Global stylesheet -->
+  <link rel="stylesheet" href="../css/global.css">
+
+  <!-- Style tambahan khusus halaman ini (opsional) -->
+  <style>
+    /*
+     * Tulis style spesifik halaman ini di sini.
+     * Hindari mengulang variabel atau class yang sudah ada di global.css.
+     */
+  </style>
+</head>
+
+<!--
+  data-page: isi dengan slug navigasi tanpa slash.
+  Contoh: profil | akademik | kesiswaan | berita | unduhan
+  Dipakai oleh components.js untuk menandai menu aktif.
+-->
+<body data-page="">
+
+  <!-- Skip-to-content (aksesibilitas) -->
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+
+  <!-- ══════════════════════════════════════════════════
+       TOPBAR — diisi otomatis oleh components.js
+       ══════════════════════════════════════════════════ -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left" id="topbar-kontak"></div>
+      <div class="topbar-right" id="topbar-ta"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER — diisi otomatis oleh components.js
+       ══════════════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark">
+          <svg viewBox="0 0 40 40">
+            <text x="20" y="28" text-anchor="middle"
+              font-family="Georgia,serif" font-size="18"
+              font-weight="bold" fill="white">SD</text>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <strong id="header-nama"></strong>
+          <small  id="header-tagline"></small>
+        </div>
+      </a>
+      <nav id="nav-menu" aria-label="Navigasi utama"></nav>
+      <button class="hamburger" id="hamburger"
+        aria-label="Buka/tutup menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       BREADCRUMB — opsional, ganti sesuai halaman
+       ══════════════════════════════════════════════════ -->
+  <nav class="breadcrumb-bar" aria-label="Breadcrumb" style="
+    background: var(--surface);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--gray-400);
+  ">
+    <div class="container" style="display:flex;gap:6px;align-items:center;">
+      <a href="../" style="color:var(--blue-700);">Beranda</a>
+      <span>›</span>
+      <!-- [GANTI] Tambah level breadcrumb sesuai kedalaman halaman -->
+      <span style="color:var(--gray-600);">Nama Halaman</span>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       KONTEN UTAMA — isi di sini
+       ══════════════════════════════════════════════════ -->
+  <main id="page-content">
+
+    <!-- PAGE HEADER (judul halaman) -->
+    <section class="section" style="padding-bottom:0;">
+      <div class="container">
+        <div class="section-tag">
+          <!-- [GANTI] Label kecil di atas judul, mis. "Tentang Kami" -->
+          Kategori
+        </div>
+        <h1 class="section-heading">
+          <!-- [GANTI] Judul halaman -->
+          Judul Halaman
+        </h1>
+        <div class="section-rule" style="margin-bottom:0;"></div>
+      </div>
+    </section>
+
+    <!-- KONTEN HALAMAN -->
+    <section class="section">
+      <div class="container">
+        <!--
+          Tulis konten halaman di sini.
+          Gunakan class dari global.css:
+            .section         → padding atas-bawah
+            .section-alt     → background abu muda
+            .section-heading → judul serif biru
+            .section-tag     → label kecil uppercase
+            .section-rule    → garis emas dekoratif
+            .read-more       → link "baca selengkapnya →"
+            .btn.btn-primary → tombol biru solid
+            .btn.btn-outline → tombol outline biru
+            .badge.badge-new → badge "Baru" hijau
+        -->
+        <p style="color:var(--gray-400);font-style:italic;">
+          [Konten halaman ini belum diisi]
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       FOOTER — diisi otomatis oleh components.js
+       ══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-mark">
+              <svg viewBox="0 0 40 40">
+                <text x="20" y="28" text-anchor="middle"
+                  font-family="Georgia,serif" font-size="18"
+                  font-weight="bold" fill="white">SD</text>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <strong id="footer-nama"></strong>
+              <small  id="footer-akreditasi"></small>
+            </div>
+          </div>
+          <p id="footer-deskripsi"></p>
+        </div>
+
+        <!-- Tautan Cepat -->
+        <div class="footer-col">
+          <h5>Tautan Cepat</h5>
+          <ul id="footer-links-utama"></ul>
+        </div>
+
+        <!-- Portal -->
+        <div class="footer-col">
+          <h5>Portal</h5>
+          <ul id="footer-links-portal"></ul>
+        </div>
+
+        <!-- Kontak -->
+        <div class="footer-col">
+          <h5>Kontak Kami</h5>
+          <div class="footer-contact" id="footer-kontak"></div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p id="footer-copy"></p>
+        <p>
+          <a href="../pages/kebijakan-privasi.html">Kebijakan Privasi</a>
+          &nbsp;&middot;&nbsp;
+          <a href="../sitemap.xml">Sitemap</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════
+       SCRIPTS — urutan jangan diubah
+       ══════════════════════════════════════════════════ -->
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+    /*
+     * Tulis kode render spesifik halaman ini di sini (opsional).
+     * DATA dan $ tersedia dari script di atas.
+     *
+     * Contoh:
+     *   document.getElementById('judul').textContent = DATA.sekolah.nama;
+     */
+  </script>
+
+</body>
+</html>
