@@ -1,694 +1,726 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengumuman — SD Muhammadiyah 01 Kukusan</title>
+/**
+ * ════════════════════════════════════════════════════════════════
+ *  DATA WEBSITE — SD Muhammadiyah 01 Kukusan
+ *  Versi: 1.3  |  Diperbarui: 2026-05-16
+ * ════════════════════════════════════════════════════════════════
+ *
+ *  PANDUAN EDIT
+ *  ─────────────────────────────────────────────────────────────
+ *  Teks   → ganti isi di antara tanda kutip "..."
+ *  Angka  → langsung ganti nilainya
+ *  true / false → ya / tidak (tanpa tanda kutip)
+ *  Daftar [...]  → tambah atau hapus item, pisahkan dengan koma.
+ *                  Item terakhir boleh tanpa koma.
+ *
+ *  JANGAN ubah nama-nama properti (sebelum tanda titik dua :)
+ *  karena template HTML bergantung padanya.
+ *
+ *  CATATAN PERBAIKAN v1.2
+ *  File ini dipindahkan ke js/data.js (sebelumnya ada duplikat
+ *  di root). Ini adalah satu-satunya file data yang berlaku.
+ * ════════════════════════════════════════════════════════════════
+ */
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/global.css">
+const DATA = {
 
-  <style>
-    /* ── Warna per kategori ───────────────────────────────── */
-    :root {
-      --kat-akademik:  #1d4ed8;
-      --kat-keuangan:  #0369a1;
-      --kat-kegiatan:  #0f766e;
-      --kat-ppdb:      #7c3aed;
-      --kat-umum:      #64748b;
-    }
+  // ──────────────────────────────────────────────────────────────
+  //  IDENTITAS SEKOLAH
+  //  Dipakai di: header, topbar, footer, tab browser
+  // ──────────────────────────────────────────────────────────────
+  sekolah: {
+    nama:            "SD Muhammadiyah 01 Kukusan",
+    tagline:         "Terakreditasi A · Depok, Jawa Barat",
+    akreditasi:      "Terakreditasi A",
+    telepon:         "(021) 7891234",
+    email:           "info@sdmuh01kukusan.sch.id",
+    alamat:          "Jl. KH Ahmad Dahlan No. 11 RT 006/005, Kel. Kukusan, Kec. Beji, Kota Depok 16425",
+    alamatPendek:    "Kukusan, Beji, Depok",
+    jamOperasional:  "Senin–Jumat, 07.00–15.00 WIB",
+    tahunAjaran:     "2025/2026",
+    urlPustaka:      "https://pustaka.sdmuh01kukusan.sch.id",
+    deskripsiFooter: "Sekolah dasar Islam berkualitas di Kukusan, Beji, Depok. Membentuk generasi unggul yang beriman, berilmu, dan berakhlak mulia berlandaskan Al-Islam dan Kemuhammadiyahan.",
+  },
 
-    /* ── Hero ─────────────────────────────────────────────── */
-    .peng-hero {
-      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-900) 100%);
-      padding: 44px 0 40px;
-    }
-    .peng-hero-tag {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
-    }
-    .peng-hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(24px, 3.5vw, 38px);
-      font-weight: 700; color: white; margin: 0 0 10px;
-    }
-    .peng-hero p { font-size: 14.5px; color: rgba(255,255,255,.65); margin: 0; }
+  // ──────────────────────────────────────────────────────────────
+  //  NAVIGASI
+  //  aktif: true → menu ini di-highlight (gunakan hanya satu)
+  // ──────────────────────────────────────────────────────────────
+  navigasi: [
+    { label: "Beranda",   href: "/",          aktif: true  },
+    { label: "Profil",    href: "/profil",     aktif: false },
+    { label: "Akademik",  href: "/akademik",   aktif: false },
+    { label: "Kesiswaan", href: "/kesiswaan",  aktif: false },
+    { label: "Berita",    href: "/berita",     aktif: false },
+    { label: "Unduhan",   href: "/unduhan",    aktif: false },
+  ],
+  navPPDB: { label: "PPDB 2025/2026", href: "/kesiswaan/ppdb" },
 
-    /* ── Toolbar filter + search ──────────────────────────── */
-    .toolbar {
-      background: white;
-      border-bottom: 1px solid var(--gray-200);
-      padding: 14px 0;
-      position: sticky;
-      top: 60px;
-      z-index: 90;
-    }
-    .toolbar-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 20px;
-      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-    }
-    .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 14px; border-radius: 20px;
-      font-size: 13px; font-weight: 500;
-      border: 1.5px solid var(--gray-200);
-      background: white; color: var(--gray-500);
-      cursor: pointer; transition: all .18s; white-space: nowrap;
-      user-select: none;
-    }
-    .chip:hover { border-color: var(--blue-500); color: var(--blue-700); }
-    .chip.aktif { background: var(--blue-700); border-color: var(--blue-700); color: white; }
-    .chip[data-kat="Akademik"].aktif  { background: var(--kat-akademik); border-color: var(--kat-akademik); }
-    .chip[data-kat="Keuangan"].aktif  { background: var(--kat-keuangan); border-color: var(--kat-keuangan); }
-    .chip[data-kat="Kegiatan"].aktif  { background: var(--kat-kegiatan); border-color: var(--kat-kegiatan); }
-    .chip[data-kat="PPDB"].aktif      { background: var(--kat-ppdb);     border-color: var(--kat-ppdb);     }
-    .chip[data-kat="Umum"].aktif      { background: var(--kat-umum);     border-color: var(--kat-umum);     }
+  // ──────────────────────────────────────────────────────────────
+  //  HERO (BANNER UTAMA)
+  // ──────────────────────────────────────────────────────────────
+  hero: {
+    badge:     "Terakreditasi A · Kurikulum Merdeka",
+    judul:     "Unggul dalam Ilmu,<br>Berkarakter Islami",
+    deskripsi: "Membentuk generasi cerdas, berakhlak mulia, dan berwawasan kebangsaan berlandaskan nilai-nilai Al-Islam dan Kemuhammadiyahan.",
+    btnUtama:  { label: "Daftar PPDB Sekarang", href: "/kesiswaan/ppdb" },
+    btnKedua:  { label: "Profil Sekolah",       href: "/profil" },
+    // Ganti dengan path foto lokal setelah mendapat foto dari sekolah
+    // Contoh: "assets/foto/hero-gedung.jpg"
+    fotoBg:    "https://picsum.photos/seed/sdmuhkkk/1400/540",
+  },
 
-    .search-wrap { position: relative; flex-shrink: 0; }
-    .search-wrap input {
-      padding: 7px 14px 7px 36px;
-      border: 1.5px solid var(--gray-200); border-radius: 20px;
-      font-size: 13px; font-family: 'DM Sans', sans-serif;
-      color: var(--blue-950); outline: none; width: 200px;
-      transition: border-color .18s, width .25s; background: white;
-    }
-    .search-wrap input:focus { border-color: var(--blue-500); width: 240px; }
-    .search-wrap::before {
-      content: "🔍"; position: absolute;
-      left: 11px; top: 50%; transform: translateY(-50%);
-      font-size: 13px; pointer-events: none;
-    }
+  // ──────────────────────────────────────────────────────────────
+  //  STATISTIK (4 angka di bawah hero)
+  // ──────────────────────────────────────────────────────────────
+  statistik: [
+    { angka: "487",  label: "Siswa Aktif"           },
+    { angka: "32",   label: "Tenaga Pendidik"        },
+    { angka: "12",   label: "Ekstrakulikuler"        },
+    { angka: "48+",  label: "Prestasi & Penghargaan" },
+  ],
 
-    /* ── Layout ───────────────────────────────────────────── */
-    .peng-layout {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 40px;
-      align-items: start;
-    }
-    @media (max-width: 840px) {
-      .peng-layout { grid-template-columns: 1fr; }
-      .peng-sidebar { order: -1; }
-    }
+  // ──────────────────────────────────────────────────────────────
+  //  SAMBUTAN KEPALA SEKOLAH
+  // ──────────────────────────────────────────────────────────────
+  kepsek: {
+    nama:    "Mudzakkir Walad, S.Pd",
+    jabatan: "Kepala Sekolah",
+    nip:     "NBM. 1167327",
+    // Ganti setelah dapat foto: "assets/foto/kepala-sekolah.jpg"
+    foto:    "https://picsum.photos/seed/principal9/280/373",
+    kutipan: "Pendidikan yang sejati bukan hanya mencerdaskan pikiran, tetapi juga membentuk hati yang mulia dan akhlak yang terpuji.",
+    sambutan: [
+      "Bismillahirrahmanirrahim. Puji syukur kehadirat Allah SWT atas nikmat dan karunia-Nya sehingga SD Muhammadiyah 01 Kukusan dapat terus berkembang dan memberikan pelayanan pendidikan terbaik bagi putra-putri kita.",
+      "Kami berkomitmen untuk menghadirkan lingkungan belajar yang kondusif, menyenangkan, dan berbasis nilai-nilai keislaman. Melalui Kurikulum Merdeka yang kami terapkan, setiap siswa dibimbing untuk menemukan potensi terbaiknya sesuai minat dan bakatnya.",
+      "Kami mengundang seluruh orang tua dan wali murid untuk bersama-sama mendukung proses pendidikan anak-anak kita demi masa depan yang lebih cerah.",
+    ],
+  },
 
-    /* ── Badge kategori ───────────────────────────────────── */
-    .kat-badge {
-      display: inline-block; font-size: 10.5px; font-weight: 700;
-      letter-spacing: .8px; text-transform: uppercase;
-      border-radius: 3px; padding: 2px 8px; color: white;
-    }
-    .kat-badge.Akademik  { background: var(--kat-akademik); }
-    .kat-badge.Keuangan  { background: var(--kat-keuangan); }
-    .kat-badge.Kegiatan  { background: var(--kat-kegiatan); }
-    .kat-badge.PPDB      { background: var(--kat-ppdb); }
-    .kat-badge.Umum      { background: var(--kat-umum); }
+  // ══════════════════════════════════════════════════════════════
+  //  PENGUMUMAN
+  //  Dipakai di: beranda (5 teratas), pages/pengumuman.html (semua)
+  //
+  //  ── CARA MENAMBAH PENGUMUMAN BARU ────────────────────────
+  //  Salin template di bawah, tempel di PALING ATAS array,
+  //  lalu isi setiap field.
+  //
+  //  TEMPLATE:
+  //  {
+  //    id:        "slug-unik",               ← wajib, unik
+  //    kategori:  "Akademik",                ← pilih salah satu:
+  //                                             Akademik | Keuangan |
+  //                                             Kegiatan | PPDB | Umum
+  //    judul:     "Judul Pengumuman",
+  //    ringkasan: "Satu kalimat ringkas.",
+  //    konten: [                             ← detail isi (satu string per paragraf)
+  //      "Paragraf pertama...",
+  //      "Paragraf kedua...",
+  //    ],
+  //    tanggal:   "1 Januari 2026",          ← tanggal terbit
+  //    berlakuHingga: "31 Januari 2026",     ← opsional, isi "" jika tidak ada
+  //    sasaran:   "Semua Warga Sekolah",     ← mis: "Orang Tua Siswa Kelas 6"
+  //    lampiran:  "",                        ← URL file PDF, atau "" jika tidak ada
+  //    baru:      true,                      ← true = tampil badge BARU di beranda
+  //    penting:   false,                     ← true = tampil badge PENTING (merah)
+  //  },
+  //
+  //  ── CATATAN ───────────────────────────────────────────────
+  //  · id tidak boleh sama dengan pengumuman lain
+  //  · urutan: terbaru selalu di paling atas array
+  //  · beranda: hanya 5 teratas yang ditampilkan
+  // ══════════════════════════════════════════════════════════════
+  pengumuman: [
+    {
+      id:            "uas-genap-2025-2026",
+      kategori:      "Akademik",
+      judul:         "Jadwal Penilaian Akhir Tahun (PAT) Semester Genap 2025/2026",
+      ringkasan:     "PAT dilaksanakan 2–13 Juni 2026 untuk seluruh kelas 1–5, dan ujian kelas 6 mulai 28 Mei 2026.",
+      konten: [
+        "Diberitahukan kepada seluruh orang tua dan wali murid bahwa Penilaian Akhir Tahun (PAT) Semester Genap Tahun Pelajaran 2025/2026 akan dilaksanakan dengan jadwal sebagai berikut:",
+        "Kelas 6: Ujian Akhir Kelas 6 dilaksanakan pada 28 Mei – 3 Juni 2026. Pengumuman hasil akan disampaikan pada 20 Juni 2026.",
+        "Kelas 1–5: PAT dilaksanakan pada 2–13 Juni 2026. Siswa diwajibkan hadir tepat waktu pukul 07.00 WIB, membawa alat tulis lengkap, dan mengenakan seragam putih-merah.",
+        "Selama periode ujian, tidak ada kegiatan ekstrakurikuler. Siswa yang berhalangan hadir karena sakit wajib menyertakan surat keterangan dokter. Untuk informasi lebih lanjut, silakan hubungi wali kelas masing-masing.",
+      ],
+      tanggal:       "14 Mei 2026",
+      berlakuHingga: "13 Juni 2026",
+      sasaran:       "Semua Orang Tua & Wali Murid",
+      lampiran:      "",
+      baru:          true,
+      penting:       true,
+    },
+    {
+      id:            "spp-mei-2026",
+      kategori:      "Keuangan",
+      judul:         "Batas Akhir Pembayaran SPP Bulan Mei 2026",
+      ringkasan:     "Pembayaran SPP bulan Mei 2026 paling lambat tanggal 20 Mei 2026 via transfer bank atau QRIS.",
+      konten: [
+        "Diberitahukan kepada seluruh orang tua dan wali murid bahwa batas akhir pembayaran SPP bulan Mei 2026 adalah tanggal 20 Mei 2026.",
+        "Pembayaran dapat dilakukan melalui: (1) Transfer Bank ke rekening sekolah — konfirmasi via WhatsApp ke nomor TU sekolah, atau (2) Scan QRIS yang tersedia di loket Tata Usaha.",
+        "Bagi siswa yang belum melunasi SPP setelah tanggal 20 Mei 2026, wali kelas akan menghubungi orang tua secara langsung. Mohon kerja sama dan tepat waktu dalam pembayaran demi kelancaran operasional sekolah.",
+        "Untuk informasi rekening dan QRIS, silakan menghubungi bagian Tata Usaha sekolah pada jam kerja (Senin–Jumat, 07.30–14.00 WIB).",
+      ],
+      tanggal:       "10 Mei 2026",
+      berlakuHingga: "20 Mei 2026",
+      sasaran:       "Semua Orang Tua & Wali Murid",
+      lampiran:      "",
+      baru:          false,
+      penting:       false,
+    },
+    {
+      id:            "ekskul-daftar-ta-baru",
+      kategori:      "Kegiatan",
+      judul:         "Pendaftaran Ekstrakurikuler Tahun Ajaran 2026/2027 Dibuka",
+      ringkasan:     "Pendaftaran ekstrakurikuler pilihan untuk TA 2026/2027 dibuka 1–31 Mei 2026 melalui portal siswa atau formulir di TU.",
+      konten: [
+        "Dalam rangka pengembangan minat dan bakat peserta didik, SD Muhammadiyah 01 Kukusan membuka pendaftaran ekstrakurikuler pilihan untuk Tahun Ajaran 2026/2027.",
+        "Ekstrakurikuler yang tersedia: Study Club, Bola Voli, Tapak Suci, Bahasa Inggris, Futsal, Seni Tari, dan Angklung. Ekstrakurikuler wajib Hizbul Wathan (HW) tidak perlu didaftarkan terpisah.",
+        "Pendaftaran dibuka pada 1–31 Mei 2026 melalui dua jalur: (1) Online via Portal Siswa di menu Ekstrakurikuler, atau (2) Mengisi formulir fisik di ruang Tata Usaha pada jam kerja.",
+        "Setiap siswa dapat memilih maksimal 2 ekstrakurikuler pilihan. Kuota terbatas. Pendaftar yang melebihi kuota akan diseleksi berdasarkan urutan pendaftaran. Jadwal dan pembina akan diumumkan pada awal Juli 2026.",
+      ],
+      tanggal:       "2 Mei 2026",
+      berlakuHingga: "31 Mei 2026",
+      sasaran:       "Siswa Kelas 1–6",
+      lampiran:      "",
+      baru:          false,
+      penting:       false,
+    },
+    {
+      id:            "ppdb-2026-2027",
+      kategori:      "PPDB",
+      judul:         "PPDB Tahun Ajaran 2026/2027 Resmi Dibuka",
+      ringkasan:     "Penerimaan Peserta Didik Baru kelas 1 TA 2026/2027 dibuka mulai 20 April 2026. Pendaftaran online dan offline tersedia.",
+      konten: [
+        "SD Muhammadiyah 01 Kukusan dengan bangga mengumumkan pembukaan Penerimaan Peserta Didik Baru (PPDB) Kelas 1 untuk Tahun Ajaran 2026/2027.",
+        "Persyaratan: Anak yang lahir pada atau sebelum 1 Juli 2020 (usia minimal 6 tahun). Dokumen: fotokopi Akta Kelahiran, Kartu Keluarga, pas foto 3×4 (2 lembar), Surat Keterangan Sehat. Biaya pendaftaran: Gratis.",
+        "Pendaftaran dibuka mulai 20 April 2026 dan akan ditutup ketika kuota terpenuhi (2 rombongan belajar, maksimal 56 siswa). Daftar melalui halaman PPDB di website ini atau langsung ke TU sekolah.",
+        "Informasi lebih lanjut: hubungi sekolah via WhatsApp atau kunjungi langsung pada hari kerja pukul 07.30–14.00 WIB.",
+      ],
+      tanggal:       "20 Apr 2026",
+      berlakuHingga: "",
+      sasaran:       "Calon Peserta Didik Baru & Orang Tua",
+      lampiran:      "",
+      baru:          false,
+      penting:       true,
+    },
+    {
+      id:            "rapat-komite-genap",
+      kategori:      "Umum",
+      judul:         "Undangan Rapat Komite Sekolah Semester Genap 2025/2026",
+      ringkasan:     "Rapat komite sekolah dilaksanakan Sabtu, 20 April 2026 pukul 09.00 WIB di aula sekolah. Kehadiran orang tua sangat diharapkan.",
+      konten: [
+        "Dengan hormat, Kepala SD Muhammadiyah 01 Kukusan mengundang seluruh orang tua dan wali murid untuk menghadiri Rapat Komite Sekolah Semester Genap Tahun Pelajaran 2025/2026.",
+        "Waktu dan Tempat: Sabtu, 20 April 2026 · Pukul 09.00–11.30 WIB · Aula SD Muhammadiyah 01 Kukusan.",
+        "Agenda rapat: (1) Laporan perkembangan program sekolah semester genap, (2) Pembahasan persiapan PAT dan Ujian Kelas 6, (3) Rencana kegiatan akhir tahun ajaran 2025/2026, (4) Tanya jawab dan masukan dari orang tua.",
+        "Mengingat pentingnya agenda tersebut, kami sangat mengharapkan kehadiran Bapak/Ibu orang tua dan wali murid tepat waktu. Konfirmasi kehadiran dapat disampaikan kepada wali kelas masing-masing.",
+      ],
+      tanggal:       "15 Apr 2026",
+      berlakuHingga: "20 Apr 2026",
+      sasaran:       "Semua Orang Tua & Wali Murid",
+      lampiran:      "",
+      baru:          false,
+      penting:       false,
+    },
+    {
+      id:            "libur-idul-adha-2026",
+      kategori:      "Akademik",
+      judul:         "Libur Idul Adha 1447 H dan Penyesuaian Jadwal KBM",
+      ringkasan:     "Sekolah libur pada 16–17 Juni 2026 dalam rangka Hari Raya Idul Adha 1447 H. KBM kembali normal pada 18 Juni 2026.",
+      konten: [
+        "Diberitahukan kepada seluruh warga SD Muhammadiyah 01 Kukusan bahwa dalam rangka Hari Raya Idul Adha 1447 H, sekolah akan libur pada:",
+        "Senin, 16 Juni 2026 (Hari Raya Idul Adha) dan Selasa, 17 Juni 2026 (cuti bersama). Kegiatan Belajar Mengajar kembali normal pada Rabu, 18 Juni 2026.",
+        "Pada Hari Raya Idul Adha, sekolah menyelenggarakan Sholat Idul Adha bersama dan penyembelihan hewan qurban. Siswa yang ingin berpartisipasi dalam kegiatan qurban sekolah dapat menghubungi panitia melalui wali kelas.",
+        "Semoga hari raya Idul Adha 1447 H membawa keberkahan bagi kita semua. Taqabbalallahu minna wa minkum.",
+      ],
+      tanggal:       "5 Jun 2026",
+      berlakuHingga: "17 Jun 2026",
+      sasaran:       "Semua Warga Sekolah",
+      lampiran:      "",
+      baru:          false,
+      penting:       false,
+    },
+  ],
 
-    /* ── Badge status ─────────────────────────────────────── */
-    .badge-baru {
-      display: inline-block; font-size: 10px; font-weight: 700;
-      letter-spacing: .5px; text-transform: uppercase;
-      background: #16a34a; color: white;
-      border-radius: 3px; padding: 2px 7px;
-    }
-    .badge-penting {
-      display: inline-block; font-size: 10px; font-weight: 700;
-      letter-spacing: .5px; text-transform: uppercase;
-      background: #dc2626; color: white;
-      border-radius: 3px; padding: 2px 7px;
-    }
+  // ══════════════════════════════════════════════════════════════
+  //  BERITA
+  //  Dipakai di: beranda (3 teratas yg unggulan:true),
+  //              pages/berita.html (semua), pages/berita-detail.html (satu)
+  //
+  //  ── CARA MENAMBAH BERITA BARU ─────────────────────────────
+  //  Salin blok template di bawah ini, tempel di PALING ATAS
+  //  array (sebelum artikel pertama), lalu isi setiap field.
+  //
+  //  TEMPLATE:
+  //  {
+  //    id:       "slug-unik-tanpa-spasi",      ← wajib, unik
+  //    kategori: "Prestasi",                   ← pilih salah satu:
+  //                                               Prestasi | Kegiatan |
+  //                                               Program  | Pengumuman
+  //    judul:    "Judul Berita Di Sini",
+  //    ringkasan:"Satu–dua kalimat pembuka.",
+  //    konten: [                               ← isi artikel penuh
+  //      "Paragraf pertama...",
+  //      "Paragraf kedua...",
+  //    ],
+  //    tanggal:  "1 Januari 2026",
+  //    penulis:  "Tim Redaksi",
+  //    dibaca:   "0",
+  //    foto:     "assets/foto/nama-foto.jpg",  ← atau URL
+  //    fotoAlt:  "Keterangan foto",
+  //    tags:     ["kata-kunci", "lainnya"],
+  //    unggulan: false,                        ← true = tampil di beranda
+  //  },
+  //
+  //  ── CATATAN ───────────────────────────────────────────────
+  //  · id tidak boleh sama dengan artikel lain
+  //  · unggulan:true → tampil di beranda (maks. 3 yang paling atas)
+  //  · foto: gunakan path relatif dari root repo, atau URL lengkap
+  // ══════════════════════════════════════════════════════════════
+  berita: [
+    {
+      id:       "robotik-juara-2",
+      kategori: "Prestasi",
+      judul:    "Tim Robotik SD Muhammadiyah 01 Raih Juara 2 Tingkat Kota Depok",
+      ringkasan:"Enam siswa kelas 5 berhasil membawa pulang medali perak dalam Kompetisi Robotik Tingkat Kota Depok yang diselenggarakan oleh Dinas Pendidikan Kota Depok.",
+      konten: [
+        "Alhamdulillah, tim robotik SD Muhammadiyah 01 Kukusan kembali mengharumkan nama sekolah. Enam siswa kelas 5 berhasil meraih Juara 2 dalam Kompetisi Robotik Tingkat Kota Depok yang diselenggarakan oleh Dinas Pendidikan Kota Depok pada 8 Mei 2026 di Gedung Balai Kota Depok.",
+        "Tim yang terdiri dari Farhan, Nadia, Zaky, Alya, Raka, dan Siti ini telah berlatih selama tiga bulan di bawah bimbingan guru pembina ekstrakurikuler robotik. Mereka merancang robot yang mampu menyelesaikan tantangan jalur rintangan secara otomatis menggunakan sensor ultrasonik.",
+        "\"Kami sangat bangga dengan pencapaian anak-anak kami. Ini adalah buah dari kerja keras, ketekunan, dan doa orang tua. Semoga prestasi ini menjadi penyemangat bagi seluruh siswa kami untuk terus berinovasi,\" ujar Mudzakkir Walad, S.Pd., selaku Kepala Sekolah.",
+        "Keberhasilan ini tidak terlepas dari dukungan program Koding dan Kecerdasan Artifisial (KKA) yang mulai terintegrasi dalam pembelajaran sejak semester ganjil 2025/2026. Program ini mendorong siswa untuk berpikir komputasional dan kreatif sejak dini.",
+        "Tim akan mewakili Kota Depok dalam Kompetisi Robotik Tingkat Provinsi Jawa Barat yang akan diselenggarakan pada bulan Juli 2026. Dukungan dan doa dari seluruh warga sekolah sangat diharapkan.",
+      ],
+      tanggal:  "10 Mei 2026",
+      penulis:  "Tim Redaksi",
+      dibaca:   "234",
+      foto:     "https://picsum.photos/seed/berita1/900/500",
+      fotoAlt:  "Tim Robotik SD Muhammadiyah 01 Kukusan",
+      tags:     ["robotik", "prestasi", "kota-depok", "kka"],
+      unggulan: true,
+    },
+    {
+      id:       "p5-suara-demokrasi",
+      kategori: "Kegiatan",
+      judul:    "Projek P5 Tema \"Suara Demokrasi\" Wujudkan Pemimpin Muda Berkarakter",
+      ringkasan:"Siswa kelas 4 dan 5 antusias mengikuti Projek Penguatan Profil Pelajar Pancasila dengan tema Suara Demokrasi — simulasi pemilihan ketua kelas secara demokratis dan islami.",
+      konten: [
+        "Selama dua pekan penuh, halaman dan kelas-kelas SD Muhammadiyah 01 Kukusan dipenuhi semangat demokrasi. Siswa kelas 4 dan 5 melaksanakan Projek Penguatan Profil Pelajar Pancasila (P5) dengan tema \"Suara Demokrasi\" yang berlangsung dari 27 April hingga 8 Mei 2026.",
+        "Projek ini dirancang untuk menumbuhkan pemahaman praktis tentang proses demokrasi yang sehat kepada siswa. Mereka menjalani seluruh tahapan pemilu sesungguhnya: sosialisasi, pendaftaran calon, kampanye, debat kandidat, pemungutan suara, hingga penghitungan hasil.",
+        "Yang istimewa, seluruh proses ini diintegrasikan dengan nilai-nilai Islam. Setiap kandidat diwajibkan menyampaikan visi misi yang mengandung nilai amanah, adil, dan musyawarah — tiga pilar kepemimpinan dalam Islam yang menjadi landasan pembahasan selama projek berlangsung.",
+        "\"Anak-anak belajar bahwa pemimpin yang baik bukan hanya yang populer, tetapi yang jujur dan bertanggung jawab. Nilai inilah yang kami tanamkan melalui projek ini,\" ujar Ibu Sari, guru fasilitator P5.",
+        "Projek ini menghasilkan berbagai karya nyata: poster kampanye, video manifesto, dan laporan refleksi tertulis. Seluruh karya dipamerkan dalam Pameran Karya P5 yang terbuka untuk orang tua pada 9 Mei 2026 dan disambut antusias.",
+      ],
+      tanggal:  "5 Mei 2026",
+      penulis:  "Tim Redaksi",
+      dibaca:   "189",
+      foto:     "https://picsum.photos/seed/berita2/900/500",
+      fotoAlt:  "Kegiatan P5 Suara Demokrasi",
+      tags:     ["p5", "profil-pelajar-pancasila", "demokrasi", "kegiatan"],
+      unggulan: true,
+    },
+    {
+      id:       "tahfidz-semester-genap",
+      kategori: "Program",
+      judul:    "Program Tahfidz Joyful Learning Resmi Berjalan di Semua Kelas",
+      ringkasan:"Mulai semester genap 2025/2026, program Tahfidz Joyful Learning berjalan terjadwal setiap Selasa–Kamis pukul 07.00 untuk seluruh siswa kelas 1–6.",
+      konten: [
+        "Bismillahirrahmanirrahim. Sebagai wujud komitmen sekolah dalam mencetak generasi penghafal Al-Qur'an, SD Muhammadiyah 01 Kukusan resmi menjalankan program Tahfidz Joyful Learning secara terjadwal mulai semester genap tahun pelajaran 2025/2026.",
+        "Program ini dilaksanakan setiap Selasa, Rabu, dan Kamis pukul 07.00–07.30 sebelum kegiatan belajar mengajar dimulai. Seluruh siswa dari kelas 1 hingga kelas 6 mengikuti program ini secara serentak di kelasnya masing-masing, dibimbing oleh guru wali kelas yang telah mendapat pelatihan khusus tahsin.",
+        "Target hafalan dirancang bertahap sesuai jenjang: siswa kelas 1–2 mempelajari surat-surat pendek dari An-Nas hingga Ad-Dhuha, kelas 3–4 melanjutkan hafalan Juz 30 dan menambah surat-surat pilihan, sementara kelas 5–6 ditargetkan menyelesaikan Juz 30 secara penuh dan mulai menghafal Juz 29.",
+        "Metode yang digunakan mengombinasikan Metode Umi (talaqqi langsung dari guru), Metode Jama'i (hafalan bersama), dan pendekatan Joyful Learning yang menyisipkan permainan dan nyanyian untuk siswa kelas rendah agar proses menghafal terasa menyenangkan.",
+        "\"Al-Qur'an adalah cahaya. Kami ingin setiap anak membawa cahaya itu pulang ke rumah, setiap hari,\" tutur Mudzakkir Walad, S.Pd. Perkembangan hafalan setiap siswa dipantau melalui buku mutaba'ah yang ditandatangani orang tua setiap minggu.",
+      ],
+      tanggal:  "28 Apr 2026",
+      penulis:  "Tim Redaksi",
+      dibaca:   "312",
+      foto:     "https://picsum.photos/seed/berita3/900/500",
+      fotoAlt:  "Program Tahfidz Joyful Learning",
+      tags:     ["tahfidz", "al-quran", "program-unggulan", "ismuba"],
+      unggulan: true,
+    },
+    {
+      id:       "ppdb-2026-2027-dibuka",
+      kategori: "Pengumuman",
+      judul:    "PPDB Tahun Ajaran 2026/2027 Resmi Dibuka — Kuota Terbatas",
+      ringkasan:"Penerimaan Peserta Didik Baru (PPDB) SD Muhammadiyah 01 Kukusan untuk tahun ajaran 2026/2027 dibuka mulai 20 April 2026. Pendaftaran dapat dilakukan secara online maupun langsung ke sekolah.",
+      konten: [
+        "SD Muhammadiyah 01 Kukusan dengan bangga mengumumkan pembukaan Penerimaan Peserta Didik Baru (PPDB) untuk Tahun Ajaran 2026/2027. Pendaftaran dibuka mulai 20 April 2026 dan akan ditutup ketika kuota terpenuhi.",
+        "Calon peserta didik baru yang akan diterima adalah anak-anak yang lahir pada atau sebelum 1 Juli 2020 (usia minimal 6 tahun saat masuk). Sekolah menyediakan kuota sebanyak 2 rombongan belajar (maksimal 56 siswa) untuk kelas 1.",
+        "Pendaftaran dapat dilakukan melalui dua jalur: (1) Jalur Online melalui tautan yang tersedia di halaman PPDB website ini, atau (2) Jalur Langsung ke kantor Tata Usaha sekolah pada hari dan jam kerja (Senin–Jumat pukul 07.30–14.00 WIB).",
+        "Dokumen yang diperlukan antara lain: fotokopi Akta Kelahiran, fotokopi Kartu Keluarga, pas foto 3×4 sebanyak 2 lembar, dan Surat Keterangan Sehat dari dokter. Biaya pendaftaran: gratis.",
+        "Untuk informasi lebih lanjut, orang tua dapat menghubungi sekolah melalui WhatsApp atau datang langsung. SD Muhammadiyah 01 Kukusan siap menjadi rumah kedua terbaik bagi putra-putri Anda. Mari bergabung bersama kami!",
+      ],
+      tanggal:  "20 Apr 2026",
+      penulis:  "Panitia PPDB",
+      dibaca:   "528",
+      foto:     "https://picsum.photos/seed/berita4/900/500",
+      fotoAlt:  "PPDB SD Muhammadiyah 01 Kukusan 2026/2027",
+      tags:     ["ppdb", "penerimaan-siswa", "pengumuman"],
+      unggulan: false,
+    },
+    {
+      id:       "senam-sehat-hut-ri",
+      kategori: "Kegiatan",
+      judul:    "Semarak HUT RI ke-81: Senam Massal, Lomba, dan Pentas Seni Warnai Sekolah",
+      ringkasan:"Ratusan siswa, guru, dan orang tua memenuhi halaman sekolah dalam peringatan HUT Kemerdekaan RI ke-81 yang meriah dan penuh semangat kebangsaan.",
+      konten: [
+        "Dalam rangka memperingati Hari Ulang Tahun Kemerdekaan Republik Indonesia yang ke-81, SD Muhammadiyah 01 Kukusan menyelenggarakan serangkaian kegiatan bertema \"Nusantara Bersatu\" pada 15–17 Agustus 2025.",
+        "Puncak peringatan pada 17 Agustus dimulai dengan upacara bendera khidmat yang diikuti seluruh warga sekolah. Setelah upacara, kegembiraan meledak dalam senam massal bersama orang tua dan wali murid yang memenuhi lapangan sekolah.",
+        "Berbagai perlombaan tradisional digelar selama dua hari: balap karung, makan kerupuk, tarik tambang, memasukkan pensil ke dalam botol, dan lomba menggambar bertema kemerdekaan. Semua cabang lomba dijuarai oleh siswa dari kelas yang berbeda, menunjukkan pemerataan bakat di setiap jenjang.",
+        "Peringatan ditutup dengan Pentas Seni pada malam 17 Agustus yang menampilkan tari Saman, angklung medley lagu-lagu perjuangan, dan puisi kemerdekaan yang dibawakan siswa kelas 6. Penampilan angklung mendapat aplaus meriah dari ratusan penonton yang hadir.",
+        "\"Cinta tanah air adalah bagian dari iman. Melalui perayaan ini, kami ingin anak-anak merasakan bahwa menjadi Indonesia itu adalah anugerah,\" pungkas Kepala Sekolah Mudzakkir Walad, S.Pd.",
+      ],
+      tanggal:  "17 Agu 2025",
+      penulis:  "Tim Redaksi",
+      dibaca:   "401",
+      foto:     "https://picsum.photos/seed/berita5/900/500",
+      fotoAlt:  "Peringatan HUT RI di SD Muhammadiyah 01 Kukusan",
+      tags:     ["hut-ri", "kemerdekaan", "kegiatan", "pentas-seni"],
+      unggulan: false,
+    },
+    {
+      id:       "akreditasi-a-dipertahankan",
+      kategori: "Prestasi",
+      judul:    "SD Muhammadiyah 01 Kukusan Pertahankan Akreditasi A dari BAN-S/M",
+      ringkasan:"Setelah melalui proses visitasi dan penilaian komprehensif oleh tim BAN-S/M, SD Muhammadiyah 01 Kukusan kembali meraih dan mempertahankan Akreditasi A hingga tahun 2027.",
+      konten: [
+        "Alhamdulillah, SD Muhammadiyah 01 Kukusan resmi mempertahankan predikat Akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M). Penilaian dilakukan melalui visitasi lapangan oleh tim asesor BAN-S/M pada tahun 2022 dan berlaku hingga 2027.",
+        "Predikat Akreditasi A merupakan pengakuan tertinggi atas standar mutu pendidikan yang mencakup delapan komponen: standar isi, proses, kompetensi lulusan, pendidik dan tenaga kependidikan, sarana prasarana, pengelolaan, pembiayaan, dan penilaian pendidikan.",
+        "Keberhasilan ini merupakan buah dari kerja keras seluruh komponen sekolah — kepala sekolah, guru, tenaga kependidikan, komite sekolah, dan dukungan orang tua — dalam menjaga dan meningkatkan kualitas pendidikan secara konsisten.",
+        "\"Akreditasi A bukan tujuan akhir. Ini adalah amanah untuk terus meningkatkan kualitas layanan pendidikan kami. Terima kasih kepada seluruh warga sekolah yang telah berjuang bersama,\" ujar Mudzakkir Walad, S.Pd.",
+        "Ke depan, sekolah berkomitmen untuk terus berinovasi dalam implementasi Kurikulum Merdeka dan penguatan nilai-nilai Al-Islam dan Kemuhammadiyahan, demi mencetak generasi yang cerdas, berakhlak mulia, dan siap menghadapi tantangan global.",
+      ],
+      tanggal:  "5 Mar 2025",
+      penulis:  "Tim Redaksi",
+      dibaca:   "876",
+      foto:     "https://picsum.photos/seed/berita6/900/500",
+      fotoAlt:  "Sertifikat Akreditasi A SD Muhammadiyah 01 Kukusan",
+      tags:     ["akreditasi", "prestasi", "ban-sm", "mutu"],
+      unggulan: false,
+    },
+  ],
 
-    /* ── Kartu pengumuman ─────────────────────────────────── */
-    .peng-card {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 14px;
-      transition: box-shadow .2s;
-    }
-    .peng-card:hover { box-shadow: 0 4px 18px rgba(13,49,114,.09); }
-    .peng-card.penting { border-left: 4px solid #dc2626; }
-    .peng-card.baru    { border-left: 4px solid #16a34a; }
+  // ──────────────────────────────────────────────────────────────
+  //  PORTAL PENGGUNA
+  //  tautan: daftar link di setiap kartu portal
+  // ──────────────────────────────────────────────────────────────
+  portal: [
+    {
+      ikon:     "🎒",
+      kelas:    "ic-siswa",
+      judul:    "Portal Siswa",
+      deskripsi:"Akses e-Rapor, absensi, Google Classroom, dan perpustakaan digital.",
+      tautan: [
+        { label: "📊 e-Rapor Siswa",        href: "https://eraporsd.kemdikbud.go.id"      },
+        { label: "📚 Google Classroom",     href: "https://classroom.google.com"           },
+        { label: "📖 Perpustakaan Digital", href: "https://pustaka.sdmuh01kukusan.sch.id" },
+        { label: "✅ Absensi Online",       href: "/portal/siswa"                          },
+      ],
+    },
+    {
+      ikon:     "👨‍👩‍👧",
+      kelas:    "ic-ortu",
+      judul:    "Portal Orang Tua",
+      deskripsi:"Pantau perkembangan belajar, info SPP, dan hubungi wali kelas.",
+      tautan: [
+        { label: "📈 Pantau Nilai Anak",    href: "/portal/orang-tua" },
+        { label: "💳 Info Pembayaran SPP",  href: "/portal/orang-tua" },
+        { label: "💬 Hubungi Wali Kelas",   href: "/portal/orang-tua" },
+        { label: "📋 Absensi Anak",         href: "/portal/orang-tua" },
+      ],
+    },
+    {
+      ikon:     "🏫",
+      kelas:    "ic-guru",
+      judul:    "Portal Guru",
+      deskripsi:"Kelola e-Rapor, jadwal mengajar, Google Classroom, dan absensi kelas.",
+      tautan: [
+        { label: "📝 e-Rapor Guru",        href: "https://eraporsd.kemdikbud.go.id" },
+        { label: "📚 Google Classroom",    href: "https://classroom.google.com"     },
+        { label: "📅 Jadwal Mengajar",     href: "/portal/guru"                     },
+        { label: "✅ Absensi Kelas",       href: "/portal/guru"                     },
+      ],
+    },
+  ],
 
-    /* Header kartu — klik untuk buka/tutup */
-    .peng-card-head {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      padding: 18px 20px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .peng-tanggal {
-      flex-shrink: 0;
-      text-align: center;
-      background: var(--blue-50);
-      border: 1px solid var(--blue-100);
-      border-radius: 8px;
-      padding: 8px 12px;
-      min-width: 52px;
-    }
-    .peng-tanggal .hari {
-      font-family: var(--serif);
-      font-size: 22px; font-weight: 700;
-      color: var(--blue-900); line-height: 1;
-    }
-    .peng-tanggal .bln {
-      font-size: 11px; font-weight: 600;
-      color: var(--blue-700); text-transform: uppercase;
-      letter-spacing: .5px; margin-top: 2px;
-    }
-    .peng-card-meta { flex: 1; min-width: 0; }
-    .peng-card-badges {
-      display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px;
-    }
-    .peng-card-head h3 {
-      font-family: var(--serif);
-      font-size: 17px; font-weight: 700;
-      color: var(--blue-950); margin: 0 0 6px;
-      line-height: 1.35;
-    }
-    .peng-card-info {
-      display: flex; flex-wrap: wrap; gap: 12px;
-      font-size: 12px; color: var(--gray-400);
-    }
-    .peng-card-info span { display: flex; gap: 4px; align-items: center; }
-    .peng-chevron {
-      flex-shrink: 0; font-size: 18px;
-      color: var(--gray-300); transition: transform .25s;
-      margin-top: 2px;
-    }
-    .peng-card.terbuka .peng-chevron { transform: rotate(180deg); }
+  // ──────────────────────────────────────────────────────────────
+  //  AGENDA / KEGIATAN MENDATANG
+  //  tipe: "acara" | "ujian" | "libur"
+  //  Kalender mini akan otomatis menandai tanggal yang ada agendanya.
+  //  Format tanggal: angka hari saja (tanpa nol di depan), misal "2" bukan "02"
+  //  bulanNum: nomor bulan (1=Jan, 2=Feb, ... 12=Des) untuk logika kalender
+  // ──────────────────────────────────────────────────────────────
+  agenda: [
+    { tanggal: "20", bulanNum: 5,  bulan: "Mei", judul: "Peringatan Hari Kebangkitan Nasional",     detail: "Upacara bendera bersama seluruh warga sekolah pukul 07.30 WIB", tipe: "acara" },
+    { tanggal: "25", bulanNum: 5,  bulan: "Mei", judul: "Penilaian Akhir Tahun (PAT) Kelas 1–5",   detail: "Pelaksanaan PAT Semester Genap 2025/2026",                      tipe: "ujian" },
+    { tanggal: "2",  bulanNum: 6,  bulan: "Jun", judul: "Ujian Akhir Kelas 6 — Gelombang 1",        detail: "Ujian kelulusan gelombang pertama untuk siswa kelas 6",          tipe: "ujian" },
+    { tanggal: "16", bulanNum: 6,  bulan: "Jun", judul: "Libur Idul Adha 1446 H",                   detail: "Sekolah libur resmi",                                            tipe: "libur" },
+    { tanggal: "28", bulanNum: 6,  bulan: "Jun", judul: "Wisuda & Perpisahan Kelas 6 TA 2025/2026", detail: "Acara puncak kelulusan siswa kelas 6",                           tipe: "acara" },
+  ],
 
-    /* Isi detail — collapsible */
-    .peng-card-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .35s ease, padding .25s;
-    }
-    .peng-card.terbuka .peng-card-body {
-      max-height: 800px;
-    }
-    .peng-card-body-inner {
-      padding: 0 20px 22px 88px;  /* indent sejajar judul */
-      border-top: 1px solid var(--gray-200);
-      padding-top: 18px;
-    }
-    @media (max-width: 480px) {
-      .peng-card-body-inner { padding-left: 20px; }
-    }
-    .peng-konten p {
-      font-size: 14.5px; color: var(--gray-600);
-      line-height: 1.75; margin: 0 0 12px;
-    }
-    .peng-konten p:last-child { margin-bottom: 0; }
-    .peng-footer-row {
-      display: flex; gap: 10px; align-items: center;
-      flex-wrap: wrap; margin-top: 16px; padding-top: 14px;
-      border-top: 1px solid var(--gray-200);
-    }
-    .btn-unduh {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 16px; border-radius: 6px;
-      background: var(--blue-700); color: white;
-      font-size: 13px; font-weight: 600;
-      text-decoration: none; transition: background .18s;
-    }
-    .btn-unduh:hover { background: var(--blue-900); }
-    .peng-share {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 14px; border-radius: 6px;
-      border: 1.5px solid #25d366; color: #25d366;
-      font-size: 13px; font-weight: 500;
-      text-decoration: none; transition: all .18s;
-    }
-    .peng-share:hover { background: #25d366; color: white; }
+  // ──────────────────────────────────────────────────────────────
+  //  TAUTAN FOOTER
+  // ──────────────────────────────────────────────────────────────
+  footerLinks: {
+    utama: [
+      { label: "Beranda",        href: "/"              },
+      { label: "Profil Sekolah", href: "/profil"        },
+      { label: "Akademik",       href: "/akademik"      },
+      { label: "Kesiswaan",      href: "/kesiswaan"     },
+      { label: "Galeri",         href: "/galeri/foto"   },
+      { label: "Kontak",         href: "/kontak"        },
+    ],
+    portal: [
+      { label: "Portal Siswa",     href: "/portal/siswa"     },
+      { label: "Portal Guru",      href: "/portal/guru"      },
+      { label: "Portal Orang Tua", href: "/portal/orang-tua" },
+      { label: "PPDB Online",      href: "/kesiswaan/ppdb"   },
+      { label: "Unduhan",          href: "/unduhan"          },
+      { label: "Agenda Sekolah",   href: "/agenda"           },
+    ],
+  },
 
-    /* ── Empty state ──────────────────────────────────────── */
-    .empty-state {
-      text-align: center; padding: 56px 20px;
-      color: var(--gray-400);
-    }
-    .empty-state .ikon { font-size: 44px; margin-bottom: 14px; }
-    .empty-state p { font-size: 14.5px; margin: 0; }
+  // ══════════════════════════════════════════════════════════════
+  //  ██████╗ ██████╗  ██████╗ ███████╗██╗██╗
+  //  ██╔══██╗██╔══██╗██╔═══██╗██╔════╝██║██║
+  //  ██████╔╝██████╔╝██║   ██║█████╗  ██║██║
+  //  ██╔═══╝ ██╔══██╗██║   ██║██╔══╝  ██║██║
+  //  ██║     ██║  ██║╚██████╔╝██║     ██║███████╗
+  //  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝
+  //  DATA HALAMAN-HALAMAN SPESIFIK
+  //  Dipakai oleh halaman di pages/*.html saja,
+  //  tidak memengaruhi beranda (index.html).
+  // ══════════════════════════════════════════════════════════════
 
-    /* ── Sidebar ──────────────────────────────────────────── */
-    .sidebar-box {
-      background: white; border: 1px solid var(--gray-200);
-      border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
-    }
-    .sidebar-head {
-      background: var(--blue-900); color: white;
-      padding: 12px 18px; font-family: var(--serif);
-      font-size: 15px; font-weight: 700;
-    }
+  // ──────────────────────────────────────────────────────────────
+  //  PROFIL SEKOLAH (pages/profil.html)
+  //  ⚠ PRIORITAS UPDATE: Ganti semua teks placeholder di bawah
+  //    dengan data resmi dari sekolah setelah diterima.
+  // ──────────────────────────────────────────────────────────────
+  profil: {
 
-    /* Statistik ringkas */
-    .stat-mini-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-    }
-    .stat-mini {
-      padding: 16px 14px; text-align: center;
-      border-right: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200);
-    }
-    .stat-mini:nth-child(even) { border-right: none; }
-    .stat-mini:nth-last-child(-n+2) { border-bottom: none; }
-    .stat-mini .num {
-      font-family: var(--serif); font-size: 26px;
-      font-weight: 700; color: var(--blue-900); line-height: 1;
-    }
-    .stat-mini .lbl { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+    // Sejarah singkat — isi dengan narasi resmi dari sekolah (200–300 kata)
+    // Setiap string dalam array = satu paragraf
+    // ⚠ Placeholder — ganti dengan narasi resmi dari sekolah
+    sejarah: [
+      "SD Muhammadiyah 01 Kukusan berdiri sejak tahun 1942 sebagai bagian dari gerakan pendidikan Muhammadiyah di wilayah Kukusan, Kecamatan Beji, Kota Depok. Sebagai sekolah dasar Muhammadiyah pertama di Kota Depok, sekolah ini didirikan atas prakarsa tokoh-tokoh Muhammadiyah setempat yang bercita-cita menghadirkan pendidikan Islam yang berkualitas dan terjangkau bagi masyarakat.",
+      "Selama lebih dari delapan dekade, sekolah ini telah meluluskan ribuan alumni yang tersebar di berbagai bidang profesi. Dengan komitmen pada nilai-nilai Al-Islam dan Kemuhammadiyahan, sekolah terus bertumbuh dan beradaptasi mengikuti perkembangan kurikulum nasional, termasuk ditetapkannya sebagai Sekolah Penggerak pada tahun 2022.",
+      "Saat ini, SD Muhammadiyah 01 Kukusan menerapkan Kurikulum Merdeka dengan pendekatan Pembelajaran Mendalam yang berpusat pada peserta didik, mengintegrasikan penguatan karakter Islam ke dalam seluruh mata pelajaran dan kegiatan sekolah. Dengan raihan Akreditasi A, sekolah berkomitmen untuk terus memberikan pendidikan terbaik bagi generasi penerus.",
+    ],
 
-    /* Kategori list */
-    .kat-list { list-style: none; padding: 0; margin: 0; }
-    .kat-list li { border-bottom: 1px solid var(--gray-200); }
-    .kat-list li:last-child { border-bottom: none; }
-    .kat-list li button {
-      width: 100%; background: none; border: none; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 11px 16px; font-size: 13.5px; font-family: 'DM Sans', sans-serif;
-      color: var(--gray-600); transition: background .15s;
-      text-align: left;
-    }
-    .kat-list li button:hover { background: var(--blue-50); color: var(--blue-700); }
-    .kat-count {
-      background: var(--blue-50); color: var(--blue-700);
-      border-radius: 12px; padding: 2px 10px;
-      font-size: 12px; font-weight: 700;
-    }
+    // Tahun berdiri — tampil sebagai fakta di samping sejarah
+    tahunBerdiri: "1942",
 
-    /* Arsip bulan */
-    .arsip-list { list-style: none; padding: 0; margin: 0; }
-    .arsip-list li {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 9px 16px; border-bottom: 1px solid var(--gray-200);
-      font-size: 13px; color: var(--gray-600);
-    }
-    .arsip-list li:last-child { border-bottom: none; }
-    .arsip-count {
-      font-size: 11px; font-weight: 700;
-      background: var(--blue-50); color: var(--blue-700);
-      border-radius: 10px; padding: 1px 8px;
-    }
+    // Visi resmi — KSP 2025-2026 hal. 20
+    visi: "Terwujudnya Peserta didik yang Berkualitas Sebagai Kader Muhammadiyah yang Cerdas, Berakhlak Mulia, Berbudaya, Unggul Berkemajuan dalam Masyarakat Global.",
 
-    /* ── Hasil info ───────────────────────────────────────── */
-    .hasil-info {
-      font-size: 13px; color: var(--gray-400); margin-bottom: 16px;
-    }
-    .hasil-info strong { color: var(--blue-900); }
-  </style>
-</head>
+    // Misi resmi — KSP 2025-2026 hal. 23-25 (misi baru yang telah direvisi)
+    misi: [
+      "Membangun peserta didik yang berakhlak mulia dan rajin beribadah melalui pembelajaran yang berkesadaran dan reflektif, sesuai nilai-nilai Islam dan Muhammadiyah.",
+      "Menyelenggarakan pembelajaran yang berpusat pada peserta didik, bermakna, dan menggembirakan untuk mengembangkan potensi sesuai bakat dan minat.",
+      "Mengembangkan pembelajaran yang mendorong kemandirian, penalaran kritis, dan kreativitas melalui pengalaman belajar yang aplikatif dan inovatif.",
+      "Mewujudkan lingkungan belajar yang holistik untuk perkembangan intelektual, sosial, emosional, dan keterampilan dalam kebhinekaan global.",
+      "Menyelenggarakan program kokurikuler yang menumbuhkan kebanggaan nasional dan cinta tanah air melalui kegiatan kontekstual.",
+      "Membangun komunitas belajar yang kolaboratif antara sekolah, keluarga, dan masyarakat untuk mendukung pembelajaran.",
+    ],
 
-<body data-page="pengumuman">
+    // Tujuan strategis resmi — KSP 2025-2026 hal. 27-30
+    tujuan: [
+      "Membangun budaya sekolah berakhlak mulia melalui pembiasaan ibadah dan pembiasaan sosial islami sehari-hari.",
+      "Mewujudkan pembelajaran berpusat pada peserta didik dengan model inkuiri, PBL, PJBL, dan design thinking.",
+      "Mewujudkan profil lulusan 8 dimensi secara holistik melalui proyek lintas ilmu dan asesmen autentik.",
+      "Meningkatkan kompetensi literasi (target 100% Mahir & Cakap) dan numerasi (target 90% Mahir & Cakap).",
+      "Mewujudkan lingkungan belajar holistik yang mendukung perkembangan intelektual, seni, olahraga, dan budaya.",
+      "Menumbuhkan sikap bangga dan cinta tanah air melalui program kokurikuler kontekstual.",
+      "Membudayakan pembiasaan ibadah dan kegiatan Kemuhammadiyahan sebagai identitas sekolah.",
+      "Membangun komunitas belajar kolaboratif bersama keluarga dan masyarakat.",
+      "Meningkatkan kualitas pendidikan melalui evaluasi dan pengembangan profesional yang berkelanjutan.",
+    ],
 
-  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+    // Informasi akreditasi — NPSN dikoreksi dari KSP 2025-2026 hal. 2
+    akreditasi: {
+      nilai:         "A",
+      tahun:         "2022",
+      lembaga:       "BAN-S/M",
+      berlakuHingga: "2027",
+      npsn:          "20228835",
+    },
 
-  <!-- Topbar -->
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="topbar-left" id="topbar-kontak"></div>
-      <div class="topbar-right" id="topbar-ta"></div>
-    </div>
-  </div>
+    // Program unggulan — dari KSP 2025-2026 Bab III
+    programUnggulan: [
+      { ikon: "📖", judul: "Tahsin & Tahfidz Qur'an",  deskripsi: "Program hafalan Al-Qur'an terintegrasi sejak kelas 1 dengan target Juz 30 penuh, dibimbing dengan metode Umi, Sima'i, dan Jama'i." },
+      { ikon: "🕌", judul: "Al-Islam & Kemuhammadiyahan", deskripsi: "Mata pelajaran Kemuhammadiyahan dan Bahasa Arab sebagai muatan kekhasan yang mengokohkan identitas sekolah Muhammadiyah." },
+      { ikon: "💻", judul: "Koding & Kecerdasan Artifisial", deskripsi: "Pembelajaran koding dan KA terintegrasi lintas mata pelajaran sejak dini, sesuai Kepdirjend GTK No. 5/2025." },
+      { ikon: "🥋", judul: "Hizbul Wathan & Tapak Suci",  deskripsi: "Ekstrakurikuler wajib HW dan Tapak Suci (bela diri Muhammadiyah) untuk membentuk karakter, kedisiplinan, dan jiwa kepemimpinan." },
+      { ikon: "🎨", judul: "Seni & Budaya Lokal",         deskripsi: "Seni Tari dan Angklung sebagai apresiasi warisan budaya Jawa Barat, terintegrasi dengan nilai-nilai islami." },
+      { ikon: "🌱", judul: "7 Kebiasaan Anak Indonesia Hebat", deskripsi: "Program G7KAIH nasional yang diintegrasikan dengan nilai Al-Islam dan Kemuhammadiyahan dalam pembiasaan harian." },
+    ],
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <a href="../" class="logo-area">
-        <div class="logo-mark">
-          <svg viewBox="0 0 40 40">
-            <text x="20" y="28" text-anchor="middle"
-              font-family="Georgia,serif" font-size="18"
-              font-weight="bold" fill="white">SD</text>
-          </svg>
-        </div>
-        <div class="logo-text">
-          <strong id="header-nama"></strong>
-          <small  id="header-tagline"></small>
-        </div>
-      </a>
-      <nav id="nav-menu" aria-label="Navigasi utama"></nav>
-      <button class="hamburger" id="hamburger"
-        aria-label="Buka/tutup menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
+  },
 
-  <!-- Hero -->
-  <div class="peng-hero">
-    <div class="container">
-      <div class="peng-hero-tag">✦ Informasi Resmi</div>
-      <h1>Pengumuman Sekolah</h1>
-      <p>Informasi resmi dari SD Muhammadiyah 01 Kukusan untuk seluruh warga sekolah.</p>
-    </div>
-  </div>
+  // ══════════════════════════════════════════════════════════════
+  //  KONTAK
+  //  Dipakai di: pages/kontak.html
+  //  ⚠ Update nomor WhatsApp dan telepon setelah konfirmasi resmi
+  // ══════════════════════════════════════════════════════════════
+  kontak: {
 
-  <!-- Breadcrumb -->
-  <nav aria-label="Breadcrumb"
-    style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
-    <div class="container"
-      style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
-      <a href="../" style="color:var(--blue-700);">Beranda</a>
-      <span>›</span>
-      <span style="color:var(--gray-600);">Pengumuman</span>
-    </div>
-  </nav>
+    // Nomor WhatsApp — tanpa tanda + dan spasi, format internasional
+    // Contoh: "6281234567890" untuk nomor 081234567890
+    whatsapp: "6281234567890",
+    // ⚠ Ganti dengan nomor WhatsApp resmi sekolah
 
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <div class="toolbar-inner">
-      <div class="filter-chips" id="filter-chips">
-        <button class="chip aktif" data-kat="Semua">Semua</button>
-        <button class="chip" data-kat="Akademik">📚 Akademik</button>
-        <button class="chip" data-kat="Keuangan">💳 Keuangan</button>
-        <button class="chip" data-kat="Kegiatan">🎯 Kegiatan</button>
-        <button class="chip" data-kat="PPDB">🏫 PPDB</button>
-        <button class="chip" data-kat="Umum">📋 Umum</button>
-      </div>
-      <div class="search-wrap">
-        <input type="search" id="cari-input"
-          placeholder="Cari pengumuman…"
-          aria-label="Cari pengumuman">
-      </div>
-    </div>
-  </div>
+    // Koordinat Google Maps (Jl. KH Ahmad Dahlan No.11, Kukusan, Beji, Depok)
+    // Untuk mendapat koordinat: buka maps.google.com → klik kanan lokasi → salin koordinat
+    mapLat:  -6.3612,
+    mapLng:  106.8227,
+    // ⚠ Verifikasi/koreksi koordinat agar pin tepat di lokasi sekolah
 
-  <!-- Konten -->
-  <main id="page-content">
-    <section class="section">
-      <div class="container">
-        <div class="peng-layout">
+    // Tautan Google Maps embed & arah
+    mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1!2d106.8227!3d-6.3612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjEnNDAuMyJTIDEwNsKwNDknMjEuNyJF!5e0!3m2!1sid!2sid!4v1",
+    mapsArah:  "https://www.google.com/maps/dir/?api=1&destination=-6.3612,106.8227",
 
-          <!-- Kiri: daftar pengumuman -->
-          <div>
-            <div class="hasil-info" id="hasil-info"></div>
-            <div id="peng-list"></div>
-          </div>
+    // Layanan per bagian — info, WhatsApp, jam
+    layanan: [
+      {
+        ikon:  "🏫",
+        nama:  "Tata Usaha & Informasi Umum",
+        info:  "Informasi sekolah, surat menyurat, administrasi siswa, dan legalisir dokumen.",
+        wa:    "6281234567890",
+        jam:   "Senin–Jumat · 07.00–14.00 WIB",
+      },
+      {
+        ikon:  "📚",
+        nama:  "Kesiswaan & Akademik",
+        info:  "Jadwal pelajaran, absensi, nilai, ekstrakulikuler, dan bimbingan konseling.",
+        wa:    "6281234567890",
+        jam:   "Senin–Jumat · 07.30–13.00 WIB",
+      },
+      {
+        ikon:  "💳",
+        nama:  "Keuangan & SPP",
+        info:  "Pembayaran SPP, konfirmasi transfer, tagihan, dan laporan keuangan.",
+        wa:    "6281234567890",
+        jam:   "Senin–Jumat · 08.00–12.00 WIB",
+      },
+      {
+        ikon:  "🏫",
+        nama:  "PPDB",
+        info:  "Pendaftaran peserta didik baru, informasi syarat dan jadwal seleksi.",
+        wa:    "6281234567890",
+        jam:   "Senin–Jumat · 08.00–13.00 WIB (saat PPDB berlangsung)",
+      },
+    ],
 
-          <!-- Kanan: sidebar -->
-          <aside class="peng-sidebar">
+    // Rute / petunjuk arah dari beberapa titik umum
+    rute: [
+      {
+        dari:  "Stasiun Depok Baru (KRL)",
+        cara:  "Naik angkot D.07 jurusan Depok–Kukusan, turun di pertigaan Jl. KH Ahmad Dahlan. Sekolah ±100 m dari pemberhentian. Estimasi 15–20 menit.",
+      },
+      {
+        dari:  "Terminal Depok",
+        cara:  "Naik angkot D.04 jurusan Depok–Beji, turun di Kukusan. Lanjut jalan kaki ±5 menit ke Jl. KH Ahmad Dahlan No. 11. Estimasi 25–30 menit.",
+      },
+      {
+        dari:  "Tol Cijago (Exit Kukusan)",
+        cara:  "Keluar tol, belok kiri ke Jl. Kukusan Raya, lurus ±500 m, belok kiri ke Jl. KH Ahmad Dahlan. Sekolah berada di sisi kanan jalan. Estimasi 5 menit.",
+      },
+    ],
 
-            <!-- Statistik ringkas -->
-            <div class="sidebar-box">
-              <div class="sidebar-head">📊 Ringkasan</div>
-              <div class="stat-mini-grid" id="stat-mini"></div>
-            </div>
+  },
 
-            <!-- Filter by kategori -->
-            <div class="sidebar-box">
-              <div class="sidebar-head">📂 Kategori</div>
-              <ul class="kat-list" id="kat-list"></ul>
-            </div>
+  // ══════════════════════════════════════════════════════════════
+  //  PPDB (Penerimaan Peserta Didik Baru)
+  //  Dipakai di: pages/ppdb.html
+  //  ⚠ Update setiap tahun ajaran baru
+  // ══════════════════════════════════════════════════════════════
+  ppdb: {
 
-            <!-- Arsip per bulan -->
-            <div class="sidebar-box">
-              <div class="sidebar-head">🗓️ Arsip</div>
-              <ul class="arsip-list" id="arsip-list"></ul>
-            </div>
+    // Status pendaftaran — ubah ke false jika PPDB sudah tutup
+    buka: true,
 
-          </aside>
-        </div>
-      </div>
-    </section>
-  </main>
+    tahunAjaran:   "2026/2027",
+    kuota:         56,           // total kursi yang tersedia
+    kuotaPerKelas: 28,           // siswa per rombel
+    jumlahRombel:  2,
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="logo-area">
-            <div class="logo-mark">
-              <svg viewBox="0 0 40 40">
-                <text x="20" y="28" text-anchor="middle"
-                  font-family="Georgia,serif" font-size="18"
-                  font-weight="bold" fill="white">SD</text>
-              </svg>
-            </div>
-            <div class="logo-text">
-              <strong id="footer-nama"></strong>
-              <small  id="footer-akreditasi"></small>
-            </div>
-          </div>
-          <p id="footer-deskripsi"></p>
-        </div>
-        <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
-        <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
-        <div class="footer-col"><h5>Kontak Kami</h5><div class="footer-contact" id="footer-kontak"></div></div>
-      </div>
-      <div class="footer-bottom">
-        <p id="footer-copy"></p>
-        <p><a href="kebijakan-privasi.html">Kebijakan Privasi</a></p>
-      </div>
-    </div>
-  </footer>
+    // Jadwal tahapan PPDB
+    // ⚠ Sesuaikan tanggal dengan kalender resmi sekolah
+    jadwal: [
+      { fase: "Pengumuman & Sosialisasi", mulai: "20 Apr 2026", selesai: "30 Apr 2026", selesai2: "", status: "selesai" },
+      { fase: "Pendaftaran Online & Offline", mulai: "1 Mei 2026", selesai: "30 Jun 2026", status: "berjalan" },
+      { fase: "Seleksi & Verifikasi Berkas", mulai: "1 Jul 2026",  selesai: "10 Jul 2026", status: "menunggu" },
+      { fase: "Pengumuman Hasil Seleksi",   mulai: "14 Jul 2026", selesai: "",            status: "menunggu" },
+      { fase: "Daftar Ulang",               mulai: "15 Jul 2026", selesai: "19 Jul 2026", status: "menunggu" },
+      { fase: "Hari Pertama Masuk Sekolah", mulai: "14 Jul 2026", selesai: "",            status: "menunggu" },
+    ],
 
-  <script src="../js/data.js"></script>
-  <script src="../js/components.js"></script>
-  <script>
-  (function () {
-    const semua  = DATA.pengumuman;
-    let katAktif = 'Semua';
-    let query    = '';
+    // Jalur pendaftaran
+    jalur: [
+      {
+        nama:     "Jalur Zonasi",
+        kuota:    "70%",
+        deskripsi:"Diprioritaskan untuk calon peserta didik yang berdomisili dalam radius ≤1 km dari sekolah, dibuktikan dengan Kartu Keluarga.",
+        prioritas: true,
+      },
+      {
+        nama:     "Jalur Prestasi",
+        kuota:    "20%",
+        deskripsi:"Untuk calon peserta didik yang memiliki prestasi akademik atau non-akademik (sertifikat/piagam penghargaan tingkat kecamatan ke atas).",
+        prioritas: false,
+      },
+      {
+        nama:     "Jalur Afirmasi",
+        kuota:    "10%",
+        deskripsi:"Untuk calon peserta didik dari keluarga tidak mampu, dibuktikan dengan Kartu KIP, PKH, atau surat keterangan tidak mampu dari kelurahan.",
+        prioritas: false,
+      },
+    ],
 
-    /* ── Helpers ─────────────────────────────────────────── */
-    function parseTanggal(str) {
-      /* "14 Mei 2026" → Date object untuk sorting/grouping */
-      const bulanMap = {
-        'Jan':1,'Feb':2,'Mar':3,'Apr':4,'Mei':5,'Jun':6,
-        'Jul':7,'Agu':8,'Sep':9,'Okt':10,'Nov':11,'Des':12,
-        'Januari':1,'Februari':2,'Maret':3,'April':4,'Mei':5,
-        'Juni':6,'Juli':7,'Agustus':8,'September':9,
-        'Oktober':10,'November':11,'Desember':12
-      };
-      const p = str.trim().split(' ');
-      if (p.length < 2) return new Date(0);
-      const tgl  = parseInt(p[0]) || 1;
-      const bln  = bulanMap[p[1]] || 1;
-      const thn  = parseInt(p[2]) || 2026;
-      return new Date(thn, bln - 1, tgl);
-    }
+    // Persyaratan dokumen
+    persyaratan: [
+      { dok: "Akta Kelahiran",            ket: "Fotokopi + asli untuk verifikasi",     wajib: true  },
+      { dok: "Kartu Keluarga (KK)",       ket: "Fotokopi + asli untuk verifikasi",     wajib: true  },
+      { dok: "Pas Foto 3×4",              ket: "2 lembar, latar biru",                 wajib: true  },
+      { dok: "Surat Keterangan Sehat",    ket: "Dari puskesmas atau dokter",           wajib: true  },
+      { dok: "Rapor TK/RA",               ket: "Fotokopi, jika ada",                   wajib: false },
+      { dok: "Sertifikat/Piagam Prestasi",ket: "Untuk jalur prestasi",                 wajib: false },
+      { dok: "KIP / Kartu PKH",           ket: "Untuk jalur afirmasi, jika ada",       wajib: false },
+    ],
 
-    function namaBulan(d) {
-      const nama = ['Januari','Februari','Maret','April','Mei','Juni',
-                    'Juli','Agustus','September','Oktober','November','Desember'];
-      return nama[d.getMonth()] + ' ' + d.getFullYear();
-    }
+    // FAQ — pertanyaan yang sering ditanyakan
+    faq: [
+      {
+        q: "Berapa biaya pendaftaran PPDB?",
+        a: "Pendaftaran PPDB SD Muhammadiyah 01 Kukusan tidak dipungut biaya (gratis).",
+      },
+      {
+        q: "Apakah harus bisa baca tulis untuk masuk kelas 1?",
+        a: "Tidak wajib. Yang terpenting calon siswa memenuhi syarat usia (minimal 6 tahun per 1 Juli 2026). Kemampuan literasi dasar akan dikembangkan melalui program sekolah.",
+      },
+      {
+        q: "Bagaimana jika kuota sudah penuh?",
+        a: "Pendaftaran akan ditutup otomatis ketika kuota terpenuhi. Kami menyarankan untuk mendaftar lebih awal.",
+      },
+      {
+        q: "Apakah ada tes masuk?",
+        a: "Tidak ada tes akademik. Seleksi dilakukan berdasarkan jalur (zonasi, prestasi, atau afirmasi) dan urutan pendaftaran jika kuota terbatas.",
+      },
+      {
+        q: "Apakah anak dari non-Muslim bisa mendaftar?",
+        a: "SD Muhammadiyah 01 Kukusan adalah sekolah Islam Muhammadiyah. Seluruh kegiatan sekolah, termasuk mata pelajaran keagamaan, berlandaskan nilai-nilai Al-Islam dan Kemuhammadiyahan.",
+      },
+      {
+        q: "Bagaimana cara cek status pendaftaran?",
+        a: "Status pendaftaran dapat dicek melalui bagian Tata Usaha sekolah, atau dengan menghubungi panitia PPDB via WhatsApp pada jam kerja.",
+      },
+    ],
 
-    function hariTanggal(tanggalStr) {
-      /* "14 Mei 2026" → { hari:"14", bln:"Mei" } */
-      const p = tanggalStr.trim().split(' ');
-      return { hari: p[0] || '—', bln: p[1] || '' };
-    }
+    // Kontak panitia PPDB
+    kontakPanitia: {
+      wa:  "6281234567890",   // ⚠ Ganti dengan nomor WA panitia PPDB
+      jam: "Senin–Jumat · 08.00–13.00 WIB (selama masa PPDB)",
+    },
 
-    function teksWA(p) {
-      return encodeURIComponent(
-        '📢 *' + p.judul + '*\n\n' +
-        p.ringkasan + '\n\nSD Muhammadiyah 01 Kukusan'
-      );
-    }
+  },
 
-    /* ── Filter ──────────────────────────────────────────── */
-    function filtered() {
-      return semua.filter(p => {
-        const cocokKat = katAktif === 'Semua' || p.kategori === katAktif;
-        const cocokQ   = query === '' ||
-          p.judul.toLowerCase().includes(query) ||
-          p.ringkasan.toLowerCase().includes(query);
-        return cocokKat && cocokQ;
-      });
-    }
-
-    /* ── Render satu kartu pengumuman ───────────────────── */
-    function cardHTML(p) {
-      const td  = hariTanggal(p.tanggal);
-      const badges = [
-        `<span class="kat-badge ${p.kategori}">${p.kategori}</span>`,
-        p.baru     ? `<span class="badge-baru">Baru</span>`     : '',
-        p.penting  ? `<span class="badge-penting">Penting</span>` : '',
-      ].filter(Boolean).join('');
-
-      const berlaku = p.berlakuHingga
-        ? `<span>⏳ Berlaku hingga ${p.berlakuHingga}</span>`
-        : '';
-
-      const lampiranBtn = p.lampiran
-        ? `<a class="btn-unduh" href="${p.lampiran}" target="_blank" rel="noopener">
-             📎 Unduh Lampiran
-           </a>`
-        : '';
-
-      const kontenP = (p.konten || [p.ringkasan])
-        .map(txt => `<p>${txt}</p>`).join('');
-
-      const extraClass = p.penting ? ' penting' : p.baru ? ' baru' : '';
-
-      return `
-        <div class="peng-card${extraClass}" data-id="${p.id}">
-          <div class="peng-card-head" role="button" tabindex="0"
-               aria-expanded="false" onclick="toggleCard(this)">
-            <div class="peng-tanggal">
-              <div class="hari">${td.hari}</div>
-              <div class="bln">${td.bln}</div>
-            </div>
-            <div class="peng-card-meta">
-              <div class="peng-card-badges">${badges}</div>
-              <h3>${p.judul}</h3>
-              <div class="peng-card-info">
-                <span>📅 ${p.tanggal}</span>
-                <span>👥 ${p.sasaran}</span>
-                ${berlaku}
-              </div>
-            </div>
-            <div class="peng-chevron">⌄</div>
-          </div>
-          <div class="peng-card-body">
-            <div class="peng-card-body-inner">
-              <div class="peng-konten">${kontenP}</div>
-              <div class="peng-footer-row">
-                ${lampiranBtn}
-                <a class="peng-share"
-                   href="https://wa.me/?text=${teksWA(p)}"
-                   target="_blank" rel="noopener">
-                  💬 Bagikan via WhatsApp
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    /* ── Render daftar ────────────────────────────────────── */
-    function render() {
-      const list  = filtered();
-      const el    = document.getElementById('peng-list');
-      const info  = document.getElementById('hasil-info');
-
-      info.innerHTML = `Menampilkan <strong>${list.length}</strong> pengumuman`;
-
-      if (list.length === 0) {
-        el.innerHTML = `
-          <div class="empty-state">
-            <div class="ikon">📭</div>
-            <p>Tidak ada pengumuman yang cocok.<br>
-               Coba kata kunci lain atau ubah filter kategori.</p>
-          </div>`;
-        return;
-      }
-      el.innerHTML = list.map(cardHTML).join('');
-
-      /* Buka otomatis yang pertama jika ada &id= di URL */
-      const hash = new URLSearchParams(window.location.search).get('id');
-      if (hash) {
-        const target = el.querySelector(`[data-id="${hash}"] .peng-card-head`);
-        if (target) {
-          toggleCard(target);
-          target.closest('.peng-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-    }
-
-    /* ── Render sidebar ───────────────────────────────────── */
-    function renderSidebar() {
-      /* Statistik */
-      const jumlahTotal   = semua.length;
-      const jumlahPenting = semua.filter(p => p.penting).length;
-      const jumlahBaru    = semua.filter(p => p.baru).length;
-      const jumlahKat     = [...new Set(semua.map(p => p.kategori))].length;
-      document.getElementById('stat-mini').innerHTML = `
-        <div class="stat-mini"><div class="num">${jumlahTotal}</div><div class="lbl">Total</div></div>
-        <div class="stat-mini"><div class="num">${jumlahBaru}</div><div class="lbl">Baru</div></div>
-        <div class="stat-mini"><div class="num">${jumlahPenting}</div><div class="lbl">Penting</div></div>
-        <div class="stat-mini"><div class="num">${jumlahKat}</div><div class="lbl">Kategori</div></div>`;
-
-      /* Kategori */
-      const kats = ['Akademik','Keuangan','Kegiatan','PPDB','Umum'];
-      document.getElementById('kat-list').innerHTML =
-        kats.map(k => {
-          const n = semua.filter(p => p.kategori === k).length;
-          return `<li><button onclick="filterKat('${k}')">
-            <span>${k}</span>
-            <span class="kat-count">${n}</span>
-          </button></li>`;
-        }).join('');
-
-      /* Arsip per bulan */
-      const bulanMap = {};
-      semua.forEach(p => {
-        const d = parseTanggal(p.tanggal);
-        const k = namaBulan(d);
-        bulanMap[k] = (bulanMap[k] || 0) + 1;
-      });
-      document.getElementById('arsip-list').innerHTML =
-        Object.entries(bulanMap)
-          .map(([bln, n]) =>
-            `<li><span>${bln}</span><span class="arsip-count">${n}</span></li>`)
-          .join('');
-    }
-
-    /* ── Toggle buka/tutup kartu ──────────────────────────── */
-    window.toggleCard = function (headEl) {
-      const card = headEl.closest('.peng-card');
-      const sudahBuka = card.classList.contains('terbuka');
-      /* Tutup semua dulu */
-      document.querySelectorAll('.peng-card.terbuka').forEach(c => {
-        c.classList.remove('terbuka');
-        c.querySelector('.peng-card-head').setAttribute('aria-expanded', 'false');
-      });
-      if (!sudahBuka) {
-        card.classList.add('terbuka');
-        headEl.setAttribute('aria-expanded', 'true');
-      }
-    };
-
-    /* ── Filter dari sidebar ─────────────────────────────── */
-    window.filterKat = function (kat) {
-      katAktif = kat;
-      /* Sync chips */
-      document.querySelectorAll('.chip').forEach(c => {
-        c.classList.toggle('aktif', c.dataset.kat === kat);
-      });
-      render();
-      /* Scroll ke daftar */
-      document.getElementById('peng-list').scrollIntoView({ behavior: 'smooth' });
-    };
-
-    /* ── Event: filter chips ─────────────────────────────── */
-    document.getElementById('filter-chips')
-      .addEventListener('click', function (e) {
-        const chip = e.target.closest('.chip');
-        if (!chip) return;
-        katAktif = chip.dataset.kat;
-        document.querySelectorAll('.chip').forEach(c =>
-          c.classList.toggle('aktif', c === chip));
-        render();
-      });
-
-    /* ── Event: search ───────────────────────────────────── */
-    let debounce;
-    document.getElementById('cari-input')
-      .addEventListener('input', function () {
-        clearTimeout(debounce);
-        debounce = setTimeout(() => {
-          query = this.value.trim().toLowerCase();
-          render();
-        }, 220);
-      });
-
-    /* ── Keyboard: enter untuk toggle ───────────────────── */
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && e.target.classList.contains('peng-card-head')) {
-        toggleCard(e.target);
-      }
-    });
-
-    /* ── Init ─────────────────────────────────────────────── */
-    renderSidebar();
-    render();
-  })();
-  </script>
-
-</body>
-</html>
+};

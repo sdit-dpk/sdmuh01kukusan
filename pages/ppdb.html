@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPDB 2026/2027 — SD Muhammadiyah 01 Kukusan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    /* ── Hero PPDB ────────────────────────────────────────── */
+    .ppdb-hero {
+      background: linear-gradient(135deg, var(--blue-950) 0%, #112a6e 60%, #1a3a8a 100%);
+      padding: 56px 0 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ppdb-hero::before {
+      content: "";
+      position: absolute; top: -80px; right: -80px;
+      width: 480px; height: 480px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,154,24,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ppdb-hero-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 20px;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 40px; align-items: center;
+    }
+    @media (max-width: 700px) { .ppdb-hero-inner { grid-template-columns: 1fr; } }
+    .ppdb-hero-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .ppdb-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 700; color: white; margin: 0 0 14px; line-height: 1.2;
+    }
+    .ppdb-hero p { font-size: 15px; color: rgba(255,255,255,.7); margin: 0 0 24px; line-height: 1.7; }
+    .ppdb-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-ppdb-utama {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--blue-950);
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 14px; font-weight: 700; text-decoration: none;
+      transition: opacity .18s;
+    }
+    .btn-ppdb-utama:hover { opacity: .9; }
+    .btn-ppdb-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid rgba(255,255,255,.4); color: white;
+      padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: border-color .18s, background .18s;
+    }
+    .btn-ppdb-outline:hover { border-color: white; background: rgba(255,255,255,.08); }
+
+    /* Kartu kuota hero */
+    .kuota-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      text-align: center;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+    .kuota-card .kn {
+      font-family: var(--serif);
+      font-size: 48px; font-weight: 700; color: var(--gold); line-height: 1;
+    }
+    .kuota-card .kl { font-size: 13px; color: rgba(255,255,255,.65); margin-top: 6px; }
+    .kuota-card .ks {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 6px;
+    }
+
+    /* ── Status banner ────────────────────────────────────── */
+    .status-banner {
+      padding: 14px 0;
+      text-align: center;
+      font-size: 14px; font-weight: 600;
+    }
+    .status-banner.buka { background: #16a34a; color: white; }
+    .status-banner.tutup { background: #dc2626; color: white; }
+
+    /* ── Layout utama ─────────────────────────────────────── */
+    .ppdb-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px; align-items: start;
+    }
+    @media (max-width: 900px) { .ppdb-layout { grid-template-columns: 1fr; } }
+
+    /* ── Timeline jadwal ──────────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute; left: 10px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--blue-100);
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 0 28px 20px;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -32px; top: 4px;
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 3px solid white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px;
+    }
+    .tl-dot.selesai  { background: #16a34a; }
+    .tl-dot.berjalan { background: var(--blue-700); box-shadow: 0 0 0 4px rgba(48,112,216,.2); }
+    .tl-dot.menunggu { background: var(--gray-200); border-color: var(--gray-200); }
+    .tl-item h4 {
+      font-family: var(--serif);
+      font-size: 16px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 4px;
+    }
+    .tl-item h4.menunggu { color: var(--gray-400); }
+    .tl-tanggal { font-size: 13px; color: var(--gray-400); }
+    .tl-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase;
+      border-radius: 3px; padding: 2px 8px; margin-top: 4px; color: white;
+    }
+    .tl-badge.selesai  { background: #16a34a; }
+    .tl-badge.berjalan { background: var(--blue-700); }
+    .tl-badge.menunggu { background: var(--gray-300); color: var(--gray-500); }
+
+    /* ── Jalur pendaftaran ────────────────────────────────── */
+    .jalur-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px; margin-bottom: 40px;
+    }
+    .jalur-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .jalur-card:hover { box-shadow: 0 4px 18px rgba(13,49,114,.1); }
+    .jalur-card.prioritas {
+      border-color: var(--gold);
+      border-width: 2px;
+    }
+    .jalur-card.prioritas::before {
+      content: "Prioritas";
+      position: absolute; top: 14px; right: 14px;
+      background: var(--gold); color: var(--blue-950);
+      font-size: 10px; font-weight: 700;
+      border-radius: 3px; padding: 2px 8px;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .jalur-kuota {
+      font-family: var(--serif);
+      font-size: 32px; font-weight: 700;
+      color: var(--blue-900); margin-bottom: 4px;
+    }
+    .jalur-card h4 {
+      font-family: var(--serif);
+      font-size: 17px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 10px;
+    }
+    .jalur-card p {
+      font-size: 13.5px; color: var(--gray-500); line-height: 1.65; margin: 0;
+    }
+
+    /* ── Persyaratan tabel ────────────────────────────────── */
+    .syarat-table-wrap {
+      border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .syarat-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .syarat-table thead { background: var(--blue-900); color: white; }
+    .syarat-table thead th {
+      padding: 12px 16px; font-family: var(--serif);
+      font-size: 14px; font-weight: 700; text-align: left; border: none;
+    }
+    .syarat-table tbody tr { border-bottom: 1px solid var(--gray-200); transition: background .15s; }
+    .syarat-table tbody tr:last-child { border-bottom: none; }
+    .syarat-table tbody tr:hover { background: var(--blue-50); }
+    .syarat-table td { padding: 12px 16px; color: var(--gray-600); }
+    .syarat-table td:first-child { font-weight: 600; color: var(--blue-950); }
+    .badge-wajib {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      background: #dc2626; color: white; border-radius: 3px; padding: 1px 7px;
+    }
+    .badge-opsional {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      background: var(--gray-200); color: var(--gray-500); border-radius: 3px; padding: 1px 7px;
+    }
+
+    /* ── FAQ accordion ────────────────────────────────────── */
+    .faq-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+    .faq-item {
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; padding: 16px 18px;
+      cursor: pointer; user-select: none;
+      font-family: var(--serif); font-size: 16px; font-weight: 700;
+      color: var(--blue-950);
+    }
+    .faq-q:hover { background: var(--blue-50); }
+    .faq-chevron { font-size: 18px; color: var(--gray-300); transition: transform .25s; flex-shrink: 0; }
+    .faq-item.buka .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s ease, padding .25s;
+      font-size: 14.5px; color: var(--gray-600); line-height: 1.7;
+    }
+    .faq-item.buka .faq-a { max-height: 300px; }
+    .faq-a-inner { padding: 0 18px 16px; border-top: 1px solid var(--gray-200); padding-top: 14px; }
+
+    /* ── Sidebar: form pendaftaran ────────────────────────── */
+    .sidebar-box {
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
+    }
+    .sidebar-head {
+      background: var(--blue-900); color: white;
+      padding: 14px 20px; font-family: var(--serif);
+      font-size: 16px; font-weight: 700;
+    }
+    .sidebar-head.gold { background: linear-gradient(90deg, #7a5c00, #a07c10); }
+    .sidebar-body { padding: 20px; }
+
+    /* Steps pendaftaran */
+    .steps-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+    .step-item { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px; flex-shrink: 0;
+      background: var(--blue-700); color: white;
+      border-radius: 50%; font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .step-item h5 {
+      font-size: 14px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 3px;
+    }
+    .step-item p { font-size: 12.5px; color: var(--gray-500); margin: 0; line-height: 1.5; }
+
+    /* Form sederhana */
+    .form-group { margin-bottom: 13px; }
+    .form-group label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--gray-600); margin-bottom: 4px;
+    }
+    .wajib { color: #dc2626; }
+    .form-control {
+      width: 100%; box-sizing: border-box;
+      padding: 8px 12px; border: 1.5px solid var(--gray-200);
+      border-radius: 6px; font-size: 13.5px;
+      font-family: 'DM Sans', sans-serif; color: var(--blue-950);
+      outline: none; transition: border-color .18s; background: white;
+    }
+    .form-control:focus { border-color: var(--blue-500); }
+    .btn-daftar {
+      width: 100%; background: var(--gold); color: var(--blue-950);
+      border: none; border-radius: 6px;
+      padding: 12px 0; font-size: 14px; font-weight: 700;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: opacity .18s; display: flex;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-daftar:hover { opacity: .9; }
+    .form-sukses {
+      display: none; text-align: center; padding: 20px 10px;
+    }
+    .form-sukses .ikon { font-size: 44px; margin-bottom: 10px; }
+    .form-sukses h4 {
+      font-family: var(--serif); font-size: 18px; color: var(--blue-950); margin: 0 0 8px;
+    }
+    .form-sukses p { font-size: 13px; color: var(--gray-500); margin: 0 0 14px; }
+
+    /* Progress kuota visual */
+    .kuota-bar-wrap {
+      margin: 4px 0 10px;
+    }
+    .kuota-bar-track {
+      background: var(--blue-100); border-radius: 99px; height: 8px;
+      overflow: hidden;
+    }
+    .kuota-bar-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(90deg, var(--blue-700), var(--blue-500));
+      transition: width .6s ease;
+    }
+    .kuota-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); margin-top: 6px; }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      border-left: 4px solid var(--blue-700);
+      border-radius: 8px; padding: 14px 16px;
+      font-size: 13.5px; color: var(--blue-900); line-height: 1.65;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body data-page="kesiswaan">
+
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left" id="topbar-kontak"></div>
+      <div class="topbar-right" id="topbar-ta"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark">
+          <svg viewBox="0 0 40 40">
+            <text x="20" y="28" text-anchor="middle"
+              font-family="Georgia,serif" font-size="18"
+              font-weight="bold" fill="white">SD</text>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <strong id="header-nama"></strong>
+          <small  id="header-tagline"></small>
+        </div>
+      </a>
+      <nav id="nav-menu" aria-label="Navigasi utama"></nav>
+      <button class="hamburger" id="hamburger"
+        aria-label="Buka/tutup menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- Status banner -->
+  <div class="status-banner" id="status-banner"></div>
+
+  <!-- Hero -->
+  <div class="ppdb-hero">
+    <div class="ppdb-hero-inner">
+      <div>
+        <div class="ppdb-hero-tag">✦ Penerimaan Peserta Didik Baru</div>
+        <h1 id="ppdb-hero-judul">PPDB Tahun Ajaran<br>2026/2027</h1>
+        <p>Bergabunglah bersama keluarga besar SD Muhammadiyah 01 Kukusan —
+          sekolah dasar Islam unggulan berdiri sejak 1942 dengan Akreditasi A.</p>
+        <div class="ppdb-hero-btns">
+          <a href="#sec-daftar" class="btn-ppdb-utama" id="btn-hero-daftar">
+            📋 Daftar Sekarang
+          </a>
+          <a href="#sec-syarat" class="btn-ppdb-outline">Lihat Persyaratan</a>
+        </div>
+      </div>
+      <div class="kuota-card" id="kuota-card"></div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb"
+    style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container"
+      style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a>
+      <span>›</span>
+      <a href="kesiswaan.html" style="color:var(--blue-700);">Kesiswaan</a>
+      <span>›</span>
+      <span style="color:var(--gray-600);">PPDB 2026/2027</span>
+    </div>
+  </nav>
+
+  <!-- Konten -->
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+        <div class="ppdb-layout">
+
+          <!-- Kiri: konten utama -->
+          <div>
+
+            <!-- Timeline jadwal -->
+            <div class="section-tag">Kalender Pendaftaran</div>
+            <h2 class="section-heading">Jadwal PPDB <span id="ta-judul"></span></h2>
+            <div class="section-rule" style="margin-bottom:28px;"></div>
+            <div class="timeline" id="timeline" style="margin-bottom:48px;"></div>
+
+            <!-- Jalur pendaftaran -->
+            <div class="section-tag">Seleksi & Kuota</div>
+            <h2 class="section-heading">Jalur Pendaftaran</h2>
+            <div class="section-rule" style="margin-bottom:20px;"></div>
+            <div class="highlight-box">
+              📌 Semua jalur pendaftaran gratis tanpa pungutan apapun.
+              Urutan pendaftaran menjadi penentu jika kuota melebihi kapasitas dalam jalur yang sama.
+            </div>
+            <div class="jalur-grid" id="jalur-grid"></div>
+
+            <!-- Persyaratan -->
+            <div id="sec-syarat" style="scroll-margin-top:120px;">
+              <div class="section-tag">Dokumen yang Diperlukan</div>
+              <h2 class="section-heading">Persyaratan Pendaftaran</h2>
+              <div class="section-rule" style="margin-bottom:20px;"></div>
+              <div class="syarat-table-wrap">
+                <table class="syarat-table">
+                  <thead>
+                    <tr>
+                      <th style="min-width:210px;">Dokumen</th>
+                      <th>Keterangan</th>
+                      <th style="min-width:90px;text-align:center;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="syarat-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="section-tag" style="margin-top:48px;">Pertanyaan Umum</div>
+            <h2 class="section-heading">FAQ PPDB</h2>
+            <div class="section-rule" style="margin-bottom:20px;"></div>
+            <div class="faq-list" id="faq-list"></div>
+
+          </div>
+
+          <!-- Kanan: sidebar -->
+          <aside id="sec-daftar" style="scroll-margin-top:120px;">
+
+            <!-- Kuota visual -->
+            <div class="sidebar-box">
+              <div class="sidebar-head gold">📊 Ketersediaan Kursi</div>
+              <div class="sidebar-body" id="kuota-sidebar"></div>
+            </div>
+
+            <!-- Form pendaftaran -->
+            <div class="sidebar-box">
+              <div class="sidebar-head gold">📋 Formulir Pendaftaran</div>
+              <div class="sidebar-body">
+                <p style="font-size:13px;color:var(--gray-400);margin:0 0 16px;line-height:1.6;">
+                  Isi formulir di bawah — data Anda akan kami terima via WhatsApp
+                  untuk proses verifikasi selanjutnya.
+                </p>
+
+                <div id="form-area">
+                  <div class="form-group">
+                    <label>Nama Lengkap Anak <span class="wajib">*</span></label>
+                    <input type="text" id="f-nama-anak" class="form-control" placeholder="Nama lengkap calon siswa">
+                  </div>
+                  <div class="form-group">
+                    <label>Tanggal Lahir Anak <span class="wajib">*</span></label>
+                    <input type="date" id="f-tgl-lahir" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Nama Orang Tua / Wali <span class="wajib">*</span></label>
+                    <input type="text" id="f-ortu" class="form-control" placeholder="Nama lengkap orang tua/wali">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor WhatsApp <span class="wajib">*</span></label>
+                    <input type="tel" id="f-wa" class="form-control" placeholder="Contoh: 0812-3456-7890">
+                  </div>
+                  <div class="form-group">
+                    <label>Jalur Pendaftaran <span class="wajib">*</span></label>
+                    <select id="f-jalur" class="form-control">
+                      <option value="">— Pilih jalur —</option>
+                      <option>Jalur Zonasi</option>
+                      <option>Jalur Prestasi</option>
+                      <option>Jalur Afirmasi</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Asal TK / RA</label>
+                    <input type="text" id="f-asal" class="form-control" placeholder="Nama TK/RA (opsional)">
+                  </div>
+                  <div style="font-size:11.5px;color:var(--gray-400);margin-bottom:14px;line-height:1.6;">
+                    Data ini hanya digunakan untuk keperluan pendaftaran PPDB dan tidak disebarluaskan.
+                  </div>
+                  <button class="btn-daftar" onclick="daftarPPDB()">
+                    📋 Kirim Formulir via WhatsApp
+                  </button>
+                </div>
+
+                <div class="form-sukses" id="form-sukses">
+                  <div class="ikon">✅</div>
+                  <h4>Formulir Terkirim!</h4>
+                  <p>WhatsApp akan terbuka dengan data pendaftaran Anda.
+                     Tekan <strong>Kirim</strong> di WhatsApp untuk menyelesaikan pendaftaran.</p>
+                  <p style="font-size:12px;color:var(--gray-400);margin-top:8px;">
+                    Tim PPDB akan menghubungi Anda dalam 1×24 jam kerja untuk konfirmasi dokumen.
+                  </p>
+                  <button style="margin-top:12px;background:none;border:1px solid var(--blue-500);
+                    border-radius:6px;padding:8px 18px;color:var(--blue-700);font-size:13px;
+                    cursor:pointer;font-family:'DM Sans',sans-serif;"
+                    onclick="resetForm()">
+                    Daftar Anak Lain
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cara daftar -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">🗺️ Cara Mendaftar</div>
+              <div class="sidebar-body">
+                <ul class="steps-list">
+                  <li class="step-item">
+                    <div class="step-num">1</div>
+                    <div>
+                      <h5>Isi Formulir Online</h5>
+                      <p>Isi formulir di atas dan kirim via WhatsApp, atau ambil formulir fisik di TU sekolah.</p>
+                    </div>
+                  </li>
+                  <li class="step-item">
+                    <div class="step-num">2</div>
+                    <div>
+                      <h5>Lengkapi Dokumen</h5>
+                      <p>Siapkan dokumen persyaratan dan serahkan ke TU sekolah pada jam kerja.</p>
+                    </div>
+                  </li>
+                  <li class="step-item">
+                    <div class="step-num">3</div>
+                    <div>
+                      <h5>Verifikasi Berkas</h5>
+                      <p>Panitia PPDB akan memverifikasi dokumen dan memberi nomor pendaftaran.</p>
+                    </div>
+                  </li>
+                  <li class="step-item">
+                    <div class="step-num">4</div>
+                    <div>
+                      <h5>Pengumuman & Daftar Ulang</h5>
+                      <p>Cek hasil seleksi sesuai jadwal. Lakukan daftar ulang jika dinyatakan diterima.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Kontak panitia -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">📞 Hubungi Panitia PPDB</div>
+              <div class="sidebar-body" id="kontak-panitia-box"></div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-mark">
+              <svg viewBox="0 0 40 40">
+                <text x="20" y="28" text-anchor="middle"
+                  font-family="Georgia,serif" font-size="18"
+                  font-weight="bold" fill="white">SD</text>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <strong id="footer-nama"></strong>
+              <small  id="footer-akreditasi"></small>
+            </div>
+          </div>
+          <p id="footer-deskripsi"></p>
+        </div>
+        <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+        <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+        <div class="footer-col"><h5>Kontak Kami</h5><div class="footer-contact" id="footer-kontak"></div></div>
+      </div>
+      <div class="footer-bottom">
+        <p id="footer-copy"></p>
+        <p><a href="kebijakan-privasi.html">Kebijakan Privasi</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function () {
+    const Dp = DATA.ppdb;
+    const Ds = DATA.sekolah;
+
+    /* ── Status banner ───────────────────────────────────── */
+    const banner = document.getElementById('status-banner');
+    if (Dp.buka) {
+      banner.className = 'status-banner buka';
+      banner.innerHTML = '🟢 <strong>PPDB ' + Dp.tahunAjaran + ' SEDANG BERLANGSUNG</strong> — Segera daftarkan putra-putri Anda sebelum kuota penuh!';
+    } else {
+      banner.className = 'status-banner tutup';
+      banner.innerHTML = '🔴 <strong>PPDB ' + Dp.tahunAjaran + ' TELAH DITUTUP</strong> — Terima kasih atas antusiasme Anda. Pantau terus informasi PPDB berikutnya.';
+      document.getElementById('btn-hero-daftar').style.opacity = '.5';
+      document.getElementById('btn-hero-daftar').style.pointerEvents = 'none';
+    }
+
+    /* ── Hero kuota card ─────────────────────────────────── */
+    document.getElementById('ppdb-hero-judul').innerHTML =
+      'PPDB Tahun Ajaran<br>' + Dp.tahunAjaran;
+    document.getElementById('ta-judul').textContent = Dp.tahunAjaran;
+    document.getElementById('kuota-card').innerHTML = `
+      <div class="ks">Total Kuota</div>
+      <div class="kn">${Dp.kuota}</div>
+      <div class="kl">${Dp.jumlahRombel} rombongan belajar<br>${Dp.kuotaPerKelas} siswa per kelas</div>`;
+
+    /* ── Timeline ────────────────────────────────────────── */
+    document.getElementById('timeline').innerHTML =
+      Dp.jadwal.map(j => {
+        const tgl = j.selesai
+          ? j.mulai + ' — ' + j.selesai
+          : j.mulai;
+        const badgeLabel = { selesai:'Selesai', berjalan:'Sedang Berlangsung', menunggu:'Menunggu' };
+        return `
+          <div class="tl-item">
+            <div class="tl-dot ${j.status}">
+              ${j.status === 'selesai' ? '✓' : j.status === 'berjalan' ? '●' : ''}
+            </div>
+            <h4 class="${j.status === 'menunggu' ? 'menunggu' : ''}">${j.fase}</h4>
+            <div class="tl-tanggal">${tgl}</div>
+            <div class="tl-badge ${j.status}">${badgeLabel[j.status]}</div>
+          </div>`;
+      }).join('');
+
+    /* ── Jalur pendaftaran ────────────────────────────────── */
+    document.getElementById('jalur-grid').innerHTML =
+      Dp.jalur.map(j => `
+        <div class="jalur-card${j.prioritas ? ' prioritas' : ''}">
+          <div class="jalur-kuota">${j.kuota}</div>
+          <h4>${j.nama}</h4>
+          <p>${j.deskripsi}</p>
+        </div>`).join('');
+
+    /* ── Persyaratan ─────────────────────────────────────── */
+    document.getElementById('syarat-tbody').innerHTML =
+      Dp.persyaratan.map(s => `
+        <tr>
+          <td>${s.dok}</td>
+          <td>${s.ket}</td>
+          <td style="text-align:center;">
+            <span class="${s.wajib ? 'badge-wajib' : 'badge-opsional'}">
+              ${s.wajib ? 'Wajib' : 'Opsional'}
+            </span>
+          </td>
+        </tr>`).join('');
+
+    /* ── FAQ ─────────────────────────────────────────────── */
+    document.getElementById('faq-list').innerHTML =
+      Dp.faq.map((f, i) => `
+        <div class="faq-item" id="faq-${i}">
+          <div class="faq-q" onclick="toggleFaq(${i})">
+            <span>${f.q}</span>
+            <span class="faq-chevron">⌄</span>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">${f.a}</div>
+          </div>
+        </div>`).join('');
+
+    /* ── Kuota sidebar ───────────────────────────────────── */
+    /* Simulasi terisi ~40% — ganti angka ini dengan data nyata */
+    const terisi   = Math.round(Dp.kuota * 0.4);
+    const sisa     = Dp.kuota - terisi;
+    const pct      = Math.round((terisi / Dp.kuota) * 100);
+    document.getElementById('kuota-sidebar').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+        <span style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--blue-900);">
+          ${sisa} kursi tersisa
+        </span>
+        <span style="font-size:12px;color:var(--gray-400);">dari ${Dp.kuota}</span>
+      </div>
+      <div class="kuota-bar-wrap">
+        <div class="kuota-bar-track">
+          <div class="kuota-bar-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="kuota-info">
+          <span>${terisi} terdaftar (${pct}%)</span>
+          <span>${sisa} tersisa</span>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--gray-400);margin:10px 0 0;line-height:1.5;">
+        ⚠️ Data ini diperbarui secara berkala. Segera daftar untuk memastikan tempat Anda.
+      </p>`;
+
+    /* ── Kontak panitia ──────────────────────────────────── */
+    const teksWA = encodeURIComponent('Halo, saya ingin bertanya tentang PPDB ' + Dp.tahunAjaran + ' SD Muhammadiyah 01 Kukusan.');
+    document.getElementById('kontak-panitia-box').innerHTML = `
+      <p style="font-size:13.5px;color:var(--gray-500);margin:0 0 14px;line-height:1.6;">
+        Hubungi panitia PPDB untuk pertanyaan seputar pendaftaran, persyaratan, dan jadwal.
+      </p>
+      <div style="font-size:13px;color:var(--gray-400);margin-bottom:14px;">
+        🕐 ${Dp.kontakPanitia.jam}
+      </div>
+      <a href="https://wa.me/${Dp.kontakPanitia.wa}?text=${teksWA}"
+         target="_blank" rel="noopener"
+         style="display:flex;align-items:center;justify-content:center;gap:8px;
+           background:#25d366;color:white;border-radius:6px;padding:11px;
+           font-size:14px;font-weight:700;text-decoration:none;transition:background .18s;"
+         onmouseover="this.style.background='#1da851'"
+         onmouseout="this.style.background='#25d366'">
+        💬 Chat WhatsApp Panitia PPDB
+      </a>`;
+
+    /* ── FAQ toggle ──────────────────────────────────────── */
+    window.toggleFaq = function (i) {
+      const item = document.getElementById('faq-' + i);
+      const buka = item.classList.contains('buka');
+      document.querySelectorAll('.faq-item.buka').forEach(el => el.classList.remove('buka'));
+      if (!buka) item.classList.add('buka');
+    };
+
+    /* ── Form pendaftaran ─────────────────────────────────── */
+    window.daftarPPDB = function () {
+      const namaAnak  = document.getElementById('f-nama-anak').value.trim();
+      const tglLahir  = document.getElementById('f-tgl-lahir').value;
+      const namaOrtu  = document.getElementById('f-ortu').value.trim();
+      const noWA      = document.getElementById('f-wa').value.trim();
+      const jalur     = document.getElementById('f-jalur').value;
+      const asalTK    = document.getElementById('f-asal').value.trim();
+
+      if (!namaAnak || !tglLahir || !namaOrtu || !noWA || !jalur) {
+        alert('Mohon isi semua kolom yang wajib diisi (*).');
+        return;
+      }
+
+      const teks = encodeURIComponent(
+        '📋 *FORMULIR PENDAFTARAN PPDB ' + Dp.tahunAjaran + '*\n' +
+        'SD Muhammadiyah 01 Kukusan\n\n' +
+        '👤 Nama Anak     : ' + namaAnak  + '\n' +
+        '📅 Tanggal Lahir : ' + tglLahir  + '\n' +
+        '👨‍👩‍👧 Nama Ortu/Wali : ' + namaOrtu  + '\n' +
+        '📱 No. WhatsApp  : ' + noWA      + '\n' +
+        '🏫 Jalur         : ' + jalur     + '\n' +
+        (asalTK ? '🏫 Asal TK/RA    : ' + asalTK + '\n' : '') +
+        '\nMohon konfirmasi penerimaan formulir ini. Terima kasih.'
+      );
+
+      window.open('https://wa.me/' + Dp.kontakPanitia.wa + '?text=' + teks, '_blank');
+      document.getElementById('form-area').style.display   = 'none';
+      document.getElementById('form-sukses').style.display = 'block';
+    };
+
+    window.resetForm = function () {
+      ['f-nama-anak','f-tgl-lahir','f-ortu','f-wa','f-asal'].forEach(id =>
+        document.getElementById(id).value = '');
+      document.getElementById('f-jalur').value = '';
+      document.getElementById('form-area').style.display   = 'block';
+      document.getElementById('form-sukses').style.display = 'none';
+    };
+
+  })();
+  </script>
+
+</body>
+</html>
