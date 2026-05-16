@@ -31,7 +31,7 @@ const DATA = {
     nama:            "SD Muhammadiyah 01 Kukusan",
     tagline:         "Terakreditasi A · Depok, Jawa Barat",
     akreditasi:      "Terakreditasi A",
-    telepon:         "(021) 7862947",
+    telepon:         "(021) 7891234",
     email:           "info@sdmuh01kukusan.sch.id",
     alamat:          "Jl. KH Ahmad Dahlan No. 11 RT 006/005, Kel. Kukusan, Kec. Beji, Kota Depok 16425",
     alamatPendek:    "Kukusan, Beji, Depok",
@@ -134,38 +134,161 @@ const DATA = {
     },
   ],
 
-  // ──────────────────────────────────────────────────────────────
-  //  BERITA TERBARU
-  //  Hanya 3 teratas yang ditampilkan di beranda.
-  //  foto: path lokal atau URL. href: link ke halaman berita penuh.
-  // ──────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════
+  //  BERITA
+  //  Dipakai di: beranda (3 teratas yg unggulan:true),
+  //              pages/berita.html (semua), pages/berita-detail.html (satu)
+  //
+  //  ── CARA MENAMBAH BERITA BARU ─────────────────────────────
+  //  Salin blok template di bawah ini, tempel di PALING ATAS
+  //  array (sebelum artikel pertama), lalu isi setiap field.
+  //
+  //  TEMPLATE:
+  //  {
+  //    id:       "slug-unik-tanpa-spasi",      ← wajib, unik
+  //    kategori: "Prestasi",                   ← pilih salah satu:
+  //                                               Prestasi | Kegiatan |
+  //                                               Program  | Pengumuman
+  //    judul:    "Judul Berita Di Sini",
+  //    ringkasan:"Satu–dua kalimat pembuka.",
+  //    konten: [                               ← isi artikel penuh
+  //      "Paragraf pertama...",
+  //      "Paragraf kedua...",
+  //    ],
+  //    tanggal:  "1 Januari 2026",
+  //    penulis:  "Tim Redaksi",
+  //    dibaca:   "0",
+  //    foto:     "assets/foto/nama-foto.jpg",  ← atau URL
+  //    fotoAlt:  "Keterangan foto",
+  //    tags:     ["kata-kunci", "lainnya"],
+  //    unggulan: false,                        ← true = tampil di beranda
+  //  },
+  //
+  //  ── CATATAN ───────────────────────────────────────────────
+  //  · id tidak boleh sama dengan artikel lain
+  //  · unggulan:true → tampil di beranda (maks. 3 yang paling atas)
+  //  · foto: gunakan path relatif dari root repo, atau URL lengkap
+  // ══════════════════════════════════════════════════════════════
   berita: [
     {
-      kategori: "🏆 Prestasi",
+      id:       "robotik-juara-2",
+      kategori: "Prestasi",
       judul:    "Tim Robotik SD Muhammadiyah 01 Raih Juara 2 Tingkat Kota Depok",
-      ringkasan:"Enam siswa kelas 5 berhasil membawa pulang medali perak dalam Kompetisi Robotik Tingkat Kota Depok yang diselenggarakan oleh Dinas Pendidikan...",
+      ringkasan:"Enam siswa kelas 5 berhasil membawa pulang medali perak dalam Kompetisi Robotik Tingkat Kota Depok yang diselenggarakan oleh Dinas Pendidikan Kota Depok.",
+      konten: [
+        "Alhamdulillah, tim robotik SD Muhammadiyah 01 Kukusan kembali mengharumkan nama sekolah. Enam siswa kelas 5 berhasil meraih Juara 2 dalam Kompetisi Robotik Tingkat Kota Depok yang diselenggarakan oleh Dinas Pendidikan Kota Depok pada 8 Mei 2026 di Gedung Balai Kota Depok.",
+        "Tim yang terdiri dari Farhan, Nadia, Zaky, Alya, Raka, dan Siti ini telah berlatih selama tiga bulan di bawah bimbingan guru pembina ekstrakurikuler robotik. Mereka merancang robot yang mampu menyelesaikan tantangan jalur rintangan secara otomatis menggunakan sensor ultrasonik.",
+        "\"Kami sangat bangga dengan pencapaian anak-anak kami. Ini adalah buah dari kerja keras, ketekunan, dan doa orang tua. Semoga prestasi ini menjadi penyemangat bagi seluruh siswa kami untuk terus berinovasi,\" ujar Mudzakkir Walad, S.Pd., selaku Kepala Sekolah.",
+        "Keberhasilan ini tidak terlepas dari dukungan program Koding dan Kecerdasan Artifisial (KKA) yang mulai terintegrasi dalam pembelajaran sejak semester ganjil 2025/2026. Program ini mendorong siswa untuk berpikir komputasional dan kreatif sejak dini.",
+        "Tim akan mewakili Kota Depok dalam Kompetisi Robotik Tingkat Provinsi Jawa Barat yang akan diselenggarakan pada bulan Juli 2026. Dukungan dan doa dari seluruh warga sekolah sangat diharapkan.",
+      ],
       tanggal:  "10 Mei 2026",
+      penulis:  "Tim Redaksi",
       dibaca:   "234",
-      foto:     "https://picsum.photos/seed/berita1/310/235",
-      href:     "/berita/robotik-juara-2",
+      foto:     "https://picsum.photos/seed/berita1/900/500",
+      fotoAlt:  "Tim Robotik SD Muhammadiyah 01 Kukusan",
+      tags:     ["robotik", "prestasi", "kota-depok", "kka"],
+      unggulan: true,
     },
     {
-      kategori: "🎨 Kegiatan",
-      judul:    "Pelaksanaan Projek P5 Tema \"Suara Demokrasi\" Kelas 4 dan 5",
-      ringkasan:"Siswa kelas 4 dan 5 antusias mengikuti kegiatan Projek Penguatan Profil Pelajar Pancasila dengan tema Suara Demokrasi...",
+      id:       "p5-suara-demokrasi",
+      kategori: "Kegiatan",
+      judul:    "Projek P5 Tema \"Suara Demokrasi\" Wujudkan Pemimpin Muda Berkarakter",
+      ringkasan:"Siswa kelas 4 dan 5 antusias mengikuti Projek Penguatan Profil Pelajar Pancasila dengan tema Suara Demokrasi — simulasi pemilihan ketua kelas secara demokratis dan islami.",
+      konten: [
+        "Selama dua pekan penuh, halaman dan kelas-kelas SD Muhammadiyah 01 Kukusan dipenuhi semangat demokrasi. Siswa kelas 4 dan 5 melaksanakan Projek Penguatan Profil Pelajar Pancasila (P5) dengan tema \"Suara Demokrasi\" yang berlangsung dari 27 April hingga 8 Mei 2026.",
+        "Projek ini dirancang untuk menumbuhkan pemahaman praktis tentang proses demokrasi yang sehat kepada siswa. Mereka menjalani seluruh tahapan pemilu sesungguhnya: sosialisasi, pendaftaran calon, kampanye, debat kandidat, pemungutan suara, hingga penghitungan hasil.",
+        "Yang istimewa, seluruh proses ini diintegrasikan dengan nilai-nilai Islam. Setiap kandidat diwajibkan menyampaikan visi misi yang mengandung nilai amanah, adil, dan musyawarah — tiga pilar kepemimpinan dalam Islam yang menjadi landasan pembahasan selama projek berlangsung.",
+        "\"Anak-anak belajar bahwa pemimpin yang baik bukan hanya yang populer, tetapi yang jujur dan bertanggung jawab. Nilai inilah yang kami tanamkan melalui projek ini,\" ujar Ibu Sari, guru fasilitator P5.",
+        "Projek ini menghasilkan berbagai karya nyata: poster kampanye, video manifesto, dan laporan refleksi tertulis. Seluruh karya dipamerkan dalam Pameran Karya P5 yang terbuka untuk orang tua pada 9 Mei 2026 dan disambut antusias.",
+      ],
       tanggal:  "5 Mei 2026",
+      penulis:  "Tim Redaksi",
       dibaca:   "189",
-      foto:     "https://picsum.photos/seed/berita2/310/235",
-      href:     "/berita/p5-suara-demokrasi",
+      foto:     "https://picsum.photos/seed/berita2/900/500",
+      fotoAlt:  "Kegiatan P5 Suara Demokrasi",
+      tags:     ["p5", "profil-pelajar-pancasila", "demokrasi", "kegiatan"],
+      unggulan: true,
     },
     {
-      kategori: "📖 Program",
-      judul:    "Program Tahfidz Quran Kelas 1–3 Mulai Diterapkan Semester Genap",
-      ringkasan:"Mulai semester genap 2025/2026, sekolah menerapkan program hafalan Al-Quran sebagai bagian dari kurikulum unggulan...",
+      id:       "tahfidz-semester-genap",
+      kategori: "Program",
+      judul:    "Program Tahfidz Joyful Learning Resmi Berjalan di Semua Kelas",
+      ringkasan:"Mulai semester genap 2025/2026, program Tahfidz Joyful Learning berjalan terjadwal setiap Selasa–Kamis pukul 07.00 untuk seluruh siswa kelas 1–6.",
+      konten: [
+        "Bismillahirrahmanirrahim. Sebagai wujud komitmen sekolah dalam mencetak generasi penghafal Al-Qur'an, SD Muhammadiyah 01 Kukusan resmi menjalankan program Tahfidz Joyful Learning secara terjadwal mulai semester genap tahun pelajaran 2025/2026.",
+        "Program ini dilaksanakan setiap Selasa, Rabu, dan Kamis pukul 07.00–07.30 sebelum kegiatan belajar mengajar dimulai. Seluruh siswa dari kelas 1 hingga kelas 6 mengikuti program ini secara serentak di kelasnya masing-masing, dibimbing oleh guru wali kelas yang telah mendapat pelatihan khusus tahsin.",
+        "Target hafalan dirancang bertahap sesuai jenjang: siswa kelas 1–2 mempelajari surat-surat pendek dari An-Nas hingga Ad-Dhuha, kelas 3–4 melanjutkan hafalan Juz 30 dan menambah surat-surat pilihan, sementara kelas 5–6 ditargetkan menyelesaikan Juz 30 secara penuh dan mulai menghafal Juz 29.",
+        "Metode yang digunakan mengombinasikan Metode Umi (talaqqi langsung dari guru), Metode Jama'i (hafalan bersama), dan pendekatan Joyful Learning yang menyisipkan permainan dan nyanyian untuk siswa kelas rendah agar proses menghafal terasa menyenangkan.",
+        "\"Al-Qur'an adalah cahaya. Kami ingin setiap anak membawa cahaya itu pulang ke rumah, setiap hari,\" tutur Mudzakkir Walad, S.Pd. Perkembangan hafalan setiap siswa dipantau melalui buku mutaba'ah yang ditandatangani orang tua setiap minggu.",
+      ],
       tanggal:  "28 Apr 2026",
+      penulis:  "Tim Redaksi",
       dibaca:   "312",
-      foto:     "https://picsum.photos/seed/berita3/310/235",
-      href:     "/berita/tahfidz-semester-genap",
+      foto:     "https://picsum.photos/seed/berita3/900/500",
+      fotoAlt:  "Program Tahfidz Joyful Learning",
+      tags:     ["tahfidz", "al-quran", "program-unggulan", "ismuba"],
+      unggulan: true,
+    },
+    {
+      id:       "ppdb-2026-2027-dibuka",
+      kategori: "Pengumuman",
+      judul:    "PPDB Tahun Ajaran 2026/2027 Resmi Dibuka — Kuota Terbatas",
+      ringkasan:"Penerimaan Peserta Didik Baru (PPDB) SD Muhammadiyah 01 Kukusan untuk tahun ajaran 2026/2027 dibuka mulai 20 April 2026. Pendaftaran dapat dilakukan secara online maupun langsung ke sekolah.",
+      konten: [
+        "SD Muhammadiyah 01 Kukusan dengan bangga mengumumkan pembukaan Penerimaan Peserta Didik Baru (PPDB) untuk Tahun Ajaran 2026/2027. Pendaftaran dibuka mulai 20 April 2026 dan akan ditutup ketika kuota terpenuhi.",
+        "Calon peserta didik baru yang akan diterima adalah anak-anak yang lahir pada atau sebelum 1 Juli 2020 (usia minimal 6 tahun saat masuk). Sekolah menyediakan kuota sebanyak 2 rombongan belajar (maksimal 56 siswa) untuk kelas 1.",
+        "Pendaftaran dapat dilakukan melalui dua jalur: (1) Jalur Online melalui tautan yang tersedia di halaman PPDB website ini, atau (2) Jalur Langsung ke kantor Tata Usaha sekolah pada hari dan jam kerja (Senin–Jumat pukul 07.30–14.00 WIB).",
+        "Dokumen yang diperlukan antara lain: fotokopi Akta Kelahiran, fotokopi Kartu Keluarga, pas foto 3×4 sebanyak 2 lembar, dan Surat Keterangan Sehat dari dokter. Biaya pendaftaran: gratis.",
+        "Untuk informasi lebih lanjut, orang tua dapat menghubungi sekolah melalui WhatsApp atau datang langsung. SD Muhammadiyah 01 Kukusan siap menjadi rumah kedua terbaik bagi putra-putri Anda. Mari bergabung bersama kami!",
+      ],
+      tanggal:  "20 Apr 2026",
+      penulis:  "Panitia PPDB",
+      dibaca:   "528",
+      foto:     "https://picsum.photos/seed/berita4/900/500",
+      fotoAlt:  "PPDB SD Muhammadiyah 01 Kukusan 2026/2027",
+      tags:     ["ppdb", "penerimaan-siswa", "pengumuman"],
+      unggulan: false,
+    },
+    {
+      id:       "senam-sehat-hut-ri",
+      kategori: "Kegiatan",
+      judul:    "Semarak HUT RI ke-81: Senam Massal, Lomba, dan Pentas Seni Warnai Sekolah",
+      ringkasan:"Ratusan siswa, guru, dan orang tua memenuhi halaman sekolah dalam peringatan HUT Kemerdekaan RI ke-81 yang meriah dan penuh semangat kebangsaan.",
+      konten: [
+        "Dalam rangka memperingati Hari Ulang Tahun Kemerdekaan Republik Indonesia yang ke-81, SD Muhammadiyah 01 Kukusan menyelenggarakan serangkaian kegiatan bertema \"Nusantara Bersatu\" pada 15–17 Agustus 2025.",
+        "Puncak peringatan pada 17 Agustus dimulai dengan upacara bendera khidmat yang diikuti seluruh warga sekolah. Setelah upacara, kegembiraan meledak dalam senam massal bersama orang tua dan wali murid yang memenuhi lapangan sekolah.",
+        "Berbagai perlombaan tradisional digelar selama dua hari: balap karung, makan kerupuk, tarik tambang, memasukkan pensil ke dalam botol, dan lomba menggambar bertema kemerdekaan. Semua cabang lomba dijuarai oleh siswa dari kelas yang berbeda, menunjukkan pemerataan bakat di setiap jenjang.",
+        "Peringatan ditutup dengan Pentas Seni pada malam 17 Agustus yang menampilkan tari Saman, angklung medley lagu-lagu perjuangan, dan puisi kemerdekaan yang dibawakan siswa kelas 6. Penampilan angklung mendapat aplaus meriah dari ratusan penonton yang hadir.",
+        "\"Cinta tanah air adalah bagian dari iman. Melalui perayaan ini, kami ingin anak-anak merasakan bahwa menjadi Indonesia itu adalah anugerah,\" pungkas Kepala Sekolah Mudzakkir Walad, S.Pd.",
+      ],
+      tanggal:  "17 Agu 2025",
+      penulis:  "Tim Redaksi",
+      dibaca:   "401",
+      foto:     "https://picsum.photos/seed/berita5/900/500",
+      fotoAlt:  "Peringatan HUT RI di SD Muhammadiyah 01 Kukusan",
+      tags:     ["hut-ri", "kemerdekaan", "kegiatan", "pentas-seni"],
+      unggulan: false,
+    },
+    {
+      id:       "akreditasi-a-dipertahankan",
+      kategori: "Prestasi",
+      judul:    "SD Muhammadiyah 01 Kukusan Pertahankan Akreditasi A dari BAN-S/M",
+      ringkasan:"Setelah melalui proses visitasi dan penilaian komprehensif oleh tim BAN-S/M, SD Muhammadiyah 01 Kukusan kembali meraih dan mempertahankan Akreditasi A hingga tahun 2027.",
+      konten: [
+        "Alhamdulillah, SD Muhammadiyah 01 Kukusan resmi mempertahankan predikat Akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M). Penilaian dilakukan melalui visitasi lapangan oleh tim asesor BAN-S/M pada tahun 2022 dan berlaku hingga 2027.",
+        "Predikat Akreditasi A merupakan pengakuan tertinggi atas standar mutu pendidikan yang mencakup delapan komponen: standar isi, proses, kompetensi lulusan, pendidik dan tenaga kependidikan, sarana prasarana, pengelolaan, pembiayaan, dan penilaian pendidikan.",
+        "Keberhasilan ini merupakan buah dari kerja keras seluruh komponen sekolah — kepala sekolah, guru, tenaga kependidikan, komite sekolah, dan dukungan orang tua — dalam menjaga dan meningkatkan kualitas pendidikan secara konsisten.",
+        "\"Akreditasi A bukan tujuan akhir. Ini adalah amanah untuk terus meningkatkan kualitas layanan pendidikan kami. Terima kasih kepada seluruh warga sekolah yang telah berjuang bersama,\" ujar Mudzakkir Walad, S.Pd.",
+        "Ke depan, sekolah berkomitmen untuk terus berinovasi dalam implementasi Kurikulum Merdeka dan penguatan nilai-nilai Al-Islam dan Kemuhammadiyahan, demi mencetak generasi yang cerdas, berakhlak mulia, dan siap menghadapi tantangan global.",
+      ],
+      tanggal:  "5 Mar 2025",
+      penulis:  "Tim Redaksi",
+      dibaca:   "876",
+      foto:     "https://picsum.photos/seed/berita6/900/500",
+      fotoAlt:  "Sertifikat Akreditasi A SD Muhammadiyah 01 Kukusan",
+      tags:     ["akreditasi", "prestasi", "ban-sm", "mutu"],
+      unggulan: false,
     },
   ],
 
