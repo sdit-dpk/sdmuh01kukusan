@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akademik — SD Muhammadiyah 01 Kukusan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    /* ── Tab navigasi Akademik ─────────────────────────────── */
+    .tab-bar {
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+    }
+    .tab-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-bar-inner::-webkit-scrollbar { display: none; }
+    .tab-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 15px 20px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--gray-400);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-link:hover { color: var(--blue-700); }
+    .tab-link.aktif {
+      color: var(--blue-700);
+      border-bottom-color: var(--gold);
+      font-weight: 600;
+    }
+    .tab-link .tab-ikon { font-size: 16px; }
+
+    /* ── Hero banner akademik ──────────────────────────────── */
+    .akademik-hero {
+      background: linear-gradient(135deg, var(--blue-950) 0%, #112a6e 60%, #1a3a8a 100%);
+      padding: 52px 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .akademik-hero::before {
+      content: "";
+      position: absolute;
+      top: -40px; right: -80px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,154,24,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .akademik-hero::after {
+      content: "";
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,112,216,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .akademik-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .akademik-hero-tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .akademik-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 700; color: white;
+      line-height: 1.2; margin: 0 0 14px;
+    }
+    .akademik-hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,.72);
+      max-width: 580px; margin: 0 0 28px;
+      line-height: 1.7;
+    }
+    .hero-stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hero-stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 13px;
+      color: white;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       BAGIAN A — INTRAKURIKULER
+       ══════════════════════════════════════════════════════════ */
+
+    /* Mapel grid */
+    .mapel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .mapel-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 18px 18px 16px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .mapel-card:hover {
+      box-shadow: 0 4px 20px rgba(13,49,114,.1);
+      transform: translateY(-2px);
+    }
+    .mapel-card.khusus {
+      border-color: var(--blue-200);
+      background: var(--blue-50);
+    }
+    .mapel-ikon { font-size: 24px; margin-bottom: 10px; display: block; }
+    .mapel-card h4 {
+      font-family: var(--serif);
+      font-size: 15.5px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 5px;
+    }
+    .mapel-card p {
+      font-size: 12.5px;
+      color: var(--gray-400);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .mapel-badge {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase;
+      background: var(--gold);
+      color: white;
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-bottom: 8px;
+    }
+
+    /* Tabel alokasi waktu */
+    .alokasi-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+    }
+    .alokasi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      min-width: 680px;
+    }
+    .alokasi-table thead {
+      background: var(--blue-900);
+      color: white;
+    }
+    .alokasi-table thead th {
+      padding: 12px 14px;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 14px;
+      text-align: left;
+      border: none;
+    }
+    .alokasi-table thead th:not(:first-child) { text-align: center; }
+    .alokasi-table tbody tr {
+      border-bottom: 1px solid var(--gray-200);
+      transition: background .15s;
+    }
+    .alokasi-table tbody tr:last-child { border-bottom: none; }
+    .alokasi-table tbody tr:hover { background: var(--blue-50); }
+    .alokasi-table td {
+      padding: 11px 14px;
+      color: var(--gray-600);
+    }
+    .alokasi-table td:not(:first-child) { text-align: center; color: var(--blue-900); font-weight: 600; }
+    .alokasi-table .row-khusus td { background: #FEF9C3; }
+    .alokasi-table .row-khusus td:first-child { color: #713F12; font-weight: 600; }
+    .alokasi-table tfoot tr { background: var(--blue-50); }
+    .alokasi-table tfoot td {
+      font-weight: 700;
+      color: var(--blue-900);
+      font-size: 13px;
+      border-top: 2px solid var(--blue-200);
+    }
+
+    /* Pendekatan pembelajaran */
+    .pendekatan-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 640px) { .pendekatan-grid { grid-template-columns: 1fr; } }
+    .pendekatan-card {
+      border-radius: var(--radius);
+      padding: 22px 22px 20px;
+      border: 1px solid var(--gray-200);
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .pendekatan-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--blue-700);
+    }
+    .pendekatan-card h4 {
+      font-family: var(--serif);
+      font-size: 17px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 8px;
+    }
+    .pendekatan-card p {
+      font-size: 13.5px;
+      color: var(--gray-500);
+      line-height: 1.65; margin: 0;
+    }
+    .pendekatan-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--blue-700); margin-bottom: 6px;
+      display: block;
+    }
+
+    /* KKA box */
+    .kka-box {
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-900) 100%);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 640px) { .kka-box { grid-template-columns: 1fr; } }
+    .kka-box h3 {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 700;
+      color: white; margin: 0 0 10px;
+    }
+    .kka-box p { font-size: 14px; color: rgba(255,255,255,.72); margin: 0; line-height: 1.7; }
+    .kka-badge-list { display: flex; flex-direction: column; gap: 8px; }
+    .kka-badge {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 8px; padding: 10px 16px;
+      font-size: 13px; color: white; white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       BAGIAN B — KOKURIKULER
+       ══════════════════════════════════════════════════════════ */
+
+    .g7-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px;
+    }
+    .g7-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: box-shadow .2s;
+    }
+    .g7-card:hover { box-shadow: 0 4px 20px rgba(13,49,114,.1); }
+    .g7-num {
+      width: 36px; height: 36px;
+      background: var(--blue-700);
+      color: white;
+      border-radius: 50%;
+      font-size: 15px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px; flex-shrink: 0;
+    }
+    .g7-card h4 {
+      font-family: var(--serif);
+      font-size: 16.5px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 6px;
+    }
+    .g7-card p {
+      font-size: 13.5px;
+      color: var(--gray-500); line-height: 1.6; margin: 0;
+    }
+    .g7-integrasi {
+      font-size: 12px;
+      color: var(--blue-700);
+      font-weight: 500;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--blue-100);
+    }
+
+    .jadwal-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+    }
+    .jadwal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      min-width: 560px;
+    }
+    .jadwal-table thead {
+      background: var(--blue-900);
+      color: white;
+    }
+    .jadwal-table thead th {
+      padding: 12px 16px;
+      font-family: var(--serif);
+      font-size: 14px; font-weight: 700;
+      text-align: left; border: none;
+    }
+    .jadwal-table tbody tr { border-bottom: 1px solid var(--gray-200); transition: background .15s; }
+    .jadwal-table tbody tr:last-child { border-bottom: none; }
+    .jadwal-table tbody tr:hover { background: var(--blue-50); }
+    .jadwal-table td { padding: 11px 16px; color: var(--gray-600); }
+    .jadwal-table td:first-child { font-weight: 600; color: var(--blue-900); }
+
+    /* ══════════════════════════════════════════════════════════
+       BAGIAN C — EKSTRAKURIKULER
+       ══════════════════════════════════════════════════════════ */
+
+    .ekskul-category {
+      margin-bottom: 48px;
+    }
+    .ekskul-category-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--blue-100);
+    }
+    .ekskul-category-ikon {
+      width: 42px; height: 42px;
+      background: var(--blue-700);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .ekskul-category-head h3 {
+      font-family: var(--serif);
+      font-size: 21px; font-weight: 700;
+      color: var(--blue-950); margin: 0 0 2px;
+    }
+    .ekskul-category-head p {
+      font-size: 13px; color: var(--gray-400); margin: 0;
+    }
+
+    .ekskul-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .ekskul-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .ekskul-card:hover {
+      box-shadow: 0 6px 28px rgba(13,49,114,.12);
+      transform: translateY(-2px);
+    }
+    .ekskul-card.wajib {
+      border-color: var(--gold);
+      border-width: 2px;
+    }
+    .ekskul-card-head {
+      background: var(--blue-900);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ekskul-card.wajib .ekskul-card-head { background: linear-gradient(90deg, #7a5c00, #a07c10); }
+    .ekskul-card-head .ek-ikon { font-size: 24px; flex-shrink: 0; }
+    .ekskul-card-head h4 {
+      font-family: var(--serif);
+      font-size: 17px; font-weight: 700;
+      color: white; margin: 0;
+    }
+    .ekskul-wajib-tag {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: rgba(255,255,255,.7); margin-top: 2px;
+    }
+    .ekskul-card-body { padding: 18px 20px; }
+    .ekskul-card-body p {
+      font-size: 13.5px; color: var(--gray-500);
+      line-height: 1.65; margin: 0 0 14px;
+    }
+    .ekskul-meta {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .ekskul-meta-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--blue-700);
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: 20px; padding: 4px 10px;
+    }
+
+    .program-list {
+      list-style: none; padding: 0; margin: 0 0 14px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .program-list li {
+      font-size: 13px; color: var(--gray-600);
+      padding-left: 16px; position: relative; line-height: 1.5;
+    }
+    .program-list li::before {
+      content: "›";
+      position: absolute; left: 0;
+      color: var(--blue-700); font-weight: 700;
+    }
+
+    /* Wajib banner */
+    .wajib-banner {
+      background: linear-gradient(135deg, #7a5c00, #b8860b);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .wajib-banner-ikon { font-size: 48px; flex-shrink: 0; }
+    .wajib-banner h3 {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 700;
+      color: white; margin: 0 0 6px;
+    }
+    .wajib-banner p { font-size: 14px; color: rgba(255,255,255,.8); margin: 0; line-height: 1.6; }
+
+    /* Section sticky anchor */
+    .section-anchor { scroll-margin-top: 120px; }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .kka-box { padding: 24px 20px; }
+      .wajib-banner { flex-direction: column; text-align: center; gap: 16px; }
+    }
+  </style>
+</head>
+
+<body data-page="akademik">
+
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left" id="topbar-kontak"></div>
+      <div class="topbar-right" id="topbar-ta"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark">
+          <svg viewBox="0 0 40 40">
+            <text x="20" y="28" text-anchor="middle"
+              font-family="Georgia,serif" font-size="18"
+              font-weight="bold" fill="white">SD</text>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <strong id="header-nama"></strong>
+          <small  id="header-tagline"></small>
+        </div>
+      </a>
+      <nav id="nav-menu" aria-label="Navigasi utama"></nav>
+      <button class="hamburger" id="hamburger"
+        aria-label="Buka/tutup menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- Tab bar navigasi -->
+  <nav class="tab-bar" aria-label="Bagian Akademik">
+    <div class="tab-bar-inner">
+      <a class="tab-link aktif" href="#sec-intra">
+        <span class="tab-ikon">📚</span> Intrakurikuler
+      </a>
+      <a class="tab-link" href="#sec-koku">
+        <span class="tab-ikon">🌱</span> Kokurikuler
+      </a>
+      <a class="tab-link" href="#sec-ekskul">
+        <span class="tab-ikon">⭐</span> Ekstrakurikuler
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="akademik-hero">
+    <div class="akademik-hero-inner">
+      <div class="akademik-hero-tag">✦ Pengorganisasian Pembelajaran</div>
+      <h1>Akademik &amp;<br>Pengembangan Diri</h1>
+      <p>Kurikulum Merdeka dengan pendekatan Pembelajaran Mendalam — mengintegrasikan muatan nasional, nilai Al-Islam &amp; Kemuhammadiyahan, serta Profil Pelajar Pancasila secara holistik.</p>
+      <div class="hero-stat-row">
+        <div class="hero-stat-pill">📖 Kurikulum Merdeka · Pembelajaran Mendalam</div>
+        <div class="hero-stat-pill">🕌 ISMUBA Terintegrasi</div>
+        <div class="hero-stat-pill">🏅 Sekolah Penggerak 2022</div>
+        <div class="hero-stat-pill">💻 Koding &amp; KA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;color:var(--gray-400);">
+    <div class="container" style="display:flex;gap:6px;align-items:center;">
+      <a href="../" style="color:var(--blue-700);">Beranda</a>
+      <span>›</span>
+      <span style="color:var(--gray-600);">Akademik</span>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KONTEN UTAMA
+       ══════════════════════════════════════════════════════════ -->
+  <main id="page-content">
+
+    <!-- ════════════════════════════════════════════════════
+         A. INTRAKURIKULER
+         ════════════════════════════════════════════════════ -->
+    <section class="section section-anchor" id="sec-intra">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-tag">Kegiatan Tatap Muka</div>
+          <h2 class="section-heading">Intrakurikuler</h2>
+          <div class="section-rule" style="margin-bottom:10px;"></div>
+          <p style="font-size:15px;color:var(--gray-500);max-width:680px;line-height:1.7;margin:0;">
+            Pembelajaran pokok yang mencakup seluruh mata pelajaran nasional, muatan lokal,
+            dan muatan kekhasan Muhammadiyah (ISMUBA). Mengacu pada Kurikulum Merdeka
+            dengan pendekatan Pembelajaran Mendalam: <em>berkesadaran, bermakna, dan menggembirakan</em>.
+          </p>
+        </div>
+
+        <!-- Mata pelajaran -->
+        <h3 style="font-family:var(--serif);font-size:20px;color:var(--blue-950);margin:0 0 16px;">
+          Mata Pelajaran
+        </h3>
+        <div class="mapel-grid" style="margin-bottom:40px;">
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🕌</span>
+            <h4>Pendidikan Agama Islam &amp; Budi Pekerti</h4>
+            <p>Fondasi iman, ibadah, dan akhlak mulia</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🇮🇩</span>
+            <h4>Pendidikan Pancasila</h4>
+            <p>Karakter kebangsaan dan kewarganegaraan</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">📝</span>
+            <h4>Bahasa Indonesia</h4>
+            <p>Literasi, komunikasi, dan kemampuan berbahasa</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🔢</span>
+            <h4>Matematika</h4>
+            <p>Numerasi, logika, dan pemecahan masalah</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🔬</span>
+            <h4>IPAS</h4>
+            <p>Ilmu Pengetahuan Alam &amp; Sosial (Fase B–C)</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🎨</span>
+            <h4>Seni Budaya</h4>
+            <p>Seni Musik, Rupa, Teater, atau Tari (pilihan)</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">⚽</span>
+            <h4>PJOK</h4>
+            <p>Pendidikan Jasmani, Olahraga &amp; Kesehatan</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🌐</span>
+            <h4>Bahasa Inggris</h4>
+            <p>Komunikasi global dan wawasan internasional</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">🗣️</span>
+            <h4>Bahasa &amp; Sastra Sunda</h4>
+            <p>Muatan lokal pelestarian budaya Jawa Barat</p>
+          </div>
+
+          <div class="mapel-card">
+            <span class="mapel-ikon">💻</span>
+            <h4>Informatika</h4>
+            <p>Literasi digital dan pemikiran komputasional</p>
+          </div>
+
+          <div class="mapel-card khusus">
+            <span class="mapel-badge">Kekhasan Muhammadiyah</span>
+            <h4>Kemuhammadiyahan</h4>
+            <p>Sejarah, nilai, dan gerakan Muhammadiyah</p>
+          </div>
+
+          <div class="mapel-card khusus">
+            <span class="mapel-badge">Kekhasan Muhammadiyah</span>
+            <h4>Bahasa Arab</h4>
+            <p>Bahasa Al-Qur'an dan khazanah Islam</p>
+          </div>
+
+          <div class="mapel-card khusus" style="border-color:#4ade80;background:#f0fdf4;">
+            <span class="mapel-badge" style="background:#16a34a;">Program Unggulan</span>
+            <h4>Tahsin &amp; Tahfidz Al-Qur'an</h4>
+            <p>216 JP/tahun · Target Juz 30 penuh</p>
+          </div>
+
+        </div>
+
+        <!-- Alokasi waktu -->
+        <h3 style="font-family:var(--serif);font-size:20px;color:var(--blue-950);margin:0 0 14px;">
+          Alokasi Waktu Pembelajaran
+          <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--gray-400);margin-left:10px;">
+            Intrakurikuler + Kokurikuler · JP = Jam Pelajaran per Tahun
+          </span>
+        </h3>
+        <div class="alokasi-table-wrap" style="margin-bottom:40px;">
+          <table class="alokasi-table">
+            <thead>
+              <tr>
+                <th style="min-width:210px;">Mata Pelajaran</th>
+                <th>Kelas 1</th>
+                <th>Kelas 2</th>
+                <th>Kelas 3–6</th>
+                <th>Kokurikuler<br><span style="font-weight:400;font-size:12px;">K1–K6</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pendidikan Agama Islam &amp; Budi Pekerti</td><td>108</td><td>108</td><td>108</td><td>36</td></tr>
+              <tr><td>Pendidikan Pancasila</td><td>144</td><td>144</td><td>144</td><td>36</td></tr>
+              <tr><td>Bahasa Indonesia</td><td>252</td><td>288</td><td>216</td><td>36</td></tr>
+              <tr><td>Matematika</td><td>144</td><td>180</td><td>180</td><td>36</td></tr>
+              <tr><td>IPAS <span style="color:var(--gray-400);font-size:12px;">(Fase B–C)</span></td><td>—</td><td>—</td><td>180</td><td>36</td></tr>
+              <tr><td>Seni Budaya</td><td>108</td><td>108</td><td>108</td><td>36</td></tr>
+              <tr><td>PJOK</td><td>108</td><td>108</td><td>108</td><td>36</td></tr>
+              <tr><td>Bahasa &amp; Sastra Sunda</td><td>72</td><td>72</td><td>72</td><td>—</td></tr>
+              <tr><td>Bahasa Inggris</td><td>72</td><td>72</td><td>72</td><td>—</td></tr>
+              <tr><td>Informatika</td><td>—</td><td>—</td><td>72</td><td>—</td></tr>
+              <tr class="row-khusus"><td>Kemuhammadiyahan ★</td><td>—</td><td>—</td><td>36</td><td>36</td></tr>
+              <tr class="row-khusus"><td>Bahasa Arab ★</td><td>—</td><td>—</td><td>36</td><td>36</td></tr>
+              <tr class="row-khusus"><td>Tahsin &amp; Tahfidz ★</td><td>216</td><td>216</td><td>216</td><td>—</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>★ Muatan Kekhasan Muhammadiyah</td>
+                <td colspan="4" style="color:var(--gray-400);font-size:12px;font-weight:400;">
+                  Sumber: KSP SD Muhammadiyah 01 Kukusan TP 2025/2026, Tabel 6
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Pendekatan pembelajaran -->
+        <h3 style="font-family:var(--serif);font-size:20px;color:var(--blue-950);margin:0 0 16px;">
+          Model &amp; Pendekatan Pembelajaran
+        </h3>
+        <div class="pendekatan-grid" style="margin-bottom:40px;">
+          <div class="pendekatan-card">
+            <span class="pendekatan-label">PBL</span>
+            <h4>Problem Based Learning</h4>
+            <p>Siswa menghadapi permasalahan nyata untuk mengembangkan kemampuan berpikir kritis dan keterampilan pemecahan masalah secara kontekstual.</p>
+          </div>
+          <div class="pendekatan-card">
+            <span class="pendekatan-label">PJBL</span>
+            <h4>Project Based Learning</h4>
+            <p>Proyek kompleks dan bermakna yang mengembangkan pemahaman mendalam tentang konten sekaligus keterampilan abad 21.</p>
+          </div>
+          <div class="pendekatan-card">
+            <span class="pendekatan-label">DL</span>
+            <h4>Discovery Learning</h4>
+            <p>Siswa menemukan sendiri konsep dan prinsip melalui pengalaman langsung dan eksperimen yang terstruktur.</p>
+          </div>
+          <div class="pendekatan-card">
+            <span class="pendekatan-label">IBL</span>
+            <h4>Inquiry Based Learning</h4>
+            <p>Pembelajaran berpusat pada pertanyaan dan investigasi — siswa meneliti isu nyata untuk membangun pengetahuan yang bermakna.</p>
+          </div>
+        </div>
+
+        <!-- KKA Box -->
+        <div class="kka-box">
+          <div>
+            <h3>💻 Koding &amp; Kecerdasan Artifisial (KKA)</h3>
+            <p>
+              Berdasarkan Kepdirjend GTK No. 5/B/HK.03.01/2025, SD Muhammadiyah 01 Kukusan
+              mengintegrasikan pembelajaran Koding dan KA secara lintas mata pelajaran — bukan sebagai
+              mata pelajaran terpisah. Computational thinking ditanamkan sejak dini melalui konteks
+              yang familiar bagi siswa.
+            </p>
+          </div>
+          <div class="kka-badge-list">
+            <div class="kka-badge">🔢 Matematika — pola &amp; algoritma</div>
+            <div class="kka-badge">🔬 IPAS — sistem sensing makhluk hidup</div>
+            <div class="kka-badge">📝 B. Indonesia — cerita berurutan</div>
+            <div class="kka-badge">🎨 Seni Budaya — desain grafis digital</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         B. KOKURIKULER
+         ════════════════════════════════════════════════════ -->
+    <section class="section section-alt section-anchor" id="sec-koku">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-tag">Penguatan &amp; Projek</div>
+          <h2 class="section-heading">Kokurikuler</h2>
+          <div class="section-rule" style="margin-bottom:10px;"></div>
+          <p style="font-size:15px;color:var(--gray-500);max-width:680px;line-height:1.7;margin:0;">
+            Kegiatan yang memperdalam dan memperkuat kompetensi intrakurikuler melalui projek
+            lintas ilmu, pembiasaan karakter, dan program <em>7 Kebiasaan Anak Indonesia Hebat</em>
+            (G7KAIH) yang diintegrasikan dengan nilai Al-Islam &amp; Kemuhammadiyahan.
+          </p>
+        </div>
+
+        <!-- G7KAIH -->
+        <h3 style="font-family:var(--serif);font-size:20px;color:var(--blue-950);margin:0 0 6px;">
+          7 Kebiasaan Anak Indonesia Hebat (G7KAIH)
+        </h3>
+        <p style="font-size:13.5px;color:var(--gray-400);margin:0 0 20px;">
+          Program nasional Kemendikbudristek · dilaksanakan 10–15 menit setiap hari · seluruh kelas 1–6
+        </p>
+        <div class="g7-grid" style="margin-bottom:48px;">
+
+          <div class="g7-card">
+            <div class="g7-num">1</div>
+            <h4>Bangun Pagi &amp; Datang Tepat Waktu</h4>
+            <p>Membangun kedisiplinan dan tanggung jawab. Guru piket menyambut siswa di gerbang setiap pagi.</p>
+            <div class="g7-integrasi">🕌 Dikaitkan dengan hadis keberkahan waktu pagi dalam Islam</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">2</div>
+            <h4>Beribadah</h4>
+            <p>Sholat Dhuha &amp; Dzuhur berjamaah, tadarus Al-Qur'an 10 menit sebelum KBM, dan mutaba'ah harian.</p>
+            <div class="g7-integrasi">🕌 Sesuai tuntunan tarjih Muhammadiyah</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">3</div>
+            <h4>Berolahraga</h4>
+            <p>Senam pagi bersama setiap Jumat, aktivitas fisik ringan di sela pelajaran, dan pemantauan tumbuh kembang berkala.</p>
+            <div class="g7-integrasi">🕌 "Mukmin yang kuat lebih dicintai Allah" (HR. Muslim)</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">4</div>
+            <h4>Makan Sehat &amp; Bergizi</h4>
+            <p>Kantin sekolah menyajikan makanan halal dan bergizi. Program "Bekal Sehat" bersama orang tua.</p>
+            <div class="g7-integrasi">🕌 Konsep <em>halalan thayyiban</em> dalam pemilihan makanan</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">5</div>
+            <h4>Gemar Belajar</h4>
+            <p>Morning Reading 15 menit sebelum KBM, sudut baca di setiap kelas, dan jurnal baca mingguan.</p>
+            <div class="g7-integrasi">🕌 Semangat <em>Iqra'</em> — wahyu pertama dalam Islam</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">6</div>
+            <h4>Bermasyarakat</h4>
+            <p>Jumat Bersih, proyek sosial kelas, dan program "Berbagi Berkah" bersama komunitas sekitar.</p>
+            <div class="g7-integrasi">🕌 Nilai <em>ukhuwah</em> dan <em>ta'awun</em> dalam Islam</div>
+          </div>
+
+          <div class="g7-card">
+            <div class="g7-num">7</div>
+            <h4>Tidur Cepat</h4>
+            <p>Edukasi orang tua tentang sleep hygiene, kartu monitoring waktu tidur, dan adab tidur sesuai sunnah.</p>
+            <div class="g7-integrasi">🕌 Menjaga kesehatan sebagai amanah dari Allah SWT</div>
+          </div>
+
+        </div>
+
+        <!-- Jumat Berkah & Bersih -->
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:28px 32px;margin-bottom:48px;">
+          <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:260px;">
+              <div class="section-tag" style="margin-bottom:8px;">Program Unggulan G7KAIH</div>
+              <h3 style="font-family:var(--serif);font-size:21px;color:var(--blue-950);margin:0 0 10px;">
+                🌟 Jumat Berkah dan Bersih
+              </h3>
+              <p style="font-size:14px;color:var(--gray-500);line-height:1.7;margin:0;">
+                Program mingguan setiap Jumat pagi selama 60 menit untuk seluruh kelas 1–6.
+                Mengintegrasikan nilai <em>thaharah</em>, <em>ukhuwah islamiyah</em>,
+                <em>amar ma'ruf nahi munkar</em>, dan semangat <em>tajdid</em> Muhammadiyah
+                dalam kegiatan nyata.
+              </p>
+            </div>
+            <div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--gray-600);">
+                <span style="background:var(--blue-700);color:white;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;">07.00–07.15</span>
+                Sholat Dhuha Berjamaah + dzikir &amp; motivasi islami
+              </div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--gray-600);">
+                <span style="background:var(--blue-700);color:white;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;">07.15–07.30</span>
+                Sarapan sehat bersama + adab makan sunnah
+              </div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--gray-600);">
+                <span style="background:var(--blue-700);color:white;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;">07.30–08.00</span>
+                Gotong royong membersihkan lingkungan sekolah
+              </div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--gray-600);">
+                <span style="background:var(--blue-700);color:white;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;">08.00–08.15</span>
+                Refleksi bersama &amp; penguatan nilai islami
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jadwal kokurikuler -->
+        <h3 style="font-family:var(--serif);font-size:20px;color:var(--blue-950);margin:0 0 14px;">
+          Jadwal Pelaksanaan Kokurikuler
+        </h3>
+        <div class="jadwal-table-wrap">
+          <table class="jadwal-table">
+            <thead>
+              <tr>
+                <th>Hari / Waktu</th>
+                <th>Kegiatan</th>
+                <th>Penanggung Jawab</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Setiap hari · 06.00–06.30</td>
+                <td>Salam dan Senyum Pagi (pembiasaan)</td>
+                <td>Semua Guru</td>
+              </tr>
+              <tr>
+                <td>Selasa–Kamis · 07.00–07.30</td>
+                <td>Tahfidz Joyful Learning</td>
+                <td>Guru Agama</td>
+              </tr>
+              <tr>
+                <td>Jumat · 07.00–08.00</td>
+                <td>Jumat Berkah dan Bersih (G7KAIH)</td>
+                <td>Semua Guru</td>
+              </tr>
+              <tr>
+                <td>Senin · 14.00–15.00</td>
+                <td>Muhammadiyah Young Scientist</td>
+                <td>Guru IPAS</td>
+              </tr>
+              <tr>
+                <td>Sesuai jadwal projek</td>
+                <td>Galeri Keindahan Kelas · Hari Inspirasi G7KAIH · Sudut Sehatku</td>
+                <td>Semua Guru</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         C. EKSTRAKURIKULER
+         ════════════════════════════════════════════════════ -->
+    <section class="section section-anchor" id="sec-ekskul">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-tag">Pengembangan Minat &amp; Bakat</div>
+          <h2 class="section-heading">Ekstrakurikuler</h2>
+          <div class="section-rule" style="margin-bottom:10px;"></div>
+          <p style="font-size:15px;color:var(--gray-500);max-width:680px;line-height:1.7;margin:0;">
+            Program ekstrakurikuler dirancang komprehensif untuk mengakomodasi pengembangan
+            potensi akademik, non-akademik, karakter, dan nilai-nilai keislaman — 2 jam pelajaran
+            per minggu, dilaksanakan siang atau sore hari.
+          </p>
+        </div>
+
+        <!-- Wajib -->
+        <div class="wajib-banner">
+          <div class="wajib-banner-ikon">⚜️</div>
+          <div>
+            <h3>Ekstrakurikuler Wajib — Hizbul Wathan (HW)</h3>
+            <p>
+              Gerakan kepanduan dalam persyarikatan Muhammadiyah. Wajib diikuti oleh <strong>seluruh siswa kelas 1–6</strong>,
+              dilaksanakan dalam tiga format: <strong>Reguler</strong> (latihan mingguan) ·
+              <strong>Blok</strong> (kemah &amp; perkemahan) · <strong>Aktualisasi</strong>
+              (penerapan nilai kepanduan dalam kehidupan sehari-hari).
+              Membentuk aqidah, mental, fisik, dan akhlak mulia sesuai prinsip Muhammadiyah.
+            </p>
+          </div>
+        </div>
+
+        <!-- Krida -->
+        <div class="ekskul-category">
+          <div class="ekskul-category-head">
+            <div class="ekskul-category-ikon">🎖️</div>
+            <div>
+              <h3>Ekstrakurikuler Berbasis Krida</h3>
+              <p>Kepemimpinan, kedisiplinan, dan karakter · Kelas 3–6</p>
+            </div>
+          </div>
+          <div class="ekskul-grid">
+
+            <div class="ekskul-card wajib">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">⚜️</span>
+                <div>
+                  <h4>Hizbul Wathan</h4>
+                  <div class="ekskul-wajib-tag">EKSTRAKURIKULER WAJIB</div>
+                </div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Kepanduan Muhammadiyah untuk membentuk aqidah, mental, fisik, dan akhlak mulia. Mencakup latihan kepanduan, perkemahan, dan bakti sosial.</p>
+                <ul class="program-list">
+                  <li>Pembinaan rutin mingguan (kepanduan &amp; keagamaan)</li>
+                  <li>Perkemahan berkala — aplikasi keterampilan nyata</li>
+                  <li>Lomba ketangkasan &amp; bakti sosial</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                  <span class="ekskul-meta-pill">🏛️ PDM &amp; Wakepsek Kesiswaan</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">🚩</span>
+                <div><h4>Paskibra</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Pasukan Pengibar Bendera untuk mengembangkan kedisiplinan, patriotisme, dan keterampilan baris-berbaris yang dilandasi nilai islami.</p>
+                <ul class="program-list">
+                  <li>Latihan baris-berbaris &amp; formasi khusus</li>
+                  <li>Upacara bendera dan kegiatan kenegaraan</li>
+                  <li>Latihan kepemimpinan &amp; manajemen kelompok</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 4–6</span>
+                  <span class="ekskul-meta-pill">🏋️ Pelatih &amp; Wakepsek</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Olah Minat & Bakat -->
+        <div class="ekskul-category">
+          <div class="ekskul-category-head">
+            <div class="ekskul-category-ikon">🏆</div>
+            <div>
+              <h3>Ekstrakurikuler Olah Minat &amp; Bakat</h3>
+              <p>Akademik, olahraga, dan bela diri islami</p>
+            </div>
+          </div>
+          <div class="ekskul-grid">
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">📚</span>
+                <div><h4>Study Club</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Membudayakan literasi dan numerasi melalui kegiatan pembelajaran interaktif di luar jam reguler.</p>
+                <ul class="program-list">
+                  <li>Reading Circle — diskusi buku &amp; pemahaman bacaan</li>
+                  <li>Math Fun — matematika kontekstual dan menyenangkan</li>
+                  <li>Young Writer &amp; Science Exploration</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 4–5</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">🏐</span>
+                <div><h4>Bola Voli</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Mengembangkan keterampilan bermain voli, sportivitas, dan kerja sama tim. Berpartisipasi dalam kompetisi antar sekolah.</p>
+                <ul class="program-list">
+                  <li>Latihan teknik dasar (passing, service, smash)</li>
+                  <li>Taktik permainan &amp; latihan tanding internal</li>
+                  <li>Kompetisi tingkat kecamatan/kota</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 3–6</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">🥋</span>
+                <div><h4>Tapak Suci</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Perguruan seni bela diri pencak silat di bawah naungan Muhammadiyah — tangguh, disiplin, dan berakhlak mulia.</p>
+                <ul class="program-list">
+                  <li>Jurus dasar &amp; aplikasi bela diri islami</li>
+                  <li>Pembinaan mental &amp; karakter</li>
+                  <li>Ujian kenaikan tingkat sabuk</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                  <span class="ekskul-meta-pill">🏛️ PDM</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">🌍</span>
+                <div><h4>Bahasa Inggris</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Memperkuat keterampilan berbahasa Inggris untuk komunikasi global — interaktif dan menyenangkan.</p>
+                <ul class="program-list">
+                  <li>English Fun Club &amp; Conversation Club</li>
+                  <li>Storytelling &amp; English Performance</li>
+                  <li>English Day — komunikasi full English</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">⚽</span>
+                <div><h4>Futsal</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Mengembangkan keterampilan futsal, menjaga kesehatan, membangun disiplin dan kerja sama tim.</p>
+                <ul class="program-list">
+                  <li>Teknik dasar, latihan fisik &amp; taktik permainan</li>
+                  <li>Latihan tanding internal &amp; kompetisi</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Seni -->
+        <div class="ekskul-category">
+          <div class="ekskul-category-head">
+            <div class="ekskul-category-ikon">🎭</div>
+            <div>
+              <h3>Ekstrakurikuler Berbasis Seni</h3>
+              <p>Apresiasi seni &amp; budaya lokal Jawa Barat</p>
+            </div>
+          </div>
+          <div class="ekskul-grid">
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">💃</span>
+                <div><h4>Seni Tari</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Mengembangkan apresiasi tari tradisional &amp; kreasi, khususnya tari daerah Jawa Barat, dengan kostum yang sesuai nilai islami.</p>
+                <ul class="program-list">
+                  <li>Teknik dasar &amp; tari tradisional Jawa Barat</li>
+                  <li>Tari kreasi — pengembangan gerak inovatif</li>
+                  <li>Pentas seni sekolah &amp; eksternal</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ekskul-card">
+              <div class="ekskul-card-head">
+                <span class="ek-ikon">🎵</span>
+                <div><h4>Angklung</h4></div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Mengenalkan dan mengembangkan keterampilan bermain angklung — warisan budaya Jawa Barat — dalam ensemble yang harmonis.</p>
+                <ul class="program-list">
+                  <li>Sejarah, filosofi &amp; teknik bermain angklung</li>
+                  <li>Latihan ensemble &amp; repertoar beragam</li>
+                  <li>Penampilan di berbagai acara sekolah</li>
+                </ul>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Keagamaan -->
+        <div class="ekskul-category" style="margin-bottom:0;">
+          <div class="ekskul-category-head">
+            <div class="ekskul-category-ikon">🕌</div>
+            <div>
+              <h3>Ekstrakurikuler Berbasis Keagamaan</h3>
+              <p>Pendalaman Al-Qur'an dan nilai-nilai Islam</p>
+            </div>
+          </div>
+          <div class="ekskul-grid">
+
+            <div class="ekskul-card" style="border-color:#4ade80;border-width:2px;">
+              <div class="ekskul-card-head" style="background:linear-gradient(90deg,#14532d,#166534);">
+                <span class="ek-ikon">📖</span>
+                <div>
+                  <h4>Tahfidz Al-Qur'an</h4>
+                  <div class="ekskul-wajib-tag">PROGRAM UNGGULAN</div>
+                </div>
+              </div>
+              <div class="ekskul-card-body">
+                <p>Program unggulan membina hafalan, pemahaman, dan menjaga kualitas bacaan Al-Qur'an dengan target Juz 30 penuh.</p>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+                  <div style="background:var(--blue-50);border-radius:6px;padding:10px;font-size:12.5px;">
+                    <div style="font-weight:700;color:var(--blue-900);margin-bottom:4px;">Kelas 1–2</div>
+                    <div style="color:var(--gray-500);">Surat-surat pendek Juz 30 (An-Nas → Ad-Dhuha)</div>
+                  </div>
+                  <div style="background:var(--blue-50);border-radius:6px;padding:10px;font-size:12.5px;">
+                    <div style="font-weight:700;color:var(--blue-900);margin-bottom:4px;">Kelas 3–4</div>
+                    <div style="color:var(--gray-500);">Lanjutan Juz 30 + surat-surat pilihan</div>
+                  </div>
+                  <div style="background:var(--blue-50);border-radius:6px;padding:10px;font-size:12.5px;grid-column:1/-1;">
+                    <div style="font-weight:700;color:var(--blue-900);margin-bottom:4px;">Kelas 5–6</div>
+                    <div style="color:var(--gray-500);">Selesaikan Juz 30 + mulai Juz 29 atau surat pilihan lainnya</div>
+                  </div>
+                </div>
+
+                <div style="font-size:12px;color:var(--gray-400);margin-bottom:10px;">
+                  <strong style="color:var(--blue-700);">Metode:</strong>
+                  Umi · Sima'i · Jama'i · Peer Teaching · Gambar &amp; Kisah
+                </div>
+                <div class="ekskul-meta">
+                  <span class="ekskul-meta-pill">👥 Kelas 1–6</span>
+                  <span class="ekskul-meta-pill">🎯 Target: Juz 30 penuh</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-mark">
+              <svg viewBox="0 0 40 40">
+                <text x="20" y="28" text-anchor="middle"
+                  font-family="Georgia,serif" font-size="18"
+                  font-weight="bold" fill="white">SD</text>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <strong id="footer-nama"></strong>
+              <small  id="footer-akreditasi"></small>
+            </div>
+          </div>
+          <p id="footer-deskripsi"></p>
+        </div>
+        <div class="footer-col">
+          <h5>Tautan Cepat</h5>
+          <ul id="footer-links-utama"></ul>
+        </div>
+        <div class="footer-col">
+          <h5>Portal</h5>
+          <ul id="footer-links-portal"></ul>
+        </div>
+        <div class="footer-col">
+          <h5>Kontak Kami</h5>
+          <div class="footer-contact" id="footer-kontak"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p id="footer-copy"></p>
+        <p>
+          <a href="kebijakan-privasi.html">Kebijakan Privasi</a>
+          &nbsp;&middot;&nbsp;
+          <a href="../sitemap.xml">Sitemap</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+    /* Tab aktif berdasarkan hash */
+    (function () {
+      const tabs = document.querySelectorAll('.tab-link');
+      function updateTab () {
+        const hash = window.location.hash || '#sec-intra';
+        tabs.forEach(t => {
+          t.classList.toggle('aktif', t.getAttribute('href') === hash);
+        });
+      }
+      window.addEventListener('hashchange', updateTab);
+      updateTab();
+    })();
+  </script>
+
+</body>
+</html>
