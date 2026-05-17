@@ -792,4 +792,133 @@ const DATA = {
     },
   ],
 
+  // ══════════════════════════════════════════════════════════════
+  //  STRUKTUR ORGANISASI  (pages/struktur-organisasi.html)
+  //  ⚠ Ganti nama & jabatan dengan data resmi sekolah
+  // ══════════════════════════════════════════════════════════════
+  strukturOrganisasi: {
+    komite: [
+      { jabatan: "Ketua Komite",  nama: "H. Bambang Sutrisno, S.E." },
+      { jabatan: "Sekretaris",    nama: "Ibu Dewi Rahayu, S.Pd."   },
+      { jabatan: "Bendahara",     nama: "Bapak Hendra Wijaya"       },
+    ],
+    manajemen: [
+      { level:1, jabatan:"Kepala Sekolah",                        nama:"Mudzakkir Walad, S.Pd",         nbm:"NBM. 1167327", foto:"https://picsum.photos/seed/ks01/120/120" },
+      { level:2, jabatan:"Wakasek Bidang Kurikulum",              nama:"Ibu Sari Dewi, S.Pd.",           nbm:"NBM. 1089241", foto:"https://picsum.photos/seed/wks01/120/120" },
+      { level:2, jabatan:"Wakasek Bidang Kesiswaan",              nama:"Bapak Fahmi Ridwan, S.Pd.",      nbm:"NBM. 1102384", foto:"https://picsum.photos/seed/wks02/120/120" },
+      { level:2, jabatan:"Wakasek Bidang Humas",                  nama:"Ibu Nurul Hidayah, S.Pd.I.",    nbm:"NBM. 1134567", foto:"https://picsum.photos/seed/wks03/120/120" },
+      { level:2, jabatan:"Wakasek Bidang Sarana & Prasarana",     nama:"Bapak Agus Salim, S.T.",         nbm:"NBM. 1145678", foto:"https://picsum.photos/seed/wks04/120/120" },
+    ],
+    unit: [
+      { nama:"Tata Usaha & Administrasi", ketua:"Ibu Rina Marlina",          anggota:2 },
+      { nama:"Bendahara Sekolah",          ketua:"Bapak Dedi Kurniawan",      anggota:1 },
+      { nama:"Perpustakaan",               ketua:"Ibu Lilis Suryani",         anggota:1 },
+      { nama:"UKS",                        ketua:"Ibu Yuni Astuti, S.Kep.",   anggota:1 },
+      { nama:"Bimbingan Konseling",        ketua:"Ibu Reni Kusuma, S.Psi.",   anggota:1 },
+      { nama:"Keamanan & Kebersihan",      ketua:"Bapak Eko Prasetyo",        anggota:3 },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  GURU & STAFF  (pages/guru-staff.html)
+  //  ⚠ Ganti dengan data lengkap dari sekolah
+  //  status: "GTY" = Guru Tetap Yayasan | "GTT" = Guru Tidak Tetap
+  // ══════════════════════════════════════════════════════════════
+  guruStaff: {
+    guru: [
+      { nama:"Mudzakkir Walad, S.Pd",          jabatan:"Kepala Sekolah",          mapel:"—",                    pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g01/200/200" },
+      { nama:"Ibu Sari Dewi, S.Pd.",            jabatan:"Wakasek Kurikulum",       mapel:"Matematika",           pendidikan:"S1 Pend. Matematika",  status:"GTY", foto:"https://picsum.photos/seed/g02/200/200" },
+      { nama:"Bapak Fahmi Ridwan, S.Pd.",       jabatan:"Wakasek Kesiswaan",       mapel:"PJOK",                 pendidikan:"S1 Pend. Olahraga",    status:"GTY", foto:"https://picsum.photos/seed/g03/200/200" },
+      { nama:"Ibu Nurul Hidayah, S.Pd.I.",      jabatan:"Wakasek Humas",           mapel:"PAI & Budi Pekerti",   pendidikan:"S1 PAI",               status:"GTY", foto:"https://picsum.photos/seed/g04/200/200" },
+      { nama:"Bapak Agus Salim, S.T.",           jabatan:"Wakasek Sarana",          mapel:"IPAS",                 pendidikan:"S1 Teknik Sipil",      status:"GTY", foto:"https://picsum.photos/seed/g05/200/200" },
+      { nama:"Ibu Fatimah Zahra, S.Pd.",         jabatan:"Wali Kelas 1A",           mapel:"Guru Kelas 1",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g06/200/200" },
+      { nama:"Bapak Rizky Ananda, S.Pd.",        jabatan:"Wali Kelas 1B",           mapel:"Guru Kelas 1",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g07/200/200" },
+      { nama:"Ibu Hana Pertiwi, S.Pd.",          jabatan:"Wali Kelas 2A",           mapel:"Guru Kelas 2",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g08/200/200" },
+      { nama:"Ibu Mira Lestari, S.Pd.",          jabatan:"Wali Kelas 2B",           mapel:"Guru Kelas 2",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g09/200/200" },
+      { nama:"Bapak Yusuf Hakim, S.Pd.",         jabatan:"Wali Kelas 3A",           mapel:"Guru Kelas 3",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g10/200/200" },
+      { nama:"Ibu Dian Pratiwi, S.Pd.",          jabatan:"Wali Kelas 3B",           mapel:"Guru Kelas 3",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g11/200/200" },
+      { nama:"Ibu Rini Sulistyowati, S.Pd.",     jabatan:"Wali Kelas 4A",           mapel:"Guru Kelas 4",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g12/200/200" },
+      { nama:"Bapak Andri Saputra, S.Pd.",       jabatan:"Wali Kelas 4B",           mapel:"Guru Kelas 4",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g13/200/200" },
+      { nama:"Ibu Laila Nuraini, S.Pd.",         jabatan:"Wali Kelas 5A",           mapel:"Guru Kelas 5",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g14/200/200" },
+      { nama:"Bapak Hafidz Rahman, S.Pd.",       jabatan:"Wali Kelas 5B",           mapel:"Guru Kelas 5",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g15/200/200" },
+      { nama:"Ibu Siti Aisyah, S.Pd.",           jabatan:"Wali Kelas 6A",           mapel:"Guru Kelas 6",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g16/200/200" },
+      { nama:"Bapak Wahyu Santoso, S.Pd.",       jabatan:"Wali Kelas 6B",           mapel:"Guru Kelas 6",         pendidikan:"S1 PGSD",              status:"GTY", foto:"https://picsum.photos/seed/g17/200/200" },
+      { nama:"Ustadz Ahmad Firdaus, Lc.",        jabatan:"Guru Tahfidz",            mapel:"Tahsin & Tahfidz",     pendidikan:"S1 Syariah",           status:"GTY", foto:"https://picsum.photos/seed/g18/200/200" },
+      { nama:"Ustadzah Khadijah, S.Pd.I.",       jabatan:"Guru Tahfidz",            mapel:"Tahsin & Tahfidz",     pendidikan:"S1 PAI",               status:"GTY", foto:"https://picsum.photos/seed/g19/200/200" },
+      { nama:"Bapak Faisal Akbar, S.Pd.",        jabatan:"Guru PJOK",               mapel:"PJOK",                 pendidikan:"S1 Pend. Olahraga",    status:"GTT", foto:"https://picsum.photos/seed/g20/200/200" },
+      { nama:"Ibu Nadia Rahma, S.S.",            jabatan:"Guru Bahasa Inggris",     mapel:"Bahasa Inggris",       pendidikan:"S1 Sastra Inggris",    status:"GTT", foto:"https://picsum.photos/seed/g21/200/200" },
+      { nama:"Ibu Wulan Dari, S.Pd.",            jabatan:"Guru Seni Tari",          mapel:"Seni Tari",            pendidikan:"S1 Seni Pertunjukan",  status:"GTT", foto:"https://picsum.photos/seed/g22/200/200" },
+      { nama:"Bapak Oman Suparman, S.Pd.",       jabatan:"Guru Bahasa Sunda",       mapel:"Bahasa Sunda",         pendidikan:"S1 Pend. B. Sunda",    status:"GTT", foto:"https://picsum.photos/seed/g23/200/200" },
+      { nama:"Ustadz Irfan Maulana, S.Pd.I.",    jabatan:"Guru Kemuhammadiyahan",   mapel:"Kemuhammadiyahan",     pendidikan:"S1 PAI",               status:"GTY", foto:"https://picsum.photos/seed/g24/200/200" },
+      { nama:"Ustadzah Zulfa Hanani, S.Pd.",     jabatan:"Guru Bahasa Arab",        mapel:"Bahasa Arab",          pendidikan:"S1 Pend. B. Arab",     status:"GTY", foto:"https://picsum.photos/seed/g25/200/200" },
+      { nama:"Ibu Reni Kusuma, S.Psi.",          jabatan:"Guru BK",                 mapel:"Bimbingan Konseling",  pendidikan:"S1 Psikologi",         status:"GTT", foto:"https://picsum.photos/seed/g26/200/200" },
+    ],
+    tendik: [
+      { nama:"Ibu Rina Marlina",     jabatan:"Kepala Tata Usaha",  foto:"https://picsum.photos/seed/tk01/200/200" },
+      { nama:"Bapak Dedi Kurniawan", jabatan:"Bendahara Sekolah",  foto:"https://picsum.photos/seed/tk02/200/200" },
+      { nama:"Ibu Lilis Suryani",    jabatan:"Pustakawan",         foto:"https://picsum.photos/seed/tk03/200/200" },
+      { nama:"Ibu Yuni Astuti",      jabatan:"Petugas UKS",        foto:"https://picsum.photos/seed/tk04/200/200" },
+      { nama:"Bapak Eko Prasetyo",   jabatan:"Satpam",             foto:"https://picsum.photos/seed/tk05/200/200" },
+      { nama:"Bapak Joko Susilo",    jabatan:"Petugas Kebersihan", foto:"https://picsum.photos/seed/tk06/200/200" },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  FASILITAS  (pages/fasilitas.html)
+  // ══════════════════════════════════════════════════════════════
+  fasilitas: [
+    {
+      kategori:"Ruang Belajar", ikon:"🏫",
+      deskripsi:"Ruang kelas nyaman dan kondusif untuk kegiatan belajar mengajar.",
+      items:[
+        { nama:"Ruang Kelas",           jumlah:"12 ruang", kondisi:"Baik", detail:"Papan tulis whiteboard, kipas angin, meja kursi ergonomis." },
+        { nama:"Ruang Perpustakaan",    jumlah:"1 ruang",  kondisi:"Baik", detail:"±3.000 judul buku, area baca nyaman, pojok digital." },
+        { nama:"Laboratorium Komputer", jumlah:"1 ruang",  kondisi:"Baik", detail:"30 unit komputer berkoneksi internet untuk informatika & koding." },
+        { nama:"Ruang Multimedia",      jumlah:"1 ruang",  kondisi:"Baik", detail:"Proyektor, layar, speaker untuk pembelajaran interaktif." },
+      ],
+    },
+    {
+      kategori:"Ruang Pendukung", ikon:"🏢",
+      deskripsi:"Ruang administrasi, penunjang, dan pelayanan warga sekolah.",
+      items:[
+        { nama:"Ruang Kepala Sekolah", jumlah:"1 ruang", kondisi:"Baik", detail:"Representatif untuk tamu dan rapat terbatas." },
+        { nama:"Ruang Guru",           jumlah:"1 ruang", kondisi:"Baik", detail:"Meja kerja individu, lemari arsip, akses internet." },
+        { nama:"Ruang Tata Usaha",     jumlah:"1 ruang", kondisi:"Baik", detail:"Administrasi, pelayanan surat menyurat dan legalisir." },
+        { nama:"Ruang BK",             jumlah:"1 ruang", kondisi:"Baik", detail:"Ruang konsultasi privat yang nyaman." },
+        { nama:"Ruang UKS",            jumlah:"1 ruang", kondisi:"Baik", detail:"Tempat tidur, P3K, timbangan, alat ukur tinggi badan." },
+        { nama:"Ruang Komite",         jumlah:"1 ruang", kondisi:"Baik", detail:"Untuk rapat dan koordinasi dengan orang tua/wali murid." },
+      ],
+    },
+    {
+      kategori:"Ibadah & Keagamaan", ikon:"🕌",
+      deskripsi:"Sarana ibadah dan pembinaan karakter islami warga sekolah.",
+      items:[
+        { nama:"Mushola Al-Hikmah",    jumlah:"1 unit",   kondisi:"Baik", detail:"Kapasitas ±120 jamaah, digunakan sholat Dhuha & Dzuhur berjamaah setiap hari." },
+        { nama:"Tempat Wudhu",         jumlah:"16 kran",  kondisi:"Baik", detail:"Terpisah putra dan putri, air bersih mengalir setiap hari." },
+        { nama:"Sudut Baca Al-Qur'an", jumlah:"6 sudut",  kondisi:"Baik", detail:"Di setiap kelas, berisi Al-Qur'an dan Iqra' untuk program Tahfidz." },
+      ],
+    },
+    {
+      kategori:"Olahraga & Seni", ikon:"⚽",
+      deskripsi:"Sarana pengembangan fisik, olahraga, dan bakat seni siswa.",
+      items:[
+        { nama:"Lapangan Olahraga Multifungsi", jumlah:"1 lapangan", kondisi:"Baik", detail:"Upacara, senam, futsal, voli. Ukuran 20×30 m, lantai paving block." },
+        { nama:"Ruang Seni & Musik",            jumlah:"1 ruang",    kondisi:"Baik", detail:"Peralatan angklung, kostum tari, perlengkapan seni budaya." },
+        { nama:"Ruang Tapak Suci",              jumlah:"1 ruang",    kondisi:"Baik", detail:"Matras latihan, cermin dinding, peralatan Tapak Suci." },
+      ],
+    },
+    {
+      kategori:"Fasilitas Umum", ikon:"🌿",
+      deskripsi:"Sarana penunjang kenyamanan, kebersihan, dan keselamatan.",
+      items:[
+        { nama:"Kantin Sehat",          jumlah:"1 unit",    kondisi:"Baik", detail:"Makanan halal dan bergizi, diawasi tim kesehatan sekolah." },
+        { nama:"Kamar Mandi & WC",      jumlah:"12 unit",   kondisi:"Baik", detail:"Terpisah putra, putri, dan guru. Dibersihkan setiap hari." },
+        { nama:"Area Parkir",           jumlah:"1 area",    kondisi:"Baik", detail:"Parkir guru & tamu, area penjemputan siswa yang tertata." },
+        { nama:"Taman & Area Hijau",    jumlah:"3 taman",   kondisi:"Baik", detail:"Suasana sekolah yang asri dan nyaman untuk belajar." },
+        { nama:"CCTV",                  jumlah:"12 titik",  kondisi:"Baik", detail:"Pengawasan area sekolah 24 jam untuk keamanan." },
+        { nama:"Akses Internet / WiFi", jumlah:"1 jaringan",kondisi:"Baik", detail:"WiFi di seluruh area untuk mendukung pembelajaran digital." },
+      ],
+    },
+  ],
+
 };

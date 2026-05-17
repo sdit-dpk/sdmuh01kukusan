@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fasilitas — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .profil-hero { background:linear-gradient(135deg,var(--blue-950),var(--blue-900)); padding:44px 0 40px; }
+    .profil-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,38px); font-weight:700; color:white; margin:0 0 10px; }
+    .profil-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); margin:0; }
+    .subnav { background:white; border-bottom:1px solid var(--gray-200); position:sticky; top:60px; z-index:90; }
+    .subnav-inner { max-width:1100px; margin:0 auto; padding:0 20px; display:flex; overflow-x:auto; scrollbar-width:none; }
+    .subnav-inner::-webkit-scrollbar { display:none; }
+    .subnav-link { display:block; padding:14px 18px; font-size:13.5px; font-weight:500; color:var(--gray-500); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s,border-color .2s; }
+    .subnav-link:hover { color:var(--blue-700); }
+    .subnav-link.aktif { color:var(--blue-700); border-bottom-color:var(--gold); font-weight:600; }
+
+    /* Ringkasan total */
+    .total-strip { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:14px; margin-bottom:48px; }
+    .total-card { background:white; border:1px solid var(--gray-200); border-top:3px solid var(--blue-700); border-radius:var(--radius); padding:18px 14px; text-align:center; }
+    .total-card .tn { font-family:var(--serif); font-size:28px; font-weight:700; color:var(--blue-900); line-height:1; }
+    .total-card .tl { font-size:11.5px; color:var(--gray-400); margin-top:5px; }
+
+    /* Kategori fasilitas */
+    .fas-section { margin-bottom:52px; }
+    .fas-head { display:flex; align-items:center; gap:14px; padding-bottom:16px; border-bottom:2px solid var(--blue-100); margin-bottom:20px; }
+    .fas-ikon { width:44px; height:44px; background:var(--blue-700); color:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .fas-head h3 { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--blue-950); margin:0 0 3px; }
+    .fas-head p  { font-size:13px; color:var(--gray-400); margin:0; }
+    .fas-jumlah  { margin-left:auto; font-size:12px; font-weight:700; color:var(--blue-700); background:var(--blue-50); border:1px solid var(--blue-100); border-radius:12px; padding:3px 12px; white-space:nowrap; }
+
+    /* Grid item fasilitas */
+    .fas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+    .fas-card { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; transition:box-shadow .2s,transform .2s; }
+    .fas-card:hover { box-shadow:0 4px 18px rgba(13,49,114,.1); transform:translateY(-2px); }
+    .fas-card-head { padding:16px 18px 14px; border-bottom:1px solid var(--gray-200); }
+    .fas-nama { font-family:var(--serif); font-size:16px; font-weight:700; color:var(--blue-950); margin:0 0 6px; }
+    .fas-meta { display:flex; gap:8px; flex-wrap:wrap; }
+    .fas-pill { display:inline-flex; align-items:center; gap:4px; font-size:11.5px; color:var(--blue-700); background:var(--blue-50); border:1px solid var(--blue-100); border-radius:12px; padding:3px 10px; }
+    .fas-pill.kondisi-Baik { color:#15803d; background:#f0fdf4; border-color:#bbf7d0; }
+    .fas-card-body { padding:14px 18px; }
+    .fas-card-body p { font-size:13.5px; color:var(--gray-500); line-height:1.65; margin:0; }
+
+    /* Layout dengan sidebar kategori */
+    .fas-layout { display:grid; grid-template-columns:1fr 240px; gap:40px; align-items:start; }
+    @media (max-width:800px) { .fas-layout { grid-template-columns:1fr; } .fas-sidebar { order:-1; } }
+
+    /* Sidebar navigasi kategori */
+    .sidebar-box { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; margin-bottom:16px; position:sticky; top:120px; }
+    .sidebar-head { background:var(--blue-900); color:white; padding:12px 16px; font-family:var(--serif); font-size:15px; font-weight:700; }
+    .kat-nav { list-style:none; padding:0; margin:0; }
+    .kat-nav li { border-bottom:1px solid var(--gray-200); }
+    .kat-nav li:last-child { border-bottom:none; }
+    .kat-nav a { display:flex; justify-content:space-between; align-items:center; padding:11px 16px; font-size:13.5px; color:var(--gray-600); text-decoration:none; transition:background .15s; }
+    .kat-nav a:hover { background:var(--blue-50); color:var(--blue-700); }
+    .kat-count { background:var(--blue-50); color:var(--blue-700); border-radius:12px; padding:2px 9px; font-size:11px; font-weight:700; }
+  </style>
+</head>
+<body data-page="profil">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <nav class="subnav">
+    <div class="subnav-inner">
+      <a class="subnav-link" href="profil.html">Profil Sekolah</a>
+      <a class="subnav-link" href="struktur-organisasi.html">Struktur Organisasi</a>
+      <a class="subnav-link" href="guru-staff.html">Guru &amp; Staff</a>
+      <a class="subnav-link aktif" href="fasilitas.html">Fasilitas</a>
+    </div>
+  </nav>
+
+  <div class="profil-hero">
+    <div class="container">
+      <div class="section-tag" style="color:var(--gold);margin-bottom:10px;">✦ Sarana &amp; Prasarana</div>
+      <h1>Fasilitas Sekolah</h1>
+      <p>Sarana dan prasarana lengkap untuk mendukung kegiatan belajar mengajar yang optimal dan menyenangkan.</p>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <a href="profil.html" style="color:var(--blue-700);">Profil</a><span>›</span>
+      <span style="color:var(--gray-600);">Fasilitas</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+
+        <!-- Statistik total -->
+        <div class="section-tag">Ringkasan</div>
+        <h2 class="section-heading">Sarana &amp; Prasarana dalam Angka</h2>
+        <div class="section-rule" style="margin-bottom:20px;"></div>
+        <div class="total-strip" id="total-strip"></div>
+
+        <!-- Layout utama -->
+        <div class="fas-layout">
+          <!-- Kiri: daftar fasilitas -->
+          <div id="fas-list"></div>
+
+          <!-- Kanan: navigasi kategori -->
+          <aside class="fas-sidebar">
+            <div class="sidebar-box">
+              <div class="sidebar-head">📂 Kategori</div>
+              <ul class="kat-nav" id="kat-nav"></ul>
+            </div>
+            <!-- CTA kontak -->
+            <div style="background:var(--blue-900);border-radius:var(--radius);padding:20px;text-align:center;">
+              <div style="font-size:24px;margin-bottom:10px;">🏗️</div>
+              <div style="font-family:var(--serif);font-size:16px;font-weight:700;color:white;margin-bottom:8px;">Ada Pertanyaan?</div>
+              <p style="font-size:12.5px;color:rgba(255,255,255,.65);margin:0 0 14px;line-height:1.6;">Hubungi bagian Sarana &amp; Prasarana untuk informasi lebih lanjut.</p>
+              <a href="kontak.html"
+                style="display:block;background:var(--gold);color:var(--blue-950);border-radius:6px;padding:9px;font-size:13px;font-weight:700;text-decoration:none;text-align:center;">
+                Hubungi Kami →
+              </a>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    const D = DATA.fasilitas;
+
+    // Total statistik
+    const totalItem = D.reduce((s,k)=>s+k.items.length,0);
+    const totalKat  = D.length;
+    document.getElementById('total-strip').innerHTML = [
+      { n: totalItem, l:'Total Fasilitas' },
+      { n: totalKat,  l:'Kategori' },
+      { n: D.reduce((s,k)=>s+k.items.filter(i=>i.kondisi==='Baik').length,0), l:'Kondisi Baik' },
+      { n: new Date().getFullYear(), l:'Tahun Data' },
+    ].map(s=>`<div class="total-card"><div class="tn">${s.n}</div><div class="tl">${s.l}</div></div>`).join('');
+
+    // Navigasi kategori di sidebar
+    document.getElementById('kat-nav').innerHTML = D.map(k=>`
+      <li><a href="#kat-${k.kategori.replace(/\s/g,'-')}">
+        <span>${k.ikon} ${k.kategori}</span>
+        <span class="kat-count">${k.items.length}</span>
+      </a></li>`).join('');
+
+    // Daftar fasilitas
+    document.getElementById('fas-list').innerHTML = D.map(k=>`
+      <div class="fas-section" id="kat-${k.kategori.replace(/\s/g,'-')}">
+        <div class="fas-head">
+          <div class="fas-ikon">${k.ikon}</div>
+          <div>
+            <h3>${k.kategori}</h3>
+            <p>${k.deskripsi}</p>
+          </div>
+          <span class="fas-jumlah">${k.items.length} item</span>
+        </div>
+        <div class="fas-grid">
+          ${k.items.map(f=>`
+            <div class="fas-card">
+              <div class="fas-card-head">
+                <div class="fas-nama">${f.nama}</div>
+                <div class="fas-meta">
+                  <span class="fas-pill">📦 ${f.jumlah}</span>
+                  <span class="fas-pill kondisi-${f.kondisi}">✅ ${f.kondisi}</span>
+                </div>
+              </div>
+              <div class="fas-card-body"><p>${f.detail}</p></div>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Struktur Organisasi — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .profil-hero { background: linear-gradient(135deg, var(--blue-950), var(--blue-900)); padding: 44px 0 40px; }
+    .profil-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,38px); font-weight:700; color:white; margin:0 0 10px; }
+    .profil-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); margin:0; }
+    .subnav { background:white; border-bottom:1px solid var(--gray-200); position:sticky; top:60px; z-index:90; }
+    .subnav-inner { max-width:1100px; margin:0 auto; padding:0 20px; display:flex; overflow-x:auto; scrollbar-width:none; }
+    .subnav-inner::-webkit-scrollbar { display:none; }
+    .subnav-link { display:block; padding:14px 18px; font-size:13.5px; font-weight:500; color:var(--gray-500); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s,border-color .2s; }
+    .subnav-link:hover { color:var(--blue-700); }
+    .subnav-link.aktif { color:var(--blue-700); border-bottom-color:var(--gold); font-weight:600; }
+
+    /* Komite */
+    .komite-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:48px; }
+    .komite-card { flex:1; min-width:200px; background:white; border:1px solid var(--blue-100); border-radius:var(--radius); padding:18px 20px; text-align:center; }
+    .komite-card .jbt { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--blue-700); margin-bottom:8px; }
+    .komite-card .nm  { font-family:var(--serif); font-size:16px; font-weight:700; color:var(--blue-950); }
+
+    /* Bagan organisasi */
+    .bagan { max-width:860px; margin:0 auto 48px; }
+    .bagan-ks { display:flex; justify-content:center; margin-bottom:0; }
+    .bagan-connector-v { width:2px; height:32px; background:var(--blue-200); margin:0 auto; }
+    .bagan-connector-h { height:2px; background:var(--blue-200); flex:1; align-self:center; }
+    .bagan-wakasek-row { display:flex; justify-content:center; gap:0; }
+    .bagan-wakasek-col { display:flex; flex-direction:column; align-items:center; flex:1; }
+    .org-card {
+      background:white; border:1px solid var(--gray-200); border-radius:var(--radius);
+      padding:16px 14px; text-align:center; width:100%; max-width:200px;
+      box-shadow:0 2px 8px rgba(13,49,114,.06);
+    }
+    .org-card.ks { border-color:var(--gold); border-width:2px; max-width:240px; }
+    .org-card img { width:60px; height:60px; border-radius:50%; object-fit:cover; margin-bottom:10px; border:2px solid var(--blue-100); }
+    .org-card .oc-jbt { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--blue-700); margin-bottom:5px; }
+    .org-card .oc-nm  { font-family:var(--serif); font-size:14px; font-weight:700; color:var(--blue-950); line-height:1.3; margin-bottom:3px; }
+    .org-card .oc-nbm { font-size:10.5px; color:var(--gray-400); }
+    @media (max-width:700px) {
+      .bagan-wakasek-row { flex-direction:column; align-items:center; gap:8px; }
+      .bagan-connector-h { display:none; }
+    }
+
+    /* Unit-unit */
+    .unit-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+    .unit-card { background:white; border:1px solid var(--gray-200); border-left:4px solid var(--blue-500); border-radius:var(--radius); padding:16px 18px; }
+    .unit-card h4 { font-family:var(--serif); font-size:16px; font-weight:700; color:var(--blue-950); margin:0 0 5px; }
+    .unit-card p  { font-size:13px; color:var(--gray-500); margin:0; }
+  </style>
+</head>
+<body data-page="profil">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <nav class="subnav">
+    <div class="subnav-inner">
+      <a class="subnav-link" href="profil.html">Profil Sekolah</a>
+      <a class="subnav-link aktif" href="struktur-organisasi.html">Struktur Organisasi</a>
+      <a class="subnav-link" href="guru-staff.html">Guru &amp; Staff</a>
+      <a class="subnav-link" href="fasilitas.html">Fasilitas</a>
+    </div>
+  </nav>
+
+  <div class="profil-hero">
+    <div class="container">
+      <div class="section-tag" style="color:var(--gold);margin-bottom:10px;">✦ Tentang Kami</div>
+      <h1>Struktur Organisasi</h1>
+      <p>Susunan organisasi dan kepemimpinan SD Muhammadiyah 01 Kukusan Tahun Ajaran 2025/2026.</p>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <a href="profil.html" style="color:var(--blue-700);">Profil</a><span>›</span>
+      <span style="color:var(--gray-600);">Struktur Organisasi</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+
+        <!-- Komite -->
+        <div class="section-tag">Komite Sekolah</div>
+        <h2 class="section-heading">Komite SD Muhammadiyah 01 Kukusan</h2>
+        <div class="section-rule" style="margin-bottom:24px;"></div>
+        <div class="komite-row" id="komite-row"></div>
+
+        <!-- Bagan manajemen -->
+        <div class="section-tag">Manajemen Sekolah</div>
+        <h2 class="section-heading">Bagan Struktur Organisasi</h2>
+        <div class="section-rule" style="margin-bottom:32px;"></div>
+        <div class="bagan" id="bagan-org"></div>
+
+        <!-- Unit pendukung -->
+        <div class="section-tag">Unit Pendukung</div>
+        <h2 class="section-heading">Unit &amp; Tenaga Penunjang</h2>
+        <div class="section-rule" style="margin-bottom:20px;"></div>
+        <div class="unit-grid" id="unit-grid"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    const D = DATA.strukturOrganisasi;
+
+    // Komite
+    document.getElementById('komite-row').innerHTML =
+      D.komite.map(k=>`
+        <div class="komite-card">
+          <div class="jbt">${k.jabatan}</div>
+          <div class="nm">${k.nama}</div>
+        </div>`).join('');
+
+    // Bagan — KS di atas, Wakasek di bawah
+    const ks  = D.manajemen.find(m=>m.level===1);
+    const wks = D.manajemen.filter(m=>m.level===2);
+    document.getElementById('bagan-org').innerHTML = `
+      <div class="bagan-ks">
+        <div class="org-card ks">
+          <img src="${ks.foto}" alt="${ks.nama}">
+          <div class="oc-jbt">${ks.jabatan}</div>
+          <div class="oc-nm">${ks.nama}</div>
+          <div class="oc-nbm">${ks.nbm}</div>
+        </div>
+      </div>
+      <div class="bagan-connector-v"></div>
+      <div class="bagan-wakasek-row">
+        ${wks.map((w,i)=>`
+          <div class="bagan-wakasek-col">
+            ${i>0 ? '<div class="bagan-connector-h"></div>' : ''}
+            <div class="bagan-connector-v"></div>
+            <div class="org-card">
+              <img src="${w.foto}" alt="${w.nama}">
+              <div class="oc-jbt">${w.jabatan}</div>
+              <div class="oc-nm">${w.nama}</div>
+              <div class="oc-nbm">${w.nbm}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+
+    // Unit
+    document.getElementById('unit-grid').innerHTML =
+      D.unit.map(u=>`
+        <div class="unit-card">
+          <h4>${u.nama}</h4>
+          <p>Ketua: ${u.ketua}</p>
+          <p style="margin-top:4px;color:var(--gray-400);">${u.anggota} anggota</p>
+        </div>`).join('');
+  })();
+  </script>
+</body>
+</html>
