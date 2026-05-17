@@ -107,6 +107,42 @@
   const $ = id => document.getElementById(id);
 
   /* ────────────────────────────────────────────────────────────
+   *  resolveHref(href)
+   *  Mengkonversi href root-relative (mis. "/profil") ke path
+   *  relatif yang benar berdasarkan kedalaman halaman saat ini.
+   *
+   *  - Di root (index.html)   : "/profil" → "pages/profil.html"
+   *  - Di pages/*.html        : "/profil" → "profil.html"
+   * ──────────────────────────────────────────────────────────── */
+  const hrefMap = {
+    '/':               { root: './',                    pages: '../'                   },
+    '/profil':         { root: 'pages/profil.html',     pages: 'profil.html'           },
+    '/akademik':       { root: 'pages/akademik.html',   pages: 'akademik.html'         },
+    '/kesiswaan':      { root: 'pages/kesiswaan.html',  pages: 'kesiswaan.html'        },
+    '/berita':         { root: 'pages/berita.html',     pages: 'berita.html'           },
+    '/pengumuman':     { root: 'pages/pengumuman.html', pages: 'pengumuman.html'       },
+    '/kontak':         { root: 'pages/kontak.html',     pages: 'kontak.html'           },
+    '/unduhan':        { root: 'pages/unduhan.html',    pages: 'unduhan.html'          },
+    '/kesiswaan/ppdb': { root: 'pages/ppdb.html',       pages: 'ppdb.html'             },
+    '/galeri/foto':    { root: 'pages/galeri-foto.html',pages: 'galeri-foto.html'      },
+    '/agenda':         { root: 'pages/agenda.html',     pages: 'agenda.html'           },
+    '/portal/siswa':       { root: 'pages/portal-siswa.html', pages: 'portal-siswa.html' },
+    '/portal/guru':        { root: 'pages/portal-guru.html',  pages: 'portal-guru.html'  },
+    '/portal/orang-tua':   { root: 'pages/portal-ortu.html',  pages: 'portal-ortu.html'  },
+    '/login':          { root: 'pages/login.html',      pages: 'login.html'            },
+  };
+
+  function isInPagesDir() {
+    return window.location.pathname.includes('/pages/');
+  }
+
+  function resolveHref(href) {
+    const entry = hrefMap[href];
+    if (!entry) return href;
+    return isInPagesDir() ? entry.pages : entry.root;
+  }
+
+  /* ────────────────────────────────────────────────────────────
    *  Deteksi halaman aktif dari URL atau atribut data-page
    *
    *  Mengembalikan href (mis. "/profil") dari DATA.navigasi
@@ -177,7 +213,7 @@
 
     DATA.navigasi.forEach(item => {
       const a = document.createElement('a');
-      a.href      = item.href;
+      a.href      = resolveHref(item.href);
       a.textContent = item.label;
       if (item.href === active) a.className = 'active';
       fragment.appendChild(a);
@@ -185,7 +221,7 @@
 
     // Tombol PPDB
     const ppdb = document.createElement('a');
-    ppdb.href      = DATA.navPPDB.href;
+    ppdb.href      = resolveHref(DATA.navPPDB.href);
     ppdb.textContent = DATA.navPPDB.label;
     ppdb.className = 'btn-ppdb';
     fragment.appendChild(ppdb);
@@ -214,7 +250,7 @@
     const ulUtama = $('footer-links-utama');
     if (ulUtama && FL.utama) {
       ulUtama.innerHTML = FL.utama
-        .map(l => `<li><a href="${l.href}">${l.label}</a></li>`)
+        .map(l => `<li><a href="${resolveHref(l.href)}">${l.label}</a></li>`)
         .join('');
     }
 
@@ -222,7 +258,7 @@
     const ulPortal = $('footer-links-portal');
     if (ulPortal && FL.portal) {
       ulPortal.innerHTML = FL.portal
-        .map(l => `<li><a href="${l.href}">${l.label}</a></li>`)
+        .map(l => `<li><a href="${resolveHref(l.href)}">${l.label}</a></li>`)
         .join('');
     }
 

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unduhan — SD Muhammadiyah 01 Kukusan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    /* ── Hero ─────────────────────────────────────────────── */
+    .unduhan-hero {
+      background: linear-gradient(135deg, var(--blue-950) 0%, var(--blue-900) 100%);
+      padding: 44px 0 40px;
+    }
+    .unduhan-hero-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .unduhan-hero h1 {
+      font-family: var(--serif); font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 700; color: white; margin: 0 0 10px;
+    }
+    .unduhan-hero p { font-size: 14.5px; color: rgba(255,255,255,.65); margin: 0; }
+
+    /* ── Toolbar search ───────────────────────────────────── */
+    .toolbar {
+      background: white; border-bottom: 1px solid var(--gray-200);
+      padding: 14px 0; position: sticky; top: 60px; z-index: 90;
+    }
+    .toolbar-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 20px;
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    }
+    .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+    .chip {
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      border: 1.5px solid var(--gray-200); background: white;
+      color: var(--gray-500); cursor: pointer; transition: all .18s;
+      white-space: nowrap; user-select: none;
+    }
+    .chip:hover { border-color: var(--blue-500); color: var(--blue-700); }
+    .chip.aktif { background: var(--blue-700); border-color: var(--blue-700); color: white; }
+
+    .search-wrap { position: relative; flex-shrink: 0; }
+    .search-wrap input {
+      padding: 7px 14px 7px 36px; border: 1.5px solid var(--gray-200);
+      border-radius: 20px; font-size: 13px; font-family: 'DM Sans', sans-serif;
+      color: var(--blue-950); outline: none; width: 200px;
+      transition: border-color .18s, width .25s; background: white;
+    }
+    .search-wrap input:focus { border-color: var(--blue-500); width: 240px; }
+    .search-wrap::before {
+      content: "🔍"; position: absolute; left: 11px; top: 50%;
+      transform: translateY(-50%); font-size: 13px; pointer-events: none;
+    }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .unduhan-layout {
+      display: grid; grid-template-columns: 1fr 280px;
+      gap: 40px; align-items: start;
+    }
+    @media (max-width: 820px) {
+      .unduhan-layout { grid-template-columns: 1fr; }
+      .unduhan-sidebar { order: -1; }
+    }
+
+    /* ── Kategori blok ────────────────────────────────────── */
+    .kat-blok { margin-bottom: 40px; }
+    .kat-blok:last-child { margin-bottom: 0; }
+    .kat-head {
+      display: flex; align-items: center; gap: 12px;
+      padding-bottom: 14px; border-bottom: 2px solid var(--blue-100);
+      margin-bottom: 16px;
+    }
+    .kat-ikon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--blue-700); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px; flex-shrink: 0;
+    }
+    .kat-head h3 {
+      font-family: var(--serif); font-size: 20px;
+      font-weight: 700; color: var(--blue-950); margin: 0 0 2px;
+    }
+    .kat-head p { font-size: 13px; color: var(--gray-400); margin: 0; }
+    .kat-jumlah {
+      margin-left: auto; font-size: 12px; font-weight: 700;
+      color: var(--blue-700); background: var(--blue-50);
+      border: 1px solid var(--blue-100); border-radius: 12px;
+      padding: 3px 12px; white-space: nowrap;
+    }
+
+    /* ── Tabel file ───────────────────────────────────────── */
+    .file-table-wrap {
+      border: 1px solid var(--gray-200); border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .file-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .file-table tbody tr {
+      border-bottom: 1px solid var(--gray-200); transition: background .15s;
+    }
+    .file-table tbody tr:last-child { border-bottom: none; }
+    .file-table tbody tr:hover { background: var(--blue-50); }
+    .file-table td { padding: 13px 16px; }
+    .file-nama {
+      font-weight: 600; color: var(--blue-950);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .file-format-ikon {
+      width: 32px; height: 32px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; flex-shrink: 0; color: white;
+    }
+    .fmt-PDF  { background: #dc2626; }
+    .fmt-DOCX { background: #1d4ed8; }
+    .fmt-XLSX { background: #16a34a; }
+    .fmt-JPG  { background: #d97706; }
+    .fmt-ZIP  { background: #7c3aed; }
+    .file-meta { font-size: 12px; color: var(--gray-400); margin-top: 2px; font-weight: 400; }
+    .file-ukuran { font-size: 13px; color: var(--gray-400); white-space: nowrap; }
+    .file-tahun  { font-size: 12px; color: var(--gray-400); white-space: nowrap; }
+    .btn-unduh {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue-700); color: white;
+      border-radius: 6px; padding: 7px 14px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      white-space: nowrap; transition: background .18s;
+    }
+    .btn-unduh:hover { background: var(--blue-900); }
+    .btn-unduh.disabled {
+      background: var(--gray-200); color: var(--gray-400);
+      pointer-events: none; cursor: not-allowed;
+    }
+    @media (max-width: 600px) {
+      .file-table td:nth-child(2),
+      .file-table td:nth-child(3) { display: none; }
+    }
+
+    /* ── Empty state ──────────────────────────────────────── */
+    .empty-state {
+      text-align: center; padding: 48px 20px; color: var(--gray-400);
+      grid-column: 1/-1;
+    }
+    .empty-state .ikon { font-size: 44px; margin-bottom: 14px; }
+    .empty-state p { font-size: 14.5px; margin: 0; }
+
+    /* ── Sidebar ──────────────────────────────────────────── */
+    .sidebar-box {
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
+    }
+    .sidebar-head {
+      background: var(--blue-900); color: white;
+      padding: 12px 18px; font-family: var(--serif);
+      font-size: 15px; font-weight: 700;
+    }
+    .kat-nav-list { list-style: none; padding: 0; margin: 0; }
+    .kat-nav-list li { border-bottom: 1px solid var(--gray-200); }
+    .kat-nav-list li:last-child { border-bottom: none; }
+    .kat-nav-list button {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 11px 16px; font-size: 13.5px;
+      font-family: 'DM Sans', sans-serif; color: var(--gray-600);
+      transition: background .15s; text-align: left;
+    }
+    .kat-nav-list button:hover { background: var(--blue-50); color: var(--blue-700); }
+    .kat-count {
+      background: var(--blue-50); color: var(--blue-700);
+      border-radius: 12px; padding: 2px 10px;
+      font-size: 12px; font-weight: 700;
+    }
+
+    .stat-mini-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .stat-mini {
+      padding: 14px; text-align: center;
+      border-right: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .stat-mini:nth-child(even) { border-right: none; }
+    .stat-mini:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-mini .num {
+      font-family: var(--serif); font-size: 24px;
+      font-weight: 700; color: var(--blue-900); line-height: 1;
+    }
+    .stat-mini .lbl { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+    /* ── Hasil info ───────────────────────────────────────── */
+    .hasil-info { font-size: 13px; color: var(--gray-400); margin-bottom: 20px; }
+    .hasil-info strong { color: var(--blue-900); }
+  </style>
+</head>
+
+<body data-page="unduhan">
+
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left" id="topbar-kontak"></div>
+      <div class="topbar-right" id="topbar-ta"></div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark">
+          <svg viewBox="0 0 40 40">
+            <text x="20" y="28" text-anchor="middle"
+              font-family="Georgia,serif" font-size="18"
+              font-weight="bold" fill="white">SD</text>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <strong id="header-nama"></strong>
+          <small  id="header-tagline"></small>
+        </div>
+      </a>
+      <nav id="nav-menu" aria-label="Navigasi utama"></nav>
+      <button class="hamburger" id="hamburger"
+        aria-label="Buka/tutup menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="unduhan-hero">
+    <div class="container">
+      <div class="unduhan-hero-tag">✦ Dokumen Resmi</div>
+      <h1>Pusat Unduhan</h1>
+      <p>Formulir, kalender akademik, tata tertib, dan dokumen resmi lainnya dari SD Muhammadiyah 01 Kukusan.</p>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb"
+    style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container"
+      style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a>
+      <span>›</span>
+      <span style="color:var(--gray-600);">Unduhan</span>
+    </div>
+  </nav>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="filter-chips" id="filter-chips">
+        <button class="chip aktif" data-kat="Semua">Semua</button>
+      </div>
+      <div class="search-wrap">
+        <input type="search" id="cari-input"
+          placeholder="Cari dokumen…" aria-label="Cari dokumen">
+      </div>
+    </div>
+  </div>
+
+  <!-- Konten -->
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+        <div class="unduhan-layout">
+
+          <!-- Kiri: daftar file -->
+          <div>
+            <div class="hasil-info" id="hasil-info"></div>
+            <div id="unduhan-list"></div>
+          </div>
+
+          <!-- Kanan: sidebar -->
+          <aside class="unduhan-sidebar">
+
+            <!-- Statistik -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">📊 Ringkasan</div>
+              <div class="stat-mini-grid" id="stat-mini"></div>
+            </div>
+
+            <!-- Navigasi kategori -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">📂 Kategori</div>
+              <ul class="kat-nav-list" id="kat-nav-list"></ul>
+            </div>
+
+            <!-- Panduan unduh -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">ℹ️ Panduan</div>
+              <div style="padding:16px;font-size:13px;color:var(--gray-500);line-height:1.7;">
+                <p style="margin:0 0 10px;">Klik tombol <strong>Unduh</strong> untuk mengunduh file. Beberapa file memerlukan koneksi internet aktif.</p>
+                <p style="margin:0 0 10px;">Dokumen bertanda <span style="color:#dc2626;font-weight:700;">PDF</span> memerlukan aplikasi PDF Reader.</p>
+                <p style="margin:0;">Jika file tidak tersedia atau terjadi masalah, hubungi <a href="kontak.html" style="color:var(--blue-700);">Tata Usaha</a> sekolah.</p>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-mark">
+              <svg viewBox="0 0 40 40">
+                <text x="20" y="28" text-anchor="middle"
+                  font-family="Georgia,serif" font-size="18"
+                  font-weight="bold" fill="white">SD</text>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <strong id="footer-nama"></strong>
+              <small  id="footer-akreditasi"></small>
+            </div>
+          </div>
+          <p id="footer-deskripsi"></p>
+        </div>
+        <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+        <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+        <div class="footer-col"><h5>Kontak Kami</h5><div class="footer-contact" id="footer-kontak"></div></div>
+      </div>
+      <div class="footer-bottom">
+        <p id="footer-copy"></p>
+        <p><a href="kebijakan-privasi.html">Kebijakan Privasi</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function () {
+    const semua   = DATA.unduhan; // array kategori
+    let katAktif  = 'Semua';
+    let query     = '';
+
+    /* ── Bangun chips filter dari kategori ──────────────── */
+    const chipsEl = document.getElementById('filter-chips');
+    semua.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className   = 'chip';
+      btn.dataset.kat = k.kategori;
+      btn.textContent = k.ikon + ' ' + k.kategori;
+      chipsEl.appendChild(btn);
+    });
+
+    /* ── Render sidebar ─────────────────────────────────── */
+    function renderSidebar() {
+      const totalFile = semua.reduce((s, k) => s + k.files.length, 0);
+      const totalKat  = semua.length;
+      const formatSet = new Set(semua.flatMap(k => k.files.map(f => f.format)));
+      document.getElementById('stat-mini').innerHTML = `
+        <div class="stat-mini"><div class="num">${totalFile}</div><div class="lbl">Total Dokumen</div></div>
+        <div class="stat-mini"><div class="num">${totalKat}</div><div class="lbl">Kategori</div></div>
+        <div class="stat-mini"><div class="num">${formatSet.size}</div><div class="lbl">Format</div></div>
+        <div class="stat-mini"><div class="num">${new Date().getFullYear()}</div><div class="lbl">Diperbarui</div></div>`;
+
+      document.getElementById('kat-nav-list').innerHTML =
+        semua.map(k => `
+          <li>
+            <button onclick="filterKat('${k.kategori}')">
+              <span>${k.ikon} ${k.kategori}</span>
+              <span class="kat-count">${k.files.length}</span>
+            </button>
+          </li>`).join('');
+    }
+
+    /* ── Filter & render daftar ─────────────────────────── */
+    function render() {
+      const list = semua
+        .filter(k => katAktif === 'Semua' || k.kategori === katAktif)
+        .map(k => ({
+          ...k,
+          files: k.files.filter(f =>
+            query === '' ||
+            f.nama.toLowerCase().includes(query) ||
+            k.kategori.toLowerCase().includes(query)
+          ),
+        }))
+        .filter(k => k.files.length > 0);
+
+      const totalFile = list.reduce((s, k) => s + k.files.length, 0);
+      document.getElementById('hasil-info').innerHTML =
+        `Menampilkan <strong>${totalFile}</strong> dokumen`;
+
+      if (list.length === 0) {
+        document.getElementById('unduhan-list').innerHTML = `
+          <div class="empty-state">
+            <div class="ikon">📭</div>
+            <p>Tidak ada dokumen yang cocok.<br>Coba kata kunci lain atau ubah filter.</p>
+          </div>`;
+        return;
+      }
+
+      document.getElementById('unduhan-list').innerHTML =
+        list.map(k => `
+          <div class="kat-blok" id="kat-${k.kategori.replace(/\s/g,'-')}">
+            <div class="kat-head">
+              <div class="kat-ikon">${k.ikon}</div>
+              <div>
+                <h3>${k.kategori}</h3>
+                <p>${k.deskripsi}</p>
+              </div>
+              <span class="kat-jumlah">${k.files.length} dokumen</span>
+            </div>
+            <div class="file-table-wrap">
+              <table class="file-table">
+                <tbody>
+                  ${k.files.map(f => {
+                    const tersedia = f.url && !f.url.includes('assets/dokumen/');
+                    /* Di GitHub Pages phase 1, file dokumen belum ada —
+                       tampilkan tombol disabled dengan keterangan */
+                    return `
+                    <tr>
+                      <td>
+                        <div class="file-nama">
+                          <div class="file-format-ikon fmt-${f.format}">${f.format}</div>
+                          <div>
+                            ${f.nama}
+                            <div class="file-meta">${f.format} · ${f.ukuran} · ${f.tahun}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="file-ukuran">${f.ukuran}</td>
+                      <td class="file-tahun">${f.tahun}</td>
+                      <td style="text-align:right;white-space:nowrap;">
+                        ${tersedia
+                          ? `<a class="btn-unduh" href="${f.url}" download target="_blank" rel="noopener">⬇ Unduh</a>`
+                          : `<span class="btn-unduh disabled" title="File belum tersedia">⏳ Segera</span>`
+                        }
+                      </td>
+                    </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>`).join('');
+    }
+
+    /* ── Filter dari sidebar ────────────────────────────── */
+    window.filterKat = function (kat) {
+      katAktif = kat;
+      document.querySelectorAll('.chip').forEach(c =>
+        c.classList.toggle('aktif', c.dataset.kat === kat));
+      render();
+      document.getElementById('unduhan-list').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    /* ── Event chips ────────────────────────────────────── */
+    chipsEl.addEventListener('click', function (e) {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      katAktif = chip.dataset.kat;
+      document.querySelectorAll('.chip').forEach(c =>
+        c.classList.toggle('aktif', c === chip));
+      render();
+    });
+
+    /* ── Event search ───────────────────────────────────── */
+    let debounce;
+    document.getElementById('cari-input').addEventListener('input', function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        query = this.value.trim().toLowerCase();
+        render();
+      }, 220);
+    });
+
+    renderSidebar();
+    render();
+  })();
+  </script>
+
+</body>
+</html>

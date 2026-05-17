@@ -264,7 +264,7 @@
           <div class="section-rule" style="margin-bottom:26px;"></div>
           <blockquote id="kepsek-kutipan"></blockquote>
           <div id="kepsek-sambutan"></div>
-          <a href="/profil" class="read-more">Baca selengkapnya &rarr;</a>
+          <a href="pages/profil.html" class="read-more">Baca selengkapnya &rarr;</a>
         </div>
       </div>
     </div>
@@ -282,14 +282,14 @@
         <div>
           <div class="sub-header">
             <h3 class="subsection-title">Berita Terbaru</h3>
-            <a href="/berita" class="link-all">Lihat semua berita &rarr;</a>
+            <a href="pages/berita.html" class="link-all">Lihat semua berita &rarr;</a>
           </div>
           <div class="berita-list" id="berita-list"></div>
         </div>
         <div class="pengumuman-panel">
           <div class="panel-head">
             <h3>📢 Pengumuman</h3>
-            <a href="/pengumuman">Lihat semua &rarr;</a>
+            <a href="pages/pengumuman.html">Lihat semua &rarr;</a>
           </div>
           <div id="pengumuman-list"></div>
         </div>
@@ -413,15 +413,24 @@
     $('header-tagline').textContent = D.sekolah.tagline;
 
     const nav = $('nav-menu');
+    // Peta href navigasi ke path relatif yang benar dari index.html
+    const navHrefMap = {
+      '/':          '/',
+      '/profil':    'pages/profil.html',
+      '/akademik':  'pages/akademik.html',
+      '/kesiswaan': 'pages/kesiswaan.html',
+      '/berita':    'pages/berita.html',
+      '/unduhan':   'pages/unduhan.html',
+    };
     D.navigasi.forEach(item => {
       const a = document.createElement('a');
-      a.href = item.href;
+      a.href = navHrefMap[item.href] || item.href;
       a.textContent = item.label;
       if (item.aktif) a.className = 'active';
       nav.appendChild(a);
     });
     const ppdb = document.createElement('a');
-    ppdb.href = D.navPPDB.href;
+    ppdb.href = 'pages/ppdb.html';
     ppdb.textContent = D.navPPDB.label;
     ppdb.className = 'btn-ppdb';
     nav.appendChild(ppdb);
@@ -432,8 +441,8 @@
     $('hero-judul').innerHTML              = D.hero.judul;
     $('hero-deskripsi').textContent        = D.hero.deskripsi;
     $('hero-actions').innerHTML = `
-      <a href="${D.hero.btnUtama.href}" class="btn-hero-primary">${D.hero.btnUtama.label}</a>
-      <a href="${D.hero.btnKedua.href}" class="btn-hero-ghost">${D.hero.btnKedua.label}</a>`;
+      <a href="pages/ppdb.html" class="btn-hero-primary">${D.hero.btnUtama.label}</a>
+      <a href="pages/profil.html" class="btn-hero-ghost">${D.hero.btnKedua.label}</a>`;
 
     // ── Statistik ──────────────────────────────────────────────
     $('stats-inner').innerHTML = D.statistik.map(s => `
@@ -453,8 +462,13 @@
     $('kepsek-sambutan').innerHTML  = kp.sambutan.map(p => `<p>${p}</p>`).join('');
 
     // ── Berita ─────────────────────────────────────────────────
-    $('berita-list').innerHTML = D.berita.slice(0, 3).map(b => `
-      <a href="${b.href}" class="berita-card">
+    // Ambil 3 berita unggulan, fallback ke 3 teratas jika kurang
+    const beritaTampil = [
+      ...D.berita.filter(b => b.unggulan),
+      ...D.berita.filter(b => !b.unggulan)
+    ].slice(0, 3);
+    $('berita-list').innerHTML = beritaTampil.map(b => `
+      <a href="pages/berita-detail.html?id=${b.id}" class="berita-card">
         <div class="berita-thumb">
           <img src="${b.foto}" alt="${b.judul}" loading="lazy">
         </div>
@@ -470,17 +484,25 @@
       </a>`).join('');
 
     // ── Pengumuman ─────────────────────────────────────────────
-    $('pengumuman-list').innerHTML = D.pengumuman.slice(0, 5).map(p => `
-      <div class="pengumuman-item">
-        <div class="pengumuman-date">
-          <div class="d">${p.tanggal}</div>
-          <div class="m">${p.bulan}</div>
+    $('pengumuman-list').innerHTML = D.pengumuman.slice(0, 5).map(p => {
+      // tanggal baru: "14 Mei 2026" → pisahkan hari dan bulan
+      const tParts = (p.tanggal || '').split(' ');
+      const tHari  = tParts[0] || '—';
+      const tBulan = tParts[1] || '';
+      return `
+      <a href="pages/pengumuman.html?id=${p.id}" style="text-decoration:none;color:inherit;display:block;">
+        <div class="pengumuman-item">
+          <div class="pengumuman-date">
+            <div class="d">${tHari}</div>
+            <div class="m">${tBulan}</div>
+          </div>
+          <div class="pengumuman-text">
+            <div class="pt">${p.judul}${p.baru ? '<span class="badge-new">Baru</span>' : ''}</div>
+            <div class="pd">${p.ringkasan}</div>
+          </div>
         </div>
-        <div class="pengumuman-text">
-          <div class="pt">${p.judul}${p.baru ? '<span class="badge-new">Baru</span>' : ''}</div>
-          <div class="pd">${p.detail}</div>
-        </div>
-      </div>`).join('');
+      </a>`;
+    }).join('');
 
     // ── Portal ─────────────────────────────────────────────────
     $('portal-grid').innerHTML = D.portal.map(p => `

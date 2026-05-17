@@ -723,4 +723,73 @@ const DATA = {
 
   },
 
+  // ══════════════════════════════════════════════════════════════
+  //  UNDUHAN
+  //  Dipakai di: pages/unduhan.html
+  //
+  //  ── CARA MENAMBAH FILE BARU ───────────────────────────────
+  //  Salin satu blok item, tempel di paling atas kategori yang
+  //  sesuai, lalu isi fieldnya.
+  //
+  //  TEMPLATE:
+  //  { nama: "Nama File", ukuran: "120 KB", format: "PDF",
+  //    url: "assets/dokumen/nama-file.pdf", tahun: "2026" },
+  //
+  //  format: "PDF" | "DOCX" | "XLSX" | "JPG" | "ZIP"
+  //  url   : path relatif dari root repo, atau URL lengkap
+  // ══════════════════════════════════════════════════════════════
+  unduhan: [
+    {
+      kategori: "Akademik",
+      ikon: "📚",
+      deskripsi: "Kalender akademik, jadwal pelajaran, dan dokumen kurikulum.",
+      files: [
+        { nama: "Kalender Akademik TA 2025/2026",         ukuran: "340 KB", format: "PDF",  url: "assets/dokumen/kalender-akademik-2025-2026.pdf", tahun: "2026" },
+        { nama: "Jadwal Pelajaran Semester Genap 2025/2026", ukuran: "210 KB", format: "PDF",  url: "assets/dokumen/jadwal-genap-2025-2026.pdf",      tahun: "2026" },
+        { nama: "Alokasi Waktu Kurikulum Merdeka",         ukuran: "180 KB", format: "PDF",  url: "assets/dokumen/alokasi-waktu-kurmer.pdf",         tahun: "2026" },
+        { nama: "Buku Panduan Belajar di Rumah",           ukuran: "520 KB", format: "PDF",  url: "assets/dokumen/panduan-belajar-rumah.pdf",        tahun: "2025" },
+      ],
+    },
+    {
+      kategori: "Kesiswaan",
+      ikon: "🎒",
+      deskripsi: "Tata tertib, formulir, dan dokumen kebutuhan siswa.",
+      files: [
+        { nama: "Tata Tertib Siswa TA 2025/2026",       ukuran: "290 KB", format: "PDF",  url: "assets/dokumen/tata-tertib-siswa.pdf",        tahun: "2026" },
+        { nama: "Formulir Pendaftaran Ekstrakurikuler", ukuran: "95 KB",  format: "PDF",  url: "assets/dokumen/form-ekskul.pdf",              tahun: "2026" },
+        { nama: "Buku Mutaba'ah Harian Siswa",          ukuran: "1.2 MB", format: "PDF",  url: "assets/dokumen/buku-mutabaah.pdf",            tahun: "2026" },
+        { nama: "Surat Izin Tidak Masuk Sekolah",       ukuran: "48 KB",  format: "DOCX", url: "assets/dokumen/surat-izin.docx",             tahun: "2025" },
+      ],
+    },
+    {
+      kategori: "PPDB",
+      ikon: "🏫",
+      deskripsi: "Formulir dan informasi Penerimaan Peserta Didik Baru.",
+      files: [
+        { nama: "Brosur PPDB 2026/2027",                 ukuran: "1.8 MB", format: "PDF",  url: "assets/dokumen/brosur-ppdb-2026-2027.pdf",    tahun: "2026" },
+        { nama: "Formulir Pendaftaran PPDB (cetak)",     ukuran: "120 KB", format: "PDF",  url: "assets/dokumen/form-ppdb-2026-2027.pdf",      tahun: "2026" },
+        { nama: "Persyaratan PPDB Lengkap",              ukuran: "85 KB",  format: "PDF",  url: "assets/dokumen/syarat-ppdb-2026-2027.pdf",    tahun: "2026" },
+      ],
+    },
+    {
+      kategori: "Orang Tua & Komite",
+      ikon: "👨‍👩‍👧",
+      deskripsi: "Laporan, notulen rapat komite, dan informasi untuk orang tua.",
+      files: [
+        { nama: "Laporan Program Semester Ganjil 2025/2026", ukuran: "2.1 MB", format: "PDF",  url: "assets/dokumen/laporan-ganjil-2025.pdf",   tahun: "2026" },
+        { nama: "Notulen Rapat Komite Apr 2026",             ukuran: "310 KB", format: "PDF",  url: "assets/dokumen/notulen-komite-apr-2026.pdf", tahun: "2026" },
+        { nama: "Panduan Pembayaran SPP via QRIS",           ukuran: "150 KB", format: "PDF",  url: "assets/dokumen/panduan-spp-qris.pdf",      tahun: "2025" },
+      ],
+    },
+    {
+      kategori: "Sertifikat & Penghargaan",
+      ikon: "🏅",
+      deskripsi: "Sertifikat akreditasi dan penghargaan resmi sekolah.",
+      files: [
+        { nama: "Sertifikat Akreditasi A — BAN-S/M 2022", ukuran: "890 KB", format: "PDF", url: "assets/dokumen/sertifikat-akreditasi-a.pdf", tahun: "2022" },
+        { nama: "SK Sekolah Penggerak 2022",               ukuran: "420 KB", format: "PDF", url: "assets/dokumen/sk-sekolah-penggerak.pdf",    tahun: "2022" },
+      ],
+    },
+  ],
+
 };
