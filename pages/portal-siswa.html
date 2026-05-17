@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Siswa — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    :root { --portal-color: var(--blue-700); --portal-dark: var(--blue-950); }
+
+    /* Hero portal */
+    .portal-hero {
+      background: linear-gradient(135deg, #0a1f4a 0%, #0d3172 60%, #1a4fb5 100%);
+      padding: 48px 0 44px; position: relative; overflow: hidden;
+    }
+    .portal-hero::before {
+      content: "🎒"; position: absolute; right: 5%; top: 50%;
+      transform: translateY(-50%);
+      font-size: 140px; opacity: .07; pointer-events: none;
+    }
+    .portal-hero-tag { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .portal-hero h1 { font-family:var(--serif); font-size:clamp(26px,4vw,40px); font-weight:700; color:white; margin:0 0 10px; }
+    .portal-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); max-width:520px; margin:0 0 24px; line-height:1.7; }
+    .portal-switcher { display:flex; gap:8px; flex-wrap:wrap; }
+    .ps-btn { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none; border:1.5px solid rgba(255,255,255,.3); color:white; transition:all .18s; }
+    .ps-btn:hover { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.5); }
+    .ps-btn.aktif { background:rgba(255,255,255,.18); border-color:white; }
+
+    /* Grid aplikasi utama */
+    .app-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; }
+    .app-card {
+      background:white; border:1px solid var(--gray-200); border-radius:var(--radius);
+      padding:24px 20px 20px; text-align:center; text-decoration:none; color:inherit;
+      transition:box-shadow .2s, transform .2s; display:flex; flex-direction:column; align-items:center;
+    }
+    .app-card:hover { box-shadow:0 6px 24px rgba(13,49,114,.13); transform:translateY(-3px); }
+    .app-card.utama { border-color:var(--blue-200); border-width:2px; }
+    .app-ikon {
+      width:56px; height:56px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:26px; margin-bottom:14px; flex-shrink:0;
+    }
+    .app-card h4 { font-family:var(--serif); font-size:16px; font-weight:700; color:var(--blue-950); margin:0 0 5px; }
+    .app-card p  { font-size:12.5px; color:var(--gray-500); margin:0 0 14px; line-height:1.5; flex:1; }
+    .app-link-tag { font-size:12px; font-weight:600; color:var(--blue-700); }
+
+    /* Pengumuman ringkas */
+    .peng-mini { display:flex; flex-direction:column; gap:10px; }
+    .peng-mini-item {
+      display:flex; gap:14px; align-items:flex-start;
+      background:white; border:1px solid var(--gray-200); border-radius:8px;
+      padding:14px 16px; text-decoration:none; color:inherit;
+      transition:background .15s;
+    }
+    .peng-mini-item:hover { background:var(--blue-50); }
+    .pm-tgl { text-align:center; background:var(--blue-50); border:1px solid var(--blue-100); border-radius:6px; padding:6px 10px; min-width:44px; flex-shrink:0; }
+    .pm-tgl .d { font-family:var(--serif); font-size:20px; font-weight:700; color:var(--blue-900); line-height:1; }
+    .pm-tgl .m { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--blue-700); }
+    .pm-judul { font-size:14px; font-weight:600; color:var(--blue-950); margin-bottom:3px; line-height:1.35; }
+    .pm-rin   { font-size:12px; color:var(--gray-400); line-height:1.5; }
+    .badge-baru { display:inline-block; font-size:9px; font-weight:700; background:#16a34a; color:white; border-radius:3px; padding:1px 6px; margin-left:6px; text-transform:uppercase; }
+
+    /* Agenda mini */
+    .agenda-mini { display:flex; flex-direction:column; gap:8px; }
+    .agenda-item { display:flex; gap:12px; align-items:flex-start; font-size:13.5px; }
+    .ag-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+    .ag-dot.acara  { background:var(--blue-500); }
+    .ag-dot.ujian  { background:#dc2626; }
+    .ag-dot.libur  { background:#16a34a; }
+    .ag-judul { font-weight:600; color:var(--blue-950); margin-bottom:2px; font-size:13.5px; line-height:1.35; }
+    .ag-tgl   { font-size:12px; color:var(--gray-400); }
+
+    /* Layout dua kolom */
+    .portal-layout { display:grid; grid-template-columns:1fr 300px; gap:40px; align-items:start; }
+    @media (max-width:860px) { .portal-layout { grid-template-columns:1fr; } }
+
+    /* Sidebar box */
+    .sidebar-box { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; }
+    .sidebar-head { background:var(--blue-900); color:white; padding:13px 18px; font-family:var(--serif); font-size:15px; font-weight:700; }
+    .sidebar-body { padding:18px; }
+
+    /* Panduan harian */
+    .harian-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+    .harian-item { display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--gray-600); }
+    .harian-jam  { font-size:11px; font-weight:700; color:var(--blue-700); background:var(--blue-50); border-radius:4px; padding:2px 7px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+
+    /* Mutaba'ah mini */
+    .mutabaah-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .mb-item { background:var(--blue-50); border:1px solid var(--blue-100); border-radius:6px; padding:10px 8px; text-align:center; }
+    .mb-ikon { font-size:20px; margin-bottom:4px; }
+    .mb-lbl  { font-size:11px; color:var(--blue-700); font-weight:600; line-height:1.3; }
+  </style>
+</head>
+<body data-page="kesiswaan">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero Portal -->
+  <div class="portal-hero">
+    <div class="container">
+      <div class="portal-hero-tag">✦ Portal Pengguna</div>
+      <h1>Portal Siswa</h1>
+      <p>Akses semua layanan digital sekolah dari satu tempat — e-Rapor, Google Classroom, perpustakaan, absensi, dan informasi sekolah.</p>
+      <div class="portal-switcher">
+        <a href="portal-siswa.html" class="ps-btn aktif">🎒 Siswa</a>
+        <a href="portal-ortu.html"  class="ps-btn">👨‍👩‍👧 Orang Tua</a>
+        <a href="portal-guru.html"  class="ps-btn">🏫 Guru</a>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <span style="color:var(--gray-600);">Portal Siswa</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+        <div class="portal-layout">
+
+          <!-- Kiri: aplikasi + pengumuman + agenda -->
+          <div>
+
+            <!-- Aplikasi utama -->
+            <div class="section-tag">Akses Cepat</div>
+            <h2 class="section-heading">Aplikasi &amp; Layanan Siswa</h2>
+            <div class="section-rule" style="margin-bottom:20px;"></div>
+            <div class="app-grid" style="margin-bottom:40px;" id="app-grid"></div>
+
+            <!-- Pengumuman terbaru -->
+            <div class="section-tag">Informasi</div>
+            <h2 class="section-heading">Pengumuman Terbaru</h2>
+            <div class="section-rule" style="margin-bottom:16px;"></div>
+            <div class="peng-mini" id="peng-mini" style="margin-bottom:12px;"></div>
+            <a href="pengumuman.html" style="font-size:13px;font-weight:600;color:var(--blue-700);">Lihat semua pengumuman →</a>
+
+          </div>
+
+          <!-- Kanan: sidebar -->
+          <aside>
+
+            <!-- Jadwal harian -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">📅 Jadwal Harian</div>
+              <div class="sidebar-body">
+                <ul class="harian-list">
+                  <li class="harian-item"><span class="harian-jam">06.30</span> Tiba di sekolah, wudhu, dan sholat Dhuha berjamaah</li>
+                  <li class="harian-item"><span class="harian-jam">07.00</span> Tadarus Al-Qur'an &amp; Tahfidz Joyful Learning</li>
+                  <li class="harian-item"><span class="harian-jam">07.30</span> Kegiatan Belajar Mengajar (KBM) dimulai</li>
+                  <li class="harian-item"><span class="harian-jam">09.30</span> Istirahat pertama &amp; snack</li>
+                  <li class="harian-item"><span class="harian-jam">11.45</span> Sholat Dzuhur berjamaah</li>
+                  <li class="harian-item"><span class="harian-jam">12.15</span> Makan siang &amp; istirahat</li>
+                  <li class="harian-item"><span class="harian-jam">13.00</span> KBM sesi sore</li>
+                  <li class="harian-item"><span class="harian-jam">14.30</span> Pulang / ekstrakurikuler</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Agenda mendatang -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">🗓️ Agenda Mendatang</div>
+              <div class="sidebar-body">
+                <div class="agenda-mini" id="agenda-mini"></div>
+                <div style="margin-top:14px;">
+                  <a href="akademik.html" style="font-size:13px;font-weight:600;color:var(--blue-700);">Lihat kalender akademik →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mutaba'ah harian -->
+            <div class="sidebar-box">
+              <div class="sidebar-head">✅ Amalan Harian Islami</div>
+              <div class="sidebar-body">
+                <p style="font-size:12.5px;color:var(--gray-500);margin:0 0 12px;line-height:1.6;">Biasakan amalan harian untuk menjadi Anak Indonesia Hebat yang beriman:</p>
+                <div class="mutabaah-grid">
+                  <div class="mb-item"><div class="mb-ikon">🌙</div><div class="mb-lbl">Sholat 5 Waktu</div></div>
+                  <div class="mb-item"><div class="mb-ikon">📖</div><div class="mb-lbl">Tadarus Al-Qur'an</div></div>
+                  <div class="mb-item"><div class="mb-ikon">🤲</div><div class="mb-lbl">Doa Harian</div></div>
+                  <div class="mb-item"><div class="mb-ikon">🧹</div><div class="mb-lbl">Menjaga Kebersihan</div></div>
+                  <div class="mb-item"><div class="mb-ikon">📚</div><div class="mb-lbl">Belajar Rutin</div></div>
+                  <div class="mb-item"><div class="mb-ikon">🛏️</div><div class="mb-lbl">Tidur Tepat Waktu</div></div>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    const siswaPortal = DATA.portal.find(p=>p.judul==='Portal Siswa');
+
+    // App grid — dari DATA.portal siswa + tambahan
+    const apps = [
+      { ikon:'📊', bg:'#eff6ff', judul:'e-Rapor Siswa',         deskripsi:'Lihat nilai dan rapor digital',          url:'https://eraporsd.kemdikbud.go.id', utama:true },
+      { ikon:'📚', bg:'#f0fdf4', judul:'Google Classroom',       deskripsi:'Tugas, materi, dan diskusi kelas',       url:'https://classroom.google.com',       utama:true },
+      { ikon:'📖', bg:'#fdf4ff', judul:'Perpustakaan Digital',   deskripsi:'Koleksi buku dan e-book sekolah',        url:DATA.sekolah.urlPustaka,              utama:false },
+      { ikon:'✅', bg:'#fff7ed', judul:'Absensi Online',          deskripsi:'Cek kehadiran harian',                  url:'#',                                  utama:false },
+      { ikon:'📅', bg:'#f0fdf4', judul:'Jadwal Pelajaran',        deskripsi:'Jadwal dan kalender akademik',          url:'akademik.html',                      utama:false },
+      { ikon:'📢', bg:'#eff6ff', judul:'Pengumuman Sekolah',      deskripsi:'Info terbaru dari sekolah',             url:'pengumuman.html',                    utama:false },
+      { ikon:'🎒', bg:'#fef9c3', judul:'Daftar Ekstrakurikuler',  deskripsi:'Pilih dan pantau ekstrakurikuler',      url:'akademik.html#sec-ekskul',           utama:false },
+      { ikon:'💬', bg:'#f0fdf4', judul:'Hubungi Wali Kelas',      deskripsi:'Chat langsung via WhatsApp',            url:'kontak.html',                        utama:false },
+    ];
+    document.getElementById('app-grid').innerHTML = apps.map(a=>`
+      <a href="${a.url}" class="app-card${a.utama?' utama':''}" ${a.url.startsWith('http')?'target="_blank" rel="noopener"':''}>
+        <div class="app-ikon" style="background:${a.bg};">${a.ikon}</div>
+        <h4>${a.judul}</h4>
+        <p>${a.deskripsi}</p>
+        <span class="app-link-tag">${a.url.startsWith('http')?'Buka →':'Lihat →'}</span>
+      </a>`).join('');
+
+    // Pengumuman 4 teratas
+    document.getElementById('peng-mini').innerHTML =
+      DATA.pengumuman.slice(0,4).map(p=>{
+        const t = (p.tanggal||'').split(' ');
+        return `
+          <a href="pengumuman.html?id=${p.id}" class="peng-mini-item">
+            <div class="pm-tgl"><div class="d">${t[0]||'—'}</div><div class="m">${t[1]||''}</div></div>
+            <div>
+              <div class="pm-judul">${p.judul}${p.baru?'<span class="badge-baru">Baru</span>':''}</div>
+              <div class="pm-rin">${p.ringkasan}</div>
+            </div>
+          </a>`;
+      }).join('');
+
+    // Agenda 4 mendatang
+    document.getElementById('agenda-mini').innerHTML =
+      DATA.agenda.slice(0,4).map(a=>`
+        <div class="agenda-item">
+          <div class="ag-dot ${a.tipe}"></div>
+          <div>
+            <div class="ag-judul">${a.judul}</div>
+            <div class="ag-tgl">📅 ${a.tanggal} ${a.bulan}</div>
+          </div>
+        </div>`).join('');
+  })();
+  </script>
+</body>
+</html>

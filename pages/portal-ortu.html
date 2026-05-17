@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Orang Tua — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .portal-hero { background:linear-gradient(135deg,#0a2040 0%,#0f3d6e 60%,#1a5a9a 100%); padding:48px 0 44px; position:relative; overflow:hidden; }
+    .portal-hero::before { content:"👨‍👩‍👧"; position:absolute; right:5%; top:50%; transform:translateY(-50%); font-size:130px; opacity:.07; pointer-events:none; }
+    .portal-hero-tag { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .portal-hero h1 { font-family:var(--serif); font-size:clamp(26px,4vw,40px); font-weight:700; color:white; margin:0 0 10px; }
+    .portal-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); max-width:520px; margin:0 0 24px; line-height:1.7; }
+    .portal-switcher { display:flex; gap:8px; flex-wrap:wrap; }
+    .ps-btn { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none; border:1.5px solid rgba(255,255,255,.3); color:white; transition:all .18s; }
+    .ps-btn:hover { background:rgba(255,255,255,.12); }
+    .ps-btn.aktif { background:rgba(255,255,255,.18); border-color:white; }
+
+    /* Grid layanan */
+    .layanan-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; }
+    .lay-card { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); padding:22px 20px 18px; text-decoration:none; color:inherit; transition:box-shadow .2s,transform .2s; display:flex; flex-direction:column; }
+    .lay-card:hover { box-shadow:0 6px 24px rgba(13,49,114,.13); transform:translateY(-3px); }
+    .lay-ikon { font-size:28px; margin-bottom:12px; }
+    .lay-card h4 { font-family:var(--serif); font-size:16.5px; font-weight:700; color:var(--blue-950); margin:0 0 6px; }
+    .lay-card p  { font-size:13px; color:var(--gray-500); line-height:1.6; margin:0 0 14px; flex:1; }
+    .lay-tag { font-size:12px; font-weight:600; color:var(--blue-700); }
+    .lay-card.eksternal .lay-tag::after { content:" ↗"; }
+    .lay-card.internal  .lay-tag::after { content:" →"; }
+
+    /* Panduan pembayaran */
+    .bayar-steps { display:flex; flex-direction:column; gap:14px; }
+    .bayar-step { display:flex; gap:14px; align-items:flex-start; }
+    .b-num { width:28px; height:28px; background:var(--blue-700); color:white; border-radius:50%; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .b-judul { font-size:14px; font-weight:700; color:var(--blue-950); margin-bottom:3px; }
+    .b-det   { font-size:13px; color:var(--gray-500); line-height:1.55; }
+
+    /* Wali kelas list */
+    .wk-list { display:flex; flex-direction:column; gap:10px; }
+    .wk-item { display:flex; gap:12px; align-items:center; background:white; border:1px solid var(--gray-200); border-radius:8px; padding:12px 14px; }
+    .wk-foto { width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; background:var(--blue-100); }
+    .wk-kelas { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--blue-700); margin-bottom:2px; }
+    .wk-nama  { font-size:14px; font-weight:700; color:var(--blue-950); }
+    .wk-wa { margin-left:auto; flex-shrink:0; }
+    .btn-wa-sm { display:inline-flex; align-items:center; gap:5px; background:#25d366; color:white; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:700; text-decoration:none; transition:background .18s; }
+    .btn-wa-sm:hover { background:#1da851; }
+
+    /* Pengumuman untuk ortu */
+    .peng-ortu { display:flex; flex-direction:column; gap:10px; }
+    .po-item { background:white; border:1px solid var(--gray-200); border-radius:8px; padding:14px 16px; text-decoration:none; color:inherit; transition:background .15s; display:block; }
+    .po-item:hover { background:var(--blue-50); }
+    .po-kat  { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--blue-700); margin-bottom:5px; }
+    .po-jdl  { font-size:14px; font-weight:700; color:var(--blue-950); line-height:1.35; margin-bottom:4px; }
+    .po-tgl  { font-size:12px; color:var(--gray-400); }
+    .badge-penting { display:inline-block; font-size:9px; font-weight:700; background:#dc2626; color:white; border-radius:3px; padding:1px 6px; margin-left:5px; text-transform:uppercase; }
+
+    /* Layout */
+    .portal-layout { display:grid; grid-template-columns:1fr 300px; gap:40px; align-items:start; }
+    @media (max-width:860px) { .portal-layout { grid-template-columns:1fr; } }
+    .sidebar-box { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; }
+    .sidebar-head { background:var(--blue-900); color:white; padding:13px 18px; font-family:var(--serif); font-size:15px; font-weight:700; }
+    .sidebar-body { padding:18px; }
+  </style>
+</head>
+<body data-page="kesiswaan">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <div class="portal-hero">
+    <div class="container">
+      <div class="portal-hero-tag">✦ Portal Pengguna</div>
+      <h1>Portal Orang Tua</h1>
+      <p>Pantau perkembangan belajar anak, cek tagihan SPP, dan tetap terhubung dengan sekolah dari mana saja.</p>
+      <div class="portal-switcher">
+        <a href="portal-siswa.html" class="ps-btn">🎒 Siswa</a>
+        <a href="portal-ortu.html"  class="ps-btn aktif">👨‍👩‍👧 Orang Tua</a>
+        <a href="portal-guru.html"  class="ps-btn">🏫 Guru</a>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <span style="color:var(--gray-600);">Portal Orang Tua</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+        <div class="portal-layout">
+
+          <div>
+            <!-- Layanan utama -->
+            <div class="section-tag">Akses Layanan</div>
+            <h2 class="section-heading">Layanan untuk Orang Tua</h2>
+            <div class="section-rule" style="margin-bottom:20px;"></div>
+            <div class="layanan-grid" style="margin-bottom:44px;">
+              <a href="https://eraporsd.kemdikbud.go.id" target="_blank" rel="noopener" class="lay-card eksternal">
+                <div class="lay-ikon">📊</div>
+                <h4>Pantau Nilai &amp; Rapor</h4>
+                <p>Lihat perkembangan nilai, rapor, dan capaian belajar anak secara online.</p>
+                <span class="lay-tag">e-Rapor Kemdikbud</span>
+              </a>
+              <a href="#sec-spp" class="lay-card internal">
+                <div class="lay-ikon">💳</div>
+                <h4>Info Pembayaran SPP</h4>
+                <p>Panduan pembayaran SPP via transfer bank dan QRIS, beserta konfirmasi.</p>
+                <span class="lay-tag">Lihat panduan</span>
+              </a>
+              <a href="#sec-wali-kelas" class="lay-card internal">
+                <div class="lay-ikon">💬</div>
+                <h4>Hubungi Wali Kelas</h4>
+                <p>Chat langsung dengan wali kelas putra/putri Anda via WhatsApp.</p>
+                <span class="lay-tag">Pilih wali kelas</span>
+              </a>
+              <a href="pengumuman.html" class="lay-card internal">
+                <div class="lay-ikon">📢</div>
+                <h4>Pengumuman Sekolah</h4>
+                <p>Informasi resmi dari sekolah untuk orang tua dan wali murid.</p>
+                <span class="lay-tag">Lihat pengumuman</span>
+              </a>
+              <a href="ppdb.html" class="lay-card internal">
+                <div class="lay-ikon">🏫</div>
+                <h4>PPDB 2026/2027</h4>
+                <p>Daftarkan adik atau keluarga — kuota masih tersedia.</p>
+                <span class="lay-tag">Info PPDB</span>
+              </a>
+              <a href="kontak.html" class="lay-card internal">
+                <div class="lay-ikon">📞</div>
+                <h4>Hubungi Sekolah</h4>
+                <p>Kontak TU, keuangan, dan nomor darurat sekolah.</p>
+                <span class="lay-tag">Halaman Kontak</span>
+              </a>
+            </div>
+
+            <!-- Info SPP -->
+            <div id="sec-spp" style="scroll-margin-top:80px;">
+              <div class="section-tag">Keuangan</div>
+              <h2 class="section-heading">Panduan Pembayaran SPP</h2>
+              <div class="section-rule" style="margin-bottom:20px;"></div>
+              <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:44px;">
+                <div class="bayar-steps">
+                  <div class="bayar-step">
+                    <div class="b-num">1</div>
+                    <div>
+                      <div class="b-judul">Cek tagihan bulan berjalan</div>
+                      <div class="b-det">Pastikan jumlah dan bulan pembayaran sudah benar. Tagihan SPP jatuh tempo setiap tanggal 20.</div>
+                    </div>
+                  </div>
+                  <div class="bayar-step">
+                    <div class="b-num">2</div>
+                    <div>
+                      <div class="b-judul">Pilih metode pembayaran</div>
+                      <div class="b-det"><strong>Via Transfer Bank:</strong> Hubungi TU sekolah untuk mendapatkan nomor rekening resmi.<br><strong>Via QRIS:</strong> Scan kode QRIS yang tersedia di loket TU pada jam kerja.</div>
+                    </div>
+                  </div>
+                  <div class="bayar-step">
+                    <div class="b-num">3</div>
+                    <div>
+                      <div class="b-judul">Konfirmasi pembayaran</div>
+                      <div class="b-det">Kirim bukti transfer via WhatsApp ke bagian Keuangan sekolah beserta nama siswa dan kelas. Jam konfirmasi: Senin–Jumat 08.00–12.00 WIB.</div>
+                    </div>
+                  </div>
+                  <div class="bayar-step">
+                    <div class="b-num">4</div>
+                    <div>
+                      <div class="b-judul">Simpan bukti pembayaran</div>
+                      <div class="b-det">Simpan bukti transfer sebagai referensi. Kuitansi resmi akan diberikan pada awal bulan berikutnya.</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-200);display:flex;gap:10px;flex-wrap:wrap;">
+                  <a href="kontak.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--blue-700);color:white;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;">
+                    💳 Hubungi Bagian Keuangan
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wali kelas -->
+            <div id="sec-wali-kelas" style="scroll-margin-top:80px;">
+              <div class="section-tag">Komunikasi</div>
+              <h2 class="section-heading">Daftar Wali Kelas</h2>
+              <div class="section-rule" style="margin-bottom:16px;"></div>
+              <p style="font-size:14px;color:var(--gray-500);margin:0 0 18px;">Hubungi wali kelas putra/putri Anda melalui WhatsApp pada jam kerja (07.00–15.00 WIB).</p>
+              <div class="wk-list" id="wk-list"></div>
+            </div>
+
+          </div>
+
+          <!-- Sidebar -->
+          <aside>
+            <div class="sidebar-box">
+              <div class="sidebar-head">📢 Pengumuman Penting</div>
+              <div class="sidebar-body">
+                <div class="peng-ortu" id="peng-ortu"></div>
+                <div style="margin-top:12px;">
+                  <a href="pengumuman.html" style="font-size:13px;font-weight:600;color:var(--blue-700);">Semua pengumuman →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-box">
+              <div class="sidebar-head">📅 Agenda Sekolah</div>
+              <div class="sidebar-body">
+                <div id="agenda-ortu" style="display:flex;flex-direction:column;gap:10px;"></div>
+                <div style="margin-top:12px;">
+                  <a href="akademik.html" style="font-size:13px;font-weight:600;color:var(--blue-700);">Kalender akademik →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-box">
+              <div class="sidebar-head">📞 Kontak Darurat</div>
+              <div class="sidebar-body" style="display:flex;flex-direction:column;gap:10px;">
+                <div style="font-size:13px;color:var(--gray-600);">
+                  <div style="font-weight:700;color:var(--blue-950);margin-bottom:3px;">Tata Usaha</div>
+                  <div id="kontak-telp"></div>
+                </div>
+                <div style="font-size:13px;color:var(--gray-600);">
+                  <div style="font-weight:700;color:var(--blue-950);margin-bottom:3px;">UKS / Darurat Kesehatan</div>
+                  <div>Hubungi wali kelas atau TU segera</div>
+                </div>
+                <a href="kontak.html" style="display:block;text-align:center;background:var(--blue-700);color:white;border-radius:6px;padding:9px;font-size:13px;font-weight:700;text-decoration:none;margin-top:4px;">
+                  📞 Semua Kontak Sekolah
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    // Wali kelas dari data guru
+    const waliKelas = DATA.guruStaff.guru.filter(g=>g.jabatan.startsWith('Wali Kelas'));
+    const waNum = DATA.kontak.whatsapp;
+    document.getElementById('wk-list').innerHTML = waliKelas.map(w=>{
+      const teks = encodeURIComponent(`Halo ${w.nama}, saya orang tua murid ${w.jabatan}. Saya ingin berkonsultasi mengenai perkembangan anak saya.`);
+      return `
+        <div class="wk-item">
+          <img class="wk-foto" src="${w.foto}" alt="${w.nama}" loading="lazy">
+          <div>
+            <div class="wk-kelas">${w.jabatan}</div>
+            <div class="wk-nama">${w.nama}</div>
+          </div>
+          <div class="wk-wa">
+            <a class="btn-wa-sm" href="https://wa.me/${waNum}?text=${teks}" target="_blank" rel="noopener">
+              💬 Chat
+            </a>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Pengumuman penting untuk ortu
+    document.getElementById('peng-ortu').innerHTML =
+      DATA.pengumuman.slice(0,4).map(p=>`
+        <a href="pengumuman.html?id=${p.id}" class="po-item">
+          <div class="po-kat">${p.kategori}</div>
+          <div class="po-jdl">${p.judul}${p.penting?'<span class="badge-penting">Penting</span>':''}</div>
+          <div class="po-tgl">📅 ${p.tanggal} · ${p.sasaran}</div>
+        </a>`).join('');
+
+    // Agenda untuk ortu
+    document.getElementById('agenda-ortu').innerHTML =
+      DATA.agenda.slice(0,4).map(a=>`
+        <div style="font-size:13.5px;">
+          <div style="font-weight:700;color:var(--blue-950);margin-bottom:2px;">${a.judul}</div>
+          <div style="font-size:12px;color:var(--gray-400);">📅 ${a.tanggal} ${a.bulan} · ${a.detail}</div>
+        </div>`).join('');
+
+    document.getElementById('kontak-telp').textContent = DATA.sekolah.telepon;
+  })();
+  </script>
+</body>
+</html>
