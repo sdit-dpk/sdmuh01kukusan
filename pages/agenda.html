@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Sekolah — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .agenda-hero { background:linear-gradient(135deg,var(--blue-950),var(--blue-900)); padding:44px 0 40px; }
+    .agenda-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,38px); font-weight:700; color:white; margin:0 0 10px; }
+    .agenda-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); margin:0; }
+
+    /* Layout */
+    .agenda-layout { display:grid; grid-template-columns:1fr 300px; gap:40px; align-items:start; }
+    @media (max-width:840px) { .agenda-layout { grid-template-columns:1fr; } }
+
+    /* Filter chips */
+    .filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+    .chip { padding:6px 16px; border-radius:20px; font-size:13px; font-weight:500; border:1.5px solid var(--gray-200); background:white; color:var(--gray-500); cursor:pointer; transition:all .18s; user-select:none; }
+    .chip:hover { border-color:var(--blue-500); color:var(--blue-700); }
+    .chip.aktif { background:var(--blue-700); border-color:var(--blue-700); color:white; }
+    .chip.acara.aktif  { background:#1d4ed8; border-color:#1d4ed8; }
+    .chip.ujian.aktif  { background:#dc2626; border-color:#dc2626; }
+    .chip.libur.aktif  { background:#16a34a; border-color:#16a34a; }
+
+    /* Kartu agenda */
+    .agenda-list { display:flex; flex-direction:column; gap:14px; }
+    .agenda-card {
+      display:flex; gap:0;
+      background:white; border:1px solid var(--gray-200);
+      border-radius:var(--radius); overflow:hidden;
+      transition:box-shadow .2s, transform .2s;
+    }
+    .agenda-card:hover { box-shadow:0 4px 18px rgba(13,49,114,.1); transform:translateY(-2px); }
+
+    /* Strip warna kiri */
+    .ag-strip { width:6px; flex-shrink:0; }
+    .ag-strip.acara  { background:#1d4ed8; }
+    .ag-strip.ujian  { background:#dc2626; }
+    .ag-strip.libur  { background:#16a34a; }
+
+    /* Tanggal box */
+    .ag-tanggal {
+      flex-shrink:0; width:72px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:18px 10px;
+      border-right:1px solid var(--gray-200);
+      background:var(--surface);
+    }
+    .ag-hari  { font-family:var(--serif); font-size:32px; font-weight:700; color:var(--blue-900); line-height:1; }
+    .ag-bulan { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--blue-700); margin-top:3px; }
+
+    /* Body kartu */
+    .ag-body { padding:16px 20px; flex:1; min-width:0; }
+    .ag-tipe-badge {
+      display:inline-block; font-size:10px; font-weight:700;
+      letter-spacing:.6px; text-transform:uppercase;
+      border-radius:3px; padding:2px 8px; color:white; margin-bottom:7px;
+    }
+    .ag-tipe-badge.acara  { background:#1d4ed8; }
+    .ag-tipe-badge.ujian  { background:#dc2626; }
+    .ag-tipe-badge.libur  { background:#16a34a; }
+    .ag-body h3 { font-family:var(--serif); font-size:17px; font-weight:700; color:var(--blue-950); margin:0 0 6px; line-height:1.3; }
+    .ag-body p  { font-size:13.5px; color:var(--gray-500); margin:0; line-height:1.6; }
+
+    /* Kalender mini */
+    .cal-wrap { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; }
+    .cal-head { background:var(--blue-900); color:white; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; }
+    .cal-head-title { font-family:var(--serif); font-size:16px; font-weight:700; }
+    .cal-nav { background:none; border:none; color:white; cursor:pointer; font-size:18px; padding:4px 8px; border-radius:4px; transition:background .15s; }
+    .cal-nav:hover { background:rgba(255,255,255,.15); }
+    .cal-grid { padding:14px 16px 16px; }
+    .cal-days-header { display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:6px; }
+    .cal-days-header span { text-align:center; font-size:11px; font-weight:700; color:var(--gray-400); padding:4px 0; }
+    .cal-days { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+    .cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:12.5px; color:var(--gray-600); cursor:default; position:relative; }
+    .cal-day.empty { color:transparent; }
+    .cal-day.today { background:var(--blue-700); color:white; font-weight:700; }
+    .cal-day.has-agenda { background:var(--blue-50); color:var(--blue-900); font-weight:700; }
+    .cal-day.has-agenda::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--blue-700); }
+    .cal-day.libur-hari { background:#fef2f2; color:#dc2626; }
+    .cal-day.ujian-hari { background:#fef2f2; color:#dc2626; font-weight:700; }
+
+    /* Legenda */
+    .legenda { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; padding:0 16px 14px; }
+    .leg-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--gray-500); }
+    .leg-dot  { width:10px; height:10px; border-radius:50%; }
+    .leg-dot.acara  { background:#1d4ed8; }
+    .leg-dot.ujian  { background:#dc2626; }
+    .leg-dot.libur  { background:#16a34a; }
+
+    /* Sidebar info */
+    .sidebar-box { background:white; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; }
+    .sidebar-head { background:var(--blue-900); color:white; padding:12px 18px; font-family:var(--serif); font-size:15px; font-weight:700; }
+    .sidebar-body { padding:16px 18px; }
+    .stat-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--gray-200); font-size:13.5px; }
+    .stat-row:last-child { border-bottom:none; }
+    .stat-row .lbl { color:var(--gray-500); }
+    .stat-row .val { font-weight:700; color:var(--blue-900); }
+
+    /* Empty state */
+    .empty-state { text-align:center; padding:48px 20px; color:var(--gray-400); }
+    .empty-state .ikon { font-size:44px; margin-bottom:12px; }
+  </style>
+</head>
+<body data-page="akademik">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <div class="agenda-hero">
+    <div class="container">
+      <div class="section-tag" style="color:var(--gold);margin-bottom:10px;">✦ Kalender Kegiatan</div>
+      <h1>Agenda Sekolah</h1>
+      <p>Jadwal kegiatan, ujian, dan hari libur SD Muhammadiyah 01 Kukusan Tahun Ajaran 2025/2026.</p>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <span style="color:var(--gray-600);">Agenda Sekolah</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+        <div class="agenda-layout">
+
+          <!-- Kiri: daftar agenda -->
+          <div>
+            <div class="filter-row" id="filter-row">
+              <button class="chip aktif" data-tipe="Semua">Semua</button>
+              <button class="chip acara" data-tipe="acara">🔵 Acara</button>
+              <button class="chip ujian" data-tipe="ujian">🔴 Ujian</button>
+              <button class="chip libur" data-tipe="libur">🟢 Libur</button>
+            </div>
+            <div class="agenda-list" id="agenda-list"></div>
+          </div>
+
+          <!-- Kanan: kalender mini + statistik -->
+          <aside>
+            <div class="cal-wrap">
+              <div class="cal-head">
+                <button class="cal-nav" id="cal-prev">‹</button>
+                <div class="cal-head-title" id="cal-title"></div>
+                <button class="cal-nav" id="cal-next">›</button>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-days-header">
+                  <span>Min</span><span>Sen</span><span>Sel</span>
+                  <span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+                </div>
+                <div class="cal-days" id="cal-days"></div>
+              </div>
+              <div class="legenda">
+                <div class="leg-item"><div class="leg-dot acara"></div>Acara</div>
+                <div class="leg-item"><div class="leg-dot ujian"></div>Ujian</div>
+                <div class="leg-item"><div class="leg-dot libur"></div>Libur</div>
+              </div>
+            </div>
+
+            <div class="sidebar-box">
+              <div class="sidebar-head">📊 Ringkasan TA 2025/2026</div>
+              <div class="sidebar-body">
+                <div class="stat-row"><span class="lbl">Total Agenda</span><span class="val" id="st-total"></span></div>
+                <div class="stat-row"><span class="lbl">Acara Sekolah</span><span class="val" id="st-acara"></span></div>
+                <div class="stat-row"><span class="lbl">Ujian / Asesmen</span><span class="val" id="st-ujian"></span></div>
+                <div class="stat-row"><span class="lbl">Hari Libur</span><span class="val" id="st-libur"></span></div>
+              </div>
+            </div>
+
+            <div class="sidebar-box">
+              <div class="sidebar-head">📥 Unduh Kalender</div>
+              <div class="sidebar-body">
+                <p style="font-size:13px;color:var(--gray-500);margin:0 0 14px;line-height:1.6;">
+                  Unduh kalender akademik lengkap dalam format PDF untuk dicetak atau disimpan.
+                </p>
+                <a href="unduhan.html"
+                  style="display:block;text-align:center;background:var(--blue-700);color:white;border-radius:6px;padding:10px;font-size:13px;font-weight:700;text-decoration:none;">
+                  📄 Halaman Unduhan
+                </a>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    const semua  = DATA.agenda;
+    let tipeAktif = 'Semua';
+
+    // Statistik
+    document.getElementById('st-total').textContent = semua.length;
+    document.getElementById('st-acara').textContent = semua.filter(a=>a.tipe==='acara').length;
+    document.getElementById('st-ujian').textContent = semua.filter(a=>a.tipe==='ujian').length;
+    document.getElementById('st-libur').textContent = semua.filter(a=>a.tipe==='libur').length;
+
+    // Label tipe
+    const tipeLabel = { acara:'Acara', ujian:'Ujian / Asesmen', libur:'Hari Libur' };
+
+    // Render daftar agenda
+    function render() {
+      const list = tipeAktif === 'Semua' ? semua : semua.filter(a=>a.tipe===tipeAktif);
+      const el   = document.getElementById('agenda-list');
+      if (list.length === 0) {
+        el.innerHTML = `<div class="empty-state"><div class="ikon">📭</div><p>Tidak ada agenda untuk filter ini.</p></div>`;
+        return;
+      }
+      el.innerHTML = list.map(a=>`
+        <div class="agenda-card">
+          <div class="ag-strip ${a.tipe}"></div>
+          <div class="ag-tanggal">
+            <div class="ag-hari">${a.tanggal}</div>
+            <div class="ag-bulan">${a.bulan}</div>
+          </div>
+          <div class="ag-body">
+            <span class="ag-tipe-badge ${a.tipe}">${tipeLabel[a.tipe]}</span>
+            <h3>${a.judul}</h3>
+            <p>${a.detail}</p>
+          </div>
+        </div>`).join('');
+    }
+
+    // Filter chips
+    document.getElementById('filter-row').addEventListener('click', e=>{
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      tipeAktif = chip.dataset.tipe;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('aktif',c===chip));
+      render();
+    });
+
+    // ── Kalender mini ─────────────────────────────────────
+    const bulanNama = ['Januari','Februari','Maret','April','Mei','Juni',
+                       'Juli','Agustus','September','Oktober','November','Desember'];
+    const today = new Date();
+    let calYear  = today.getFullYear();
+    let calMonth = today.getMonth(); // 0-based
+
+    // Buat set hari yang punya agenda { "2026-5-20": "acara", ... }
+    const agendaMap = {};
+    semua.forEach(a=>{
+      const key = `${calYear}-${a.bulanNum}-${parseInt(a.tanggal)}`;
+      agendaMap[key] = a.tipe;
+    });
+
+    function renderCal() {
+      const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+      const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+      document.getElementById('cal-title').textContent =
+        bulanNama[calMonth] + ' ' + calYear;
+
+      let html = '';
+      // Sel kosong sebelum hari pertama
+      for (let i=0; i<firstDay; i++) html += '<div class="cal-day empty"></div>';
+      // Hari-hari
+      for (let d=1; d<=daysInMonth; d++) {
+        const isToday = (d===today.getDate() && calMonth===today.getMonth() && calYear===today.getFullYear());
+        const key = `${calYear}-${calMonth+1}-${d}`;
+        const tipe = agendaMap[key];
+        let cls = 'cal-day';
+        if (isToday) cls += ' today';
+        else if (tipe==='libur') cls += ' libur-hari';
+        else if (tipe==='ujian') cls += ' ujian-hari';
+        else if (tipe) cls += ' has-agenda';
+        html += `<div class="${cls}" title="${tipe?tipeLabel[tipe]:''}">${d}</div>`;
+      }
+      document.getElementById('cal-days').innerHTML = html;
+    }
+
+    document.getElementById('cal-prev').addEventListener('click',()=>{
+      calMonth--; if (calMonth<0){ calMonth=11; calYear--; } renderCal();
+    });
+    document.getElementById('cal-next').addEventListener('click',()=>{
+      calMonth++; if (calMonth>11){ calMonth=0; calYear++; } renderCal();
+    });
+
+    render();
+    renderCal();
+  })();
+  </script>
+</body>
+</html>

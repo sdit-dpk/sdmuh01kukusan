@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Foto — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .galeri-hero { background:linear-gradient(135deg,var(--blue-950),var(--blue-900)); padding:44px 0 40px; }
+    .galeri-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,38px); font-weight:700; color:white; margin:0 0 10px; }
+    .galeri-hero p  { font-size:14.5px; color:rgba(255,255,255,.65); margin:0; }
+
+    /* Filter */
+    .toolbar { background:white; border-bottom:1px solid var(--gray-200); padding:12px 0; position:sticky; top:60px; z-index:90; }
+    .toolbar-inner { max-width:1100px; margin:0 auto; padding:0 20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .chip { padding:6px 14px; border-radius:20px; font-size:13px; font-weight:500; border:1.5px solid var(--gray-200); background:white; color:var(--gray-500); cursor:pointer; transition:all .18s; user-select:none; }
+    .chip:hover { border-color:var(--blue-500); color:var(--blue-700); }
+    .chip.aktif { background:var(--blue-700); border-color:var(--blue-700); color:white; }
+
+    /* Masonry-style grid */
+    .foto-grid {
+      columns: 4;
+      column-gap: 12px;
+    }
+    @media (max-width:900px) { .foto-grid { columns:3; } }
+    @media (max-width:600px) { .foto-grid { columns:2; } }
+    @media (max-width:380px) { .foto-grid { columns:1; } }
+
+    .foto-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: var(--blue-100);
+      display: block;
+    }
+    .foto-item img {
+      width: 100%; display: block;
+      transition: transform .4s;
+    }
+    .foto-item:hover img { transform: scale(1.04); }
+    .foto-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(7,30,74,.75) 0%, transparent 50%);
+      opacity: 0; transition: opacity .3s;
+      display: flex; align-items: flex-end; padding: 14px;
+    }
+    .foto-item:hover .foto-overlay { opacity: 1; }
+    .foto-overlay-text {
+      color: white;
+    }
+    .foto-overlay-kat { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--gold); margin-bottom:3px; }
+    .foto-overlay-cap { font-family:var(--serif); font-size:14px; font-weight:700; line-height:1.3; }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(7,30,74,.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+    .lightbox.buka { opacity: 1; pointer-events: all; }
+    .lb-inner { position: relative; max-width: 90vw; max-height: 90vh; }
+    .lb-img {
+      max-width: 90vw; max-height: 78vh;
+      object-fit: contain; border-radius: 8px;
+      display: block;
+    }
+    .lb-caption {
+      text-align: center; margin-top: 14px;
+      color: white;
+    }
+    .lb-caption .kat { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); margin-bottom:4px; }
+    .lb-caption .cap { font-family:var(--serif); font-size:18px; font-weight:700; }
+    .lb-close {
+      position: absolute; top: -44px; right: 0;
+      background: none; border: none; color: white;
+      font-size: 28px; cursor: pointer; padding: 4px 8px;
+      border-radius: 6px; transition: background .15s;
+    }
+    .lb-close:hover { background:rgba(255,255,255,.15); }
+    .lb-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.15); border: none;
+      color: white; font-size: 24px; cursor: pointer;
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s; backdrop-filter: blur(4px);
+    }
+    .lb-nav:hover { background:rgba(255,255,255,.3); }
+    .lb-prev { left: -60px; }
+    .lb-next { right: -60px; }
+    @media (max-width:640px) {
+      .lb-prev { left: 8px; }
+      .lb-next { right: 8px; }
+    }
+    .lb-counter { position:absolute; bottom:-36px; left:50%; transform:translateX(-50%); font-size:13px; color:rgba(255,255,255,.6); white-space:nowrap; }
+
+    /* Empty */
+    .empty-state { text-align:center; padding:64px 20px; color:var(--gray-400); }
+    .empty-state .ikon { font-size:48px; margin-bottom:14px; }
+  </style>
+</head>
+<body data-page="galeri">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+  <div class="topbar"><div class="topbar-inner"><div class="topbar-left" id="topbar-kontak"></div><div class="topbar-right" id="topbar-ta"></div></div></div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <div class="galeri-hero">
+    <div class="container">
+      <div class="section-tag" style="color:var(--gold);margin-bottom:10px;">✦ Dokumentasi Kegiatan</div>
+      <h1>Galeri Foto</h1>
+      <p>Kumpulan momen berharga kegiatan, prestasi, dan keseharian di SD Muhammadiyah 01 Kukusan.</p>
+    </div>
+  </div>
+
+  <!-- Toolbar filter -->
+  <div class="toolbar">
+    <div class="toolbar-inner" id="filter-chips">
+      <button class="chip aktif" data-kat="Semua">Semua</button>
+      <button class="chip" data-kat="Kegiatan">🎨 Kegiatan</button>
+      <button class="chip" data-kat="Prestasi">🏆 Prestasi</button>
+      <button class="chip" data-kat="Pembelajaran">📚 Pembelajaran</button>
+      <button class="chip" data-kat="Fasilitas">🏫 Fasilitas</button>
+      <button class="chip" data-kat="Ibadah">🕌 Ibadah</button>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a><span>›</span>
+      <span style="color:var(--gray-600);">Galeri Foto</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+
+        <!-- Info placeholder -->
+        <div style="background:#FEF9C3;border:1px solid #FDE047;border-radius:8px;padding:12px 16px;font-size:13px;color:#713F12;margin-bottom:24px;display:flex;gap:8px;">
+          <span>⚠️</span>
+          <span>Foto-foto di bawah menggunakan placeholder. Ganti dengan foto asli dari sekolah — simpan ke <code>assets/foto/galeri/</code> dan perbarui array <code>DATA.galeri</code> di <code>js/data.js</code>.</span>
+        </div>
+
+        <div class="foto-grid" id="foto-grid"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Tampilan foto">
+    <div class="lb-inner">
+      <button class="lb-close" id="lb-close" aria-label="Tutup">✕</button>
+      <button class="lb-nav lb-prev" id="lb-prev" aria-label="Foto sebelumnya">‹</button>
+      <img class="lb-img" id="lb-img" src="" alt="">
+      <button class="lb-nav lb-next" id="lb-next" aria-label="Foto berikutnya">›</button>
+      <div class="lb-caption">
+        <div class="kat" id="lb-kat"></div>
+        <div class="cap" id="lb-cap"></div>
+      </div>
+      <div class="lb-counter" id="lb-counter"></div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+  (function(){
+    // Data galeri — placeholder hingga foto asli tersedia
+    // Ganti url dengan path lokal: "assets/foto/galeri/nama-foto.jpg"
+    const galeri = [
+      { kat:'Kegiatan',    kap:'Peringatan HUT RI ke-81 — Senam Massal',           url:'https://picsum.photos/seed/gal01/600/400' },
+      { kat:'Prestasi',    kap:'Tim Robotik Juara 2 Kota Depok',                    url:'https://picsum.photos/seed/gal02/400/500' },
+      { kat:'Ibadah',      kap:'Sholat Dhuha Berjamaah setiap pagi',                url:'https://picsum.photos/seed/gal03/600/380' },
+      { kat:'Pembelajaran',kap:'Projek P5 Tema Suara Demokrasi',                    url:'https://picsum.photos/seed/gal04/500/400' },
+      { kat:'Kegiatan',    kap:'Perkemahan Hizbul Wathan — Latihan Kepanduan',      url:'https://picsum.photos/seed/gal05/600/450' },
+      { kat:'Fasilitas',   kap:'Laboratorium Komputer — Pembelajaran Koding',       url:'https://picsum.photos/seed/gal06/600/400' },
+      { kat:'Ibadah',      kap:'Tadarus Al-Qur\'an pagi hari sebelum KBM',          url:'https://picsum.photos/seed/gal07/400/600' },
+      { kat:'Kegiatan',    kap:'Pentas Seni Angklung di Acara Perpisahan',          url:'https://picsum.photos/seed/gal08/600/380' },
+      { kat:'Prestasi',    kap:'Pameran Karya P5 yang dihadiri Orang Tua',          url:'https://picsum.photos/seed/gal09/500/500' },
+      { kat:'Pembelajaran',kap:'Kegiatan Tahfidz Joyful Learning Kelas 2',          url:'https://picsum.photos/seed/gal10/600/420' },
+      { kat:'Fasilitas',   kap:'Mushola Al-Hikmah — Tempat Ibadah Warga Sekolah',  url:'https://picsum.photos/seed/gal11/600/400' },
+      { kat:'Kegiatan',    kap:'Jumat Berkah dan Bersih — G7KAIH',                  url:'https://picsum.photos/seed/gal12/400/500' },
+      { kat:'Prestasi',    kap:'Upacara Bendera Hari Senin',                        url:'https://picsum.photos/seed/gal13/600/400' },
+      { kat:'Pembelajaran',kap:'Eksperimen IPAS — Sains Menyenangkan',              url:'https://picsum.photos/seed/gal14/500/380' },
+      { kat:'Kegiatan',    kap:'Olahraga Bersama di Lapangan Sekolah',              url:'https://picsum.photos/seed/gal15/600/400' },
+      { kat:'Fasilitas',   kap:'Perpustakaan — Pojok Baca Siswa',                   url:'https://picsum.photos/seed/gal16/600/450' },
+      { kat:'Ibadah',      kap:'Sholat Idul Adha Bersama Warga Sekolah',            url:'https://picsum.photos/seed/gal17/400/500' },
+      { kat:'Kegiatan',    kap:'Latihan Tapak Suci — Bela Diri Muhammadiyah',       url:'https://picsum.photos/seed/gal18/600/400' },
+    ];
+
+    let katAktif = 'Semua';
+    let fotoTampil = []; // Foto yang sedang ditampilkan (untuk lightbox)
+    let idxAktif = 0;
+
+    function render() {
+      fotoTampil = katAktif === 'Semua' ? galeri : galeri.filter(f=>f.kat===katAktif);
+      const grid = document.getElementById('foto-grid');
+      if (fotoTampil.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><div class="ikon">🖼️</div><p>Tidak ada foto untuk kategori ini.</p></div>`;
+        return;
+      }
+      grid.innerHTML = fotoTampil.map((f,i)=>`
+        <div class="foto-item" data-idx="${i}" tabindex="0" role="button" aria-label="Lihat foto: ${f.kap}">
+          <img src="${f.url}" alt="${f.kap}" loading="lazy">
+          <div class="foto-overlay">
+            <div class="foto-overlay-text">
+              <div class="foto-overlay-kat">${f.kat}</div>
+              <div class="foto-overlay-cap">${f.kap}</div>
+            </div>
+          </div>
+        </div>`).join('');
+
+      // Event klik foto
+      grid.querySelectorAll('.foto-item').forEach(el=>{
+        el.addEventListener('click', ()=>bukaLightbox(parseInt(el.dataset.idx)));
+        el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') bukaLightbox(parseInt(el.dataset.idx)); });
+      });
+    }
+
+    // Lightbox
+    function bukaLightbox(idx) {
+      idxAktif = idx;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('buka');
+      document.body.style.overflow = 'hidden';
+    }
+    function tutupLightbox() {
+      document.getElementById('lightbox').classList.remove('buka');
+      document.body.style.overflow = '';
+    }
+    function updateLightbox() {
+      const f = fotoTampil[idxAktif];
+      document.getElementById('lb-img').src = f.url;
+      document.getElementById('lb-img').alt = f.kap;
+      document.getElementById('lb-kat').textContent = f.kat;
+      document.getElementById('lb-cap').textContent = f.kap;
+      document.getElementById('lb-counter').textContent = `${idxAktif+1} / ${fotoTampil.length}`;
+      document.getElementById('lb-prev').style.opacity = idxAktif===0 ? '.3' : '1';
+      document.getElementById('lb-next').style.opacity = idxAktif===fotoTampil.length-1 ? '.3' : '1';
+    }
+
+    document.getElementById('lb-close').addEventListener('click', tutupLightbox);
+    document.getElementById('lb-prev').addEventListener('click', ()=>{ if(idxAktif>0){ idxAktif--; updateLightbox(); } });
+    document.getElementById('lb-next').addEventListener('click', ()=>{ if(idxAktif<fotoTampil.length-1){ idxAktif++; updateLightbox(); } });
+    document.getElementById('lightbox').addEventListener('click', e=>{ if(e.target===e.currentTarget) tutupLightbox(); });
+    document.addEventListener('keydown', e=>{
+      if (!document.getElementById('lightbox').classList.contains('buka')) return;
+      if (e.key==='Escape') tutupLightbox();
+      if (e.key==='ArrowLeft'  && idxAktif>0){ idxAktif--; updateLightbox(); }
+      if (e.key==='ArrowRight' && idxAktif<fotoTampil.length-1){ idxAktif++; updateLightbox(); }
+    });
+
+    // Filter chips
+    document.getElementById('filter-chips').addEventListener('click', e=>{
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      katAktif = chip.dataset.kat;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('aktif',c===chip));
+      render();
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>

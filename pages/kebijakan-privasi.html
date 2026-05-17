@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kebijakan Privasi — SD Muhammadiyah 01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    .kp-hero { background:linear-gradient(135deg,var(--blue-950),var(--blue-900)); padding:44px 0 40px; }
+    .kp-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,36px); font-weight:700; color:white; margin:0 0 10px; }
+    .kp-hero p  { font-size:14px; color:rgba(255,255,255,.6); margin:0; }
+
+    /* Layout dokumen */
+    .kp-layout { display:grid; grid-template-columns:220px 1fr; gap:48px; align-items:start; }
+    @media (max-width:760px) { .kp-layout { grid-template-columns:1fr; } .kp-toc { display:none; } }
+
+    /* Daftar isi sidebar */
+    .kp-toc { position:sticky; top:80px; }
+    .kp-toc h4 { font-family:var(--serif); font-size:15px; font-weight:700; color:var(--blue-950); margin:0 0 14px; }
+    .kp-toc ol { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:2px; counter-reset:toc; }
+    .kp-toc li { counter-increment:toc; }
+    .kp-toc a {
+      display:block; padding:7px 12px; border-radius:6px;
+      font-size:13px; color:var(--gray-500); text-decoration:none;
+      transition:background .15s, color .15s;
+      border-left:2px solid transparent;
+    }
+    .kp-toc a:hover { background:var(--blue-50); color:var(--blue-700); border-left-color:var(--blue-500); }
+    .kp-toc a::before { content:counter(toc)". "; color:var(--gray-300); }
+
+    /* Konten teks kebijakan */
+    .kp-content { min-width:0; }
+    .kp-section { margin-bottom:44px; scroll-margin-top:90px; }
+    .kp-section h2 { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--blue-950); margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--blue-100); }
+    .kp-section p  { font-size:15px; color:var(--gray-600); line-height:1.8; margin:0 0 14px; }
+    .kp-section p:last-child { margin-bottom:0; }
+    .kp-section ul { padding-left:22px; margin:0 0 14px; }
+    .kp-section ul li { font-size:15px; color:var(--gray-600); line-height:1.75; margin-bottom:6px; }
+    .kp-section ul li:last-child { margin-bottom:0; }
+    .kp-section strong { color:var(--blue-950); }
+
+    /* Info box */
+    .info-box { background:var(--blue-50); border:1px solid var(--blue-100); border-left:4px solid var(--blue-700); border-radius:8px; padding:16px 18px; margin-bottom:20px; font-size:14px; color:var(--blue-900); line-height:1.7; }
+
+    /* Kontak box */
+    .kontak-box { background:var(--blue-900); border-radius:var(--radius); padding:24px 28px; color:white; }
+    .kontak-box h3 { font-family:var(--serif); font-size:20px; font-weight:700; color:white; margin:0 0 10px; }
+    .kontak-box p  { font-size:14px; color:rgba(255,255,255,.7); line-height:1.7; margin:0 0 16px; }
+    .kontak-box a  { color:var(--gold); text-decoration:none; }
+    .kontak-box a:hover { text-decoration:underline; }
+
+    /* Tanggal efektif */
+    .tanggal-efektif { display:inline-block; font-size:13px; color:var(--gray-400); background:var(--surface); border:1px solid var(--gray-200); border-radius:6px; padding:6px 14px; margin-bottom:32px; }
+  </style>
+</head>
+<body data-page="">
+  <a class="skip-link" href="#page-content">Langsung ke konten</a>
+
+  <div class="topbar"><div class="topbar-inner">
+    <div class="topbar-left" id="topbar-kontak"></div>
+    <div class="topbar-right" id="topbar-ta"></div>
+  </div></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-area">
+        <div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div>
+        <div class="logo-text"><strong id="header-nama"></strong><small id="header-tagline"></small></div>
+      </a>
+      <nav id="nav-menu"></nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <div class="kp-hero">
+    <div class="container">
+      <div class="section-tag" style="color:var(--gold);margin-bottom:10px;">✦ Dokumen Legal</div>
+      <h1>Kebijakan Privasi</h1>
+      <p>Cara kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda.</p>
+    </div>
+  </div>
+
+  <nav aria-label="Breadcrumb" style="background:var(--surface);border-bottom:1px solid var(--gray-200);padding:10px 0;font-size:13px;">
+    <div class="container" style="display:flex;gap:6px;align-items:center;color:var(--gray-400);">
+      <a href="../" style="color:var(--blue-700);">Beranda</a>
+      <span>›</span>
+      <span style="color:var(--gray-600);">Kebijakan Privasi</span>
+    </div>
+  </nav>
+
+  <main id="page-content">
+    <section class="section">
+      <div class="container">
+
+        <div class="tanggal-efektif">📅 Terakhir diperbarui: 15 Mei 2026</div>
+
+        <div class="info-box">
+          Kebijakan Privasi ini berlaku untuk website resmi SD Muhammadiyah 01 Kukusan
+          di domain <strong>sdmuh01kukusan.sch.id</strong> (dan subdomain terkait).
+          Dengan mengakses website ini, Anda menyetujui ketentuan yang tertuang di sini.
+        </div>
+
+        <div class="kp-layout">
+
+          <!-- Daftar isi -->
+          <aside class="kp-toc">
+            <h4>📋 Daftar Isi</h4>
+            <ol>
+              <li><a href="#sec-1">Informasi yang Dikumpulkan</a></li>
+              <li><a href="#sec-2">Cara Penggunaan Informasi</a></li>
+              <li><a href="#sec-3">Pembagian Informasi</a></li>
+              <li><a href="#sec-4">Keamanan Data</a></li>
+              <li><a href="#sec-5">Cookie &amp; Teknologi Pelacak</a></li>
+              <li><a href="#sec-6">Tautan Pihak Ketiga</a></li>
+              <li><a href="#sec-7">Hak Pengguna</a></li>
+              <li><a href="#sec-8">Data Anak</a></li>
+              <li><a href="#sec-9">Perubahan Kebijakan</a></li>
+              <li><a href="#sec-10">Hubungi Kami</a></li>
+            </ol>
+          </aside>
+
+          <!-- Konten -->
+          <div class="kp-content">
+
+            <div class="kp-section" id="sec-1">
+              <h2>1. Informasi yang Kami Kumpulkan</h2>
+              <p>SD Muhammadiyah 01 Kukusan hanya mengumpulkan informasi yang diperlukan untuk keperluan layanan pendidikan. Informasi yang dapat kami kumpulkan meliputi:</p>
+              <ul>
+                <li><strong>Informasi yang Anda berikan secara sukarela:</strong> nama lengkap, nomor WhatsApp, alamat email, dan informasi lain yang Anda isi pada formulir di website ini (formulir kontak, formulir PPDB, atau formulir pengaduan).</li>
+                <li><strong>Informasi teknis:</strong> alamat IP, jenis browser, perangkat yang digunakan, halaman yang dikunjungi, dan durasi kunjungan — dikumpulkan secara otomatis melalui log server.</li>
+                <li><strong>Informasi pendaftaran siswa:</strong> khusus untuk formulir PPDB, kami mengumpulkan data calon peserta didik dan orang tua/wali sesuai persyaratan administrasi sekolah.</li>
+              </ul>
+            </div>
+
+            <div class="kp-section" id="sec-2">
+              <h2>2. Cara Penggunaan Informasi</h2>
+              <p>Informasi yang kami kumpulkan digunakan untuk tujuan-tujuan berikut:</p>
+              <ul>
+                <li>Memproses formulir pendaftaran PPDB dan menghubungi calon peserta didik atau orang tua.</li>
+                <li>Merespons pertanyaan, pengaduan, atau permintaan informasi yang Anda kirimkan.</li>
+                <li>Mengirimkan pengumuman, informasi akademik, dan berita sekolah yang relevan.</li>
+                <li>Meningkatkan kualitas dan performa website melalui analisis data kunjungan.</li>
+                <li>Memenuhi kewajiban hukum dan administratif sesuai peraturan perundang-undangan yang berlaku.</li>
+              </ul>
+            </div>
+
+            <div class="kp-section" id="sec-3">
+              <h2>3. Pembagian Informasi kepada Pihak Ketiga</h2>
+              <p>Kami <strong>tidak menjual, menyewakan, atau memperdagangkan</strong> informasi pribadi Anda kepada pihak ketiga manapun untuk tujuan komersial.</p>
+              <p>Informasi pribadi Anda hanya dapat kami bagikan dalam kondisi berikut:</p>
+              <ul>
+                <li><strong>Dengan persetujuan Anda:</strong> misalnya ketika Anda mengirimkan formulir yang diteruskan melalui WhatsApp.</li>
+                <li><strong>Kewajiban hukum:</strong> apabila diwajibkan oleh peraturan perundang-undangan, perintah pengadilan, atau otoritas yang berwenang.</li>
+                <li><strong>Penyedia layanan teknis:</strong> penyedia hosting dan layanan teknis website yang terikat perjanjian kerahasiaan data.</li>
+                <li><strong>Kepentingan Persyarikatan Muhammadiyah:</strong> data yang relevan dapat dibagikan kepada Pimpinan Daerah Muhammadiyah Kota Depok dalam rangka pelaporan dan pembinaan organisasi.</li>
+              </ul>
+            </div>
+
+            <div class="kp-section" id="sec-4">
+              <h2>4. Keamanan Data</h2>
+              <p>Kami menerapkan langkah-langkah teknis dan organisasi yang wajar untuk melindungi informasi Anda dari akses tidak sah, perubahan, pengungkapan, atau penghancuran. Langkah-langkah tersebut mencakup:</p>
+              <ul>
+                <li>Penggunaan koneksi HTTPS (SSL/TLS) untuk seluruh komunikasi data di website.</li>
+                <li>Pembatasan akses data hanya kepada personel sekolah yang berwenang.</li>
+                <li>Pembaruan berkala sistem dan perangkat lunak yang digunakan.</li>
+              </ul>
+              <p>Namun demikian, tidak ada metode transmisi data melalui internet yang 100% aman. Kami tidak dapat menjamin keamanan mutlak dari informasi yang Anda kirimkan.</p>
+            </div>
+
+            <div class="kp-section" id="sec-5">
+              <h2>5. Cookie &amp; Teknologi Pelacak</h2>
+              <p>Website ini menggunakan cookie sesi dan penyimpanan lokal (<em>local storage</em>) yang bersifat teknis dan diperlukan untuk fungsionalitas dasar website, seperti menyimpan preferensi tampilan.</p>
+              <p>Website ini <strong>tidak menggunakan</strong> cookie pelacak pihak ketiga, iklan berbasis perilaku, atau layanan analitik pihak ketiga yang mengumpulkan data pengunjung lintas website.</p>
+              <p>Anda dapat mengatur browser untuk menolak cookie. Namun, beberapa fitur website mungkin tidak berfungsi optimal jika cookie dinonaktifkan.</p>
+            </div>
+
+            <div class="kp-section" id="sec-6">
+              <h2>6. Tautan ke Website Pihak Ketiga</h2>
+              <p>Website ini memuat tautan ke layanan eksternal seperti e-Rapor Kemdikbud, Google Classroom, Google Drive, dan WhatsApp. Kami tidak bertanggung jawab atas praktik privasi website-website tersebut.</p>
+              <p>Kami menyarankan Anda membaca kebijakan privasi masing-masing layanan pihak ketiga sebelum menggunakannya.</p>
+            </div>
+
+            <div class="kp-section" id="sec-7">
+              <h2>7. Hak Pengguna</h2>
+              <p>Sesuai peraturan perlindungan data yang berlaku di Indonesia, Anda berhak untuk:</p>
+              <ul>
+                <li><strong>Mengakses</strong> informasi pribadi Anda yang kami simpan.</li>
+                <li><strong>Memperbarui atau mengoreksi</strong> informasi pribadi yang tidak akurat.</li>
+                <li><strong>Meminta penghapusan</strong> informasi pribadi Anda dalam kondisi tertentu.</li>
+                <li><strong>Menarik persetujuan</strong> atas pemrosesan data yang didasarkan pada persetujuan Anda.</li>
+                <li><strong>Mengajukan keberatan</strong> atas pemrosesan data Anda untuk tujuan tertentu.</li>
+              </ul>
+              <p>Untuk menggunakan hak-hak di atas, silakan hubungi kami melalui informasi kontak di bagian akhir dokumen ini.</p>
+            </div>
+
+            <div class="kp-section" id="sec-8">
+              <h2>8. Privasi Data Anak</h2>
+              <p>SD Muhammadiyah 01 Kukusan adalah lembaga pendidikan dasar yang melayani siswa berusia 6–12 tahun. Kami berkomitmen penuh untuk melindungi privasi anak.</p>
+              <p>Kami <strong>tidak mengumpulkan</strong> data pribadi anak secara langsung tanpa persetujuan orang tua atau wali. Semua data siswa yang kami kelola diperoleh dari orang tua atau wali melalui proses administrasi resmi sekolah.</p>
+              <p>Data siswa hanya digunakan untuk keperluan administrasi pendidikan, pelaporan kepada Dinas Pendidikan, dan layanan akademik sekolah.</p>
+            </div>
+
+            <div class="kp-section" id="sec-9">
+              <h2>9. Perubahan Kebijakan Privasi</h2>
+              <p>Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu seiring perkembangan layanan, teknologi, atau ketentuan hukum yang berlaku.</p>
+              <p>Setiap perubahan akan kami umumkan melalui halaman ini dengan memperbarui tanggal "Terakhir diperbarui" di bagian atas dokumen. Kami menyarankan Anda untuk meninjau halaman ini secara berkala.</p>
+            </div>
+
+            <div class="kp-section" id="sec-10">
+              <h2>10. Hubungi Kami</h2>
+              <div class="kontak-box">
+                <h3>Ada pertanyaan tentang privasi?</h3>
+                <p>Jika Anda memiliki pertanyaan, kekhawatiran, atau permintaan terkait Kebijakan Privasi ini atau data pribadi Anda, silakan hubungi kami:</p>
+                <p>
+                  <strong style="color:white;">SD Muhammadiyah 01 Kukusan</strong><br>
+                  📍 <span id="kp-alamat"></span><br>
+                  📞 <span id="kp-telp"></span><br>
+                  ✉️ <a id="kp-email" href="#"></a>
+                </p>
+                <p>Jam layanan: <span id="kp-jam"></span></p>
+              </div>
+            </div>
+
+          </div><!-- /kp-content -->
+        </div><!-- /kp-layout -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="logo-area"><div class="logo-mark"><svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="white">SD</text></svg></div><div class="logo-text"><strong id="footer-nama"></strong><small id="footer-akreditasi"></small></div></div><p id="footer-deskripsi"></p></div>
+    <div class="footer-col"><h5>Tautan Cepat</h5><ul id="footer-links-utama"></ul></div>
+    <div class="footer-col"><h5>Portal</h5><ul id="footer-links-portal"></ul></div>
+    <div class="footer-col"><h5>Kontak Kami</h5><div class="footer-contact" id="footer-kontak"></div></div>
+  </div><div class="footer-bottom"><p id="footer-copy"></p></div></div></footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  <script>
+    const Ds = DATA.sekolah;
+    document.getElementById('kp-alamat').textContent = Ds.alamat;
+    document.getElementById('kp-telp').textContent   = Ds.telepon;
+    const emailEl = document.getElementById('kp-email');
+    emailEl.textContent = Ds.email;
+    emailEl.href        = 'mailto:' + Ds.email;
+    document.getElementById('kp-jam').textContent = Ds.jamOperasional;
+  </script>
+</body>
+</html>
