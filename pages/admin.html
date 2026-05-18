@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin — SD Muhammadiyah 01 Kukusan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    /* ── Layout dasar ── */
+    body {
+      background: var(--surface);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── Topbar admin ── */
+    .admin-topbar {
+      background: var(--blue-950);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      height: 56px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-topbar .brand {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      flex: 1;
+    }
+
+    .admin-topbar .brand span {
+      color: var(--gold);
+    }
+
+    .topbar-user {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .btn-keluar {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-keluar:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Container utama ── */
+    .admin-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    .admin-container h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin: 0 0 4px;
+    }
+
+    .admin-container .subtitle {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin: 0 0 28px;
+    }
+
+    /* ── Tab navigasi ── */
+    .tab-row {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-400);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover { color: var(--blue-700); }
+
+    .tab-btn.aktif {
+      color: var(--blue-700);
+      border-bottom-color: var(--blue-700);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--blue-700);
+      color: white;
+    }
+
+    .badge.kosong { background: var(--gray-200); color: var(--gray-400); }
+
+    /* ── Kartu permohonan ── */
+    .kartu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .kartu {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .kartu-ikon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .kartu-body { flex: 1; min-width: 0; }
+
+    .kartu-nama {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--blue-900);
+      margin: 0 0 2px;
+    }
+
+    .kartu-detail {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin: 0 0 4px;
+    }
+
+    .kartu-meta {
+      font-size: 12px;
+      color: var(--gray-300);
+    }
+
+    .kartu-aksi {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-setujui {
+      padding: 8px 16px;
+      background: var(--blue-700);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-setujui:hover { background: var(--blue-900); }
+    .btn-setujui:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .btn-tolak {
+      padding: 8px 16px;
+      background: none;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-tolak:hover { background: #fff0f0; }
+
+    /* Status badge di kartu */
+    .status-chip {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+    }
+
+    .status-chip.disetujui { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
+    .status-chip.ditolak   { background: #fff0f0; color: #b91c1c; border: 1px solid #fca5a5; }
+
+    /* Username hasil di kartu disetujui */
+    .username-hasil {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--blue-700);
+      background: #EEF4FF;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    /* ── State kosong ── */
+    .state-kosong {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--gray-400);
+    }
+
+    .state-kosong .ikon { font-size: 40px; margin-bottom: 12px; }
+    .state-kosong p { font-size: 14px; margin: 0; }
+
+    /* ── Loading state ── */
+    .state-loading {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--gray-400);
+      font-size: 14px;
+    }
+
+    /* ── Modal kredensial ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 30, 74, 0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.tampil { display: flex; }
+
+    .modal-box {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(7, 30, 74, 0.2);
+    }
+
+    .modal-box h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 22px;
+      color: var(--blue-900);
+      margin: 0 0 6px;
+    }
+
+    .modal-box .modal-sub {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin: 0 0 20px;
+      line-height: 1.6;
+    }
+
+    .kredensial-box {
+      background: var(--surface);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kredensial-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .kredensial-row:last-child { margin-bottom: 0; }
+
+    .kredensial-row .kred-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    .kredensial-row .kred-val {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue-900);
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+
+    .modal-info {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #92400e;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .btn-tutup-modal {
+      width: 100%;
+      padding: 11px;
+      background: var(--blue-700);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-tutup-modal:hover { background: var(--blue-900); }
+
+    /* ── Spinner di tombol ── */
+    .spinner-kecil {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body>
+
+  <!-- Topbar -->
+  <div class="admin-topbar">
+    <div class="brand">Panel Admin — <span>SD Muhammadiyah 01 Kukusan</span></div>
+    <span class="topbar-user" id="topbar-email"></span>
+    <button class="btn-keluar" id="btn-keluar">Keluar</button>
+  </div>
+
+  <!-- Container utama -->
+  <div class="admin-container" id="admin-container" style="display:none;">
+    <h1>Permohonan Akun</h1>
+    <p class="subtitle">Tinjau dan setujui permohonan akun dari orang tua dan guru.</p>
+
+    <!-- Tab navigasi -->
+    <div class="tab-row">
+      <button class="tab-btn aktif" id="tab-menunggu" onclick="gantiTab('menunggu')">
+        Menunggu <span class="badge" id="badge-menunggu">0</span>
+      </button>
+      <button class="tab-btn" id="tab-disetujui" onclick="gantiTab('disetujui')">
+        Disetujui <span class="badge kosong" id="badge-disetujui">0</span>
+      </button>
+      <button class="tab-btn" id="tab-ditolak" onclick="gantiTab('ditolak')">
+        Ditolak <span class="badge kosong" id="badge-ditolak">0</span>
+      </button>
+    </div>
+
+    <!-- Daftar permohonan -->
+    <div class="kartu-list" id="kartu-list">
+      <div class="state-loading">Memuat data...</div>
+    </div>
+  </div>
+
+  <!-- Halaman loading awal -->
+  <div id="loading-awal" style="display:flex;align-items:center;justify-content:center;min-height:100vh;">
+    <p style="color:var(--gray-400);font-size:14px;">Memeriksa sesi login...</p>
+  </div>
+
+  <!-- Modal kredensial -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <h2>✅ Akun Berhasil Dibuat</h2>
+      <p class="modal-sub">
+        Sampaikan kredensial berikut kepada pengguna melalui email atau
+        secara langsung. Minta mereka mengganti password setelah login pertama.
+      </p>
+      <div class="kredensial-box">
+        <div class="kredensial-row">
+          <span class="kred-label">Email Login</span>
+          <span class="kred-val" id="modal-email">—</span>
+        </div>
+        <div class="kredensial-row">
+          <span class="kred-label">Username</span>
+          <span class="kred-val" id="modal-username">—</span>
+        </div>
+        <div class="kredensial-row">
+          <span class="kred-label">Password</span>
+          <span class="kred-val" id="modal-password">—</span>
+        </div>
+      </div>
+      <div class="modal-info">
+        ⚠️ Catat kredensial ini sebelum menutup jendela.
+        Password tidak bisa dilihat kembali setelah modal ini ditutup.
+      </div>
+      <button class="btn-tutup-modal" onclick="tutupModal()">Sudah Dicatat — Tutup</button>
+    </div>
+  </div>
+
+  <!-- ── Firebase ── -->
+  <script type="module">
+    import { auth, db, firebaseConfig }
+      from '../js/firebase-config.js';
+
+    import {
+      onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    import {
+      doc, getDoc, setDoc, updateDoc,
+      collection, query, where,
+      onSnapshot, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ── State aplikasi ──
+    let tabAktif   = 'menunggu';
+    let semuaData  = [];   // semua dokumen dari Firestore (live)
+
+    // ─────────────────────────────────────────
+    //  Cek login dan role admin
+    // ─────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+      document.getElementById('loading-awal').style.display = 'none';
+
+      if (!user) {
+        // Belum login → redirect ke halaman login
+        window.location.href = './login.html';
+        return;
+      }
+
+      // Cek apakah role-nya admin
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      if (!snap.exists() || snap.data().role !== 'admin') {
+        alert('Akun Anda tidak memiliki akses ke halaman ini.');
+        await signOut(auth);
+        window.location.href = './login.html';
+        return;
+      }
+
+      // Tampilkan panel admin
+      document.getElementById('topbar-email').textContent = user.email;
+      document.getElementById('admin-container').style.display = 'block';
+
+      // Mulai mendengarkan data pendaftaran secara real-time
+      dengarkanPendaftaran();
+    });
+
+    // ─────────────────────────────────────────
+    //  Dengarkan collection pendaftaran (real-time)
+    // ─────────────────────────────────────────
+    function dengarkanPendaftaran() {
+      const q = collection(db, 'pendaftaran');
+
+      onSnapshot(q, (snapshot) => {
+        semuaData = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        // Hitung jumlah per status untuk badge
+        const jml = { menunggu: 0, disetujui: 0, ditolak: 0 };
+        semuaData.forEach(d => {
+          if (jml[d.status] !== undefined) jml[d.status]++;
+        });
+
+        // Update badge
+        ['menunggu', 'disetujui', 'ditolak'].forEach(s => {
+          const el = document.getElementById('badge-' + s);
+          el.textContent = jml[s];
+          el.className   = 'badge' + (jml[s] === 0 ? ' kosong' : '');
+        });
+
+        // Render tab aktif
+        renderTab(tabAktif);
+      });
+    }
+
+    // ─────────────────────────────────────────
+    //  Render kartu sesuai tab
+    // ─────────────────────────────────────────
+    function renderTab(status) {
+      const list    = document.getElementById('kartu-list');
+      const filtered = semuaData.filter(d => d.status === status);
+
+      if (filtered.length === 0) {
+        const label = { menunggu: 'Tidak ada permohonan yang menunggu.', disetujui: 'Belum ada permohonan yang disetujui.', ditolak: 'Belum ada permohonan yang ditolak.' };
+        list.innerHTML = `
+          <div class="state-kosong">
+            <div class="ikon">${status === 'menunggu' ? '📭' : status === 'disetujui' ? '✅' : '🚫'}</div>
+            <p>${label[status]}</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(d => kartHtml(d, status)).join('');
+    }
+
+    // ─────────────────────────────────────────
+    //  Template HTML satu kartu
+    // ─────────────────────────────────────────
+    function kartHtml(d, status) {
+      const ikon   = d.tipe === 'ortu' ? '👨‍👩‍👧' : '👨‍🏫';
+      const detail = d.tipe === 'ortu'
+        ? `Orang tua dari <strong>${d.namaAnak || '—'}</strong> · Kelas ${d.kelasAnak || '—'}`
+        : `${d.jabatan || '—'}`;
+
+      const tanggal = d.dibuatPada
+        ? new Date(d.dibuatPada.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '—';
+
+      const aksiHtml = status === 'menunggu' ? `
+        <div class="kartu-aksi">
+          <button class="btn-setujui" onclick="window._setujui('${d.id}')">✔ Setujui</button>
+          <button class="btn-tolak"   onclick="window._tolak('${d.id}')">✘ Tolak</button>
+        </div>` : `
+        <div class="kartu-aksi" style="align-items:flex-end;">
+          <span class="status-chip ${status}">${status === 'disetujui' ? 'Disetujui' : 'Ditolak'}</span>
+          ${d.usernameHasil ? `<span class="username-hasil">${d.usernameHasil}</span>` : ''}
+        </div>`;
+
+      return `
+        <div class="kartu">
+          <div class="kartu-ikon">${ikon}</div>
+          <div class="kartu-body">
+            <p class="kartu-nama">${d.namaLengkap || '—'}</p>
+            <p class="kartu-detail">${detail}</p>
+            <p class="kartu-detail">${d.email || '—'}</p>
+            <p class="kartu-meta">Mendaftar: ${tanggal}</p>
+          </div>
+          ${aksiHtml}
+        </div>`;
+    }
+
+    // ─────────────────────────────────────────
+    //  Generate username otomatis
+    // ─────────────────────────────────────────
+    function buatUsername(data) {
+      const bersihkan = (str) =>
+        (str || '').toLowerCase()
+          .split(' ')[0]                      // ambil kata pertama
+          .replace(/[^a-z0-9]/g, '');         // hapus karakter selain huruf/angka
+
+      if (data.tipe === 'ortu') {
+        const namaAnak = bersihkan(data.namaAnak);
+        const kelas    = (data.kelasAnak || '').toLowerCase().replace(/\s/g, '');
+        return `ot_${namaAnak}_${kelas}`;
+      } else {
+        const namaGuru = bersihkan(data.namaLengkap);
+        return `gr_${namaGuru}`;
+      }
+    }
+
+    // ─────────────────────────────────────────
+    //  Generate password acak (8 karakter)
+    // ─────────────────────────────────────────
+    function buatPassword() {
+      const karakter = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+      let pw = '';
+      for (let i = 0; i < 8; i++) {
+        pw += karakter[Math.floor(Math.random() * karakter.length)];
+      }
+      return pw;
+    }
+
+    // ─────────────────────────────────────────
+    //  Proses SETUJUI
+    // ─────────────────────────────────────────
+    window._setujui = async function(idDokumen) {
+      const data = semuaData.find(d => d.id === idDokumen);
+      if (!data) return;
+
+      // Konfirmasi
+      if (!confirm(`Setujui permohonan dari ${data.namaLengkap}?`)) return;
+
+      // Nonaktifkan tombol
+      const btn = document.querySelector(`[onclick="window._setujui('${idDokumen}')"]`);
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-kecil"></span>'; }
+
+      try {
+        const username = buatUsername(data);
+        const password = buatPassword();
+
+        // ── Buat akun Firebase Auth via secondary app ──
+        // (supaya sesi admin tidak terputus)
+        const appSekunder = initializeApp(firebaseConfig, 'akun-baru-' + Date.now());
+        const authSekunder = getAuth(appSekunder);
+
+        const hasil = await createUserWithEmailAndPassword(
+          authSekunder, data.email, password
+        );
+        const uid = hasil.user.uid;
+
+        // Logout dari secondary app (cleanup)
+        await authSekunder.signOut();
+
+        // ── Simpan ke collection users ──
+        const dataUser = {
+          role       : data.tipe === 'ortu' ? 'ortu' : 'guru',
+          namaLengkap: data.namaLengkap,
+          email      : data.email,
+          username   : username,
+          aktif      : true,
+          dibuatPada : serverTimestamp(),
+          dieditPada : serverTimestamp(),
+        };
+
+        if (data.tipe === 'ortu') {
+          dataUser.namaAnak  = data.namaAnak;
+          dataUser.kelasAnak = data.kelasAnak;
+        } else {
+          dataUser.jabatan = data.jabatan;
+        }
+
+        await setDoc(doc(db, 'users', uid), dataUser);
+
+        // ── Update status pendaftaran ──
+        await updateDoc(doc(db, 'pendaftaran', idDokumen), {
+          status       : 'disetujui',
+          usernameHasil: username,
+          diprosesPada : serverTimestamp(),
+        });
+
+        // ── Tampilkan modal kredensial ──
+        document.getElementById('modal-email').textContent    = data.email;
+        document.getElementById('modal-username').textContent = username;
+        document.getElementById('modal-password').textContent = password;
+        document.getElementById('modal-overlay').classList.add('tampil');
+
+      } catch (err) {
+        console.error(err);
+        const pesanKesalahan = err.code === 'auth/email-already-in-use'
+          ? 'Email ini sudah terdaftar sebagai akun Firebase.'
+          : 'Gagal membuat akun: ' + err.message;
+        alert(pesanKesalahan);
+        if (btn) { btn.disabled = false; btn.innerHTML = '✔ Setujui'; }
+      }
+    };
+
+    // ─────────────────────────────────────────
+    //  Proses TOLAK
+    // ─────────────────────────────────────────
+    window._tolak = async function(idDokumen) {
+      const data = semuaData.find(d => d.id === idDokumen);
+      if (!data) return;
+
+      if (!confirm(`Tolak permohonan dari ${data.namaLengkap}? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+      try {
+        await updateDoc(doc(db, 'pendaftaran', idDokumen), {
+          status      : 'ditolak',
+          diprosesPada: serverTimestamp(),
+        });
+      } catch (err) {
+        alert('Gagal menolak permohonan. Coba lagi.');
+        console.error(err);
+      }
+    };
+
+    // ─────────────────────────────────────────
+    //  Ganti tab
+    // ─────────────────────────────────────────
+    window.gantiTab = function(status) {
+      tabAktif = status;
+      ['menunggu', 'disetujui', 'ditolak'].forEach(s => {
+        document.getElementById('tab-' + s).classList.toggle('aktif', s === status);
+      });
+      renderTab(status);
+    };
+
+    // ─────────────────────────────────────────
+    //  Tutup modal
+    // ─────────────────────────────────────────
+    window.tutupModal = function() {
+      document.getElementById('modal-overlay').classList.remove('tampil');
+    };
+
+    // ─────────────────────────────────────────
+    //  Tombol keluar
+    // ─────────────────────────────────────────
+    document.getElementById('btn-keluar').addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = './login.html';
+    });
+
+  </script>
+
+</body>
+</html>

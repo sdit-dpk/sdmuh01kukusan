@@ -21,3 +21,6 @@ desktop.ini
 # Hapus baris ini jika foto/logo ingin ikut di repo
 # assets/foto/
 # assets/logo/
+
+# Firebase — jangan di-push ke GitHub
+js/firebase-config.js

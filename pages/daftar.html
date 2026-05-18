@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Akun Portal — SD Muhammadiyah 01 Kukusan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Global stylesheet -->
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      padding: 24px 16px;
+    }
+
+    .daftar-wrap {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* ── Logo ── */
+    .daftar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 28px;
+      text-decoration: none;
+    }
+
+    .daftar-logo .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--blue-900);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .daftar-logo .logo-mark svg { width: 28px; height: 28px; }
+
+    .daftar-logo .logo-text strong {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-900);
+      line-height: 1.3;
+    }
+
+    .daftar-logo .logo-text small {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ── Kartu ── */
+    .daftar-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(7, 30, 74, 0.08);
+      padding: 32px 28px;
+    }
+
+    .daftar-card h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin: 0 0 4px;
+    }
+
+    .daftar-card p.subtitle {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin: 0 0 24px;
+      line-height: 1.6;
+    }
+
+    /* ── Pilihan tipe akun ── */
+    .tipe-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tipe-btn {
+      padding: 12px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .tipe-btn:hover { border-color: var(--blue-500); }
+
+    .tipe-btn.aktif {
+      border-color: var(--blue-700);
+      background: #EEF4FF;
+    }
+
+    .tipe-btn .tipe-ikon {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .tipe-btn .tipe-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-900);
+    }
+
+    .tipe-btn .tipe-sub {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* ── Form fields ── */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--gray-800);
+      background: var(--surface);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--blue-500);
+      background: white;
+    }
+
+    /* Field khusus yang disembunyikan/ditampilkan sesuai tipe */
+    .field-ortu  { display: none; }
+    .field-guru  { display: none; }
+
+    /* ── Divider ── */
+    .divider-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-400);
+      margin: 4px 0 16px;
+    }
+
+    /* ── Pesan ── */
+    .pesan-box {
+      display: none;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .pesan-box.error   { background: #fff0f0; border: 1px solid #fca5a5; color: #b91c1c; }
+    .pesan-box.sukses  { background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
+    .pesan-box.tampil  { display: block; }
+
+    /* ── Tombol kirim ── */
+    .btn-daftar {
+      width: 100%;
+      padding: 12px;
+      background: var(--blue-700);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-daftar:hover    { background: var(--blue-900); }
+    .btn-daftar:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .btn-daftar .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto;
+    }
+
+    .btn-daftar.loading .teks-btn { display: none; }
+    .btn-daftar.loading .spinner  { display: block; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Link login ── */
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+
+    .login-link a {
+      color: var(--blue-700);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .login-link a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--gray-400);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: var(--blue-700); }
+  </style>
+</head>
+
+<body>
+  <div class="daftar-wrap">
+
+    <!-- Logo -->
+    <a href="../" class="daftar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <text x="20" y="28" text-anchor="middle"
+            font-family="Georgia,serif" font-size="18"
+            font-weight="bold" fill="white">SD</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <strong>SD Muhammadiyah 01 Kukusan</strong>
+        <small>Pendaftaran Akun Portal</small>
+      </div>
+    </a>
+
+    <!-- Kartu pendaftaran -->
+    <div class="daftar-card">
+      <h1>Buat Akun Portal</h1>
+      <p class="subtitle">
+        Pilih jenis akun Anda. Setelah mengisi formulir,
+        permohonan akan ditinjau oleh admin sekolah.
+        Akun akan dikirim ke email Anda setelah disetujui.
+      </p>
+
+      <!-- Pilihan tipe akun -->
+      <div class="tipe-row">
+        <button class="tipe-btn aktif" id="btn-tipe-ortu" type="button"
+          onclick="pilihTipe('ortu')">
+          <div class="tipe-ikon">👨‍👩‍👧</div>
+          <div class="tipe-label">Orang Tua</div>
+          <div class="tipe-sub">Wali murid siswa</div>
+        </button>
+        <button class="tipe-btn" id="btn-tipe-guru" type="button"
+          onclick="pilihTipe('guru')">
+          <div class="tipe-ikon">👨‍🏫</div>
+          <div class="tipe-label">Guru / Staff</div>
+          <div class="tipe-sub">Tenaga pendidik</div>
+        </button>
+      </div>
+
+      <!-- Pesan error / sukses -->
+      <div class="pesan-box error"  id="pesan-error"></div>
+      <div class="pesan-box sukses" id="pesan-sukses"></div>
+
+      <!-- ── Field bersama ── -->
+      <p class="divider-label">Data Diri</p>
+
+      <div class="form-group">
+        <label for="input-nama">Nama Lengkap</label>
+        <input type="text" id="input-nama"
+          placeholder="Sesuai KTP / identitas resmi">
+      </div>
+
+      <div class="form-group">
+        <label for="input-email">Alamat Email</label>
+        <input type="email" id="input-email"
+          placeholder="Email aktif untuk menerima akun">
+      </div>
+
+      <!-- ── Field khusus Orang Tua ── -->
+      <div class="field-ortu" id="grup-ortu">
+        <p class="divider-label">Data Anak</p>
+
+        <div class="form-group">
+          <label for="input-nama-anak">Nama Lengkap Anak</label>
+          <input type="text" id="input-nama-anak"
+            placeholder="Nama siswa yang terdaftar di sekolah">
+        </div>
+
+        <div class="form-group">
+          <label for="input-kelas-anak">Kelas Anak</label>
+          <select id="input-kelas-anak">
+            <option value="">— Pilih kelas —</option>
+            <option>1A</option><option>1B</option>
+            <option>2A</option><option>2B</option>
+            <option>3A</option><option>3B</option>
+            <option>4A</option><option>4B</option>
+            <option>5A</option><option>5B</option>
+            <option>6A</option><option>6B</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ── Field khusus Guru ── -->
+      <div class="field-guru" id="grup-guru">
+        <p class="divider-label">Data Kepegawaian</p>
+
+        <div class="form-group">
+          <label for="input-jabatan">Jabatan</label>
+          <select id="input-jabatan">
+            <option value="">— Pilih jabatan —</option>
+            <option>Guru Kelas 1A</option>
+            <option>Guru Kelas 1B</option>
+            <option>Guru Kelas 2A</option>
+            <option>Guru Kelas 2B</option>
+            <option>Guru Kelas 3A</option>
+            <option>Guru Kelas 3B</option>
+            <option>Guru Kelas 4A</option>
+            <option>Guru Kelas 4B</option>
+            <option>Guru Kelas 5A</option>
+            <option>Guru Kelas 5B</option>
+            <option>Guru Kelas 6A</option>
+            <option>Guru Kelas 6B</option>
+            <option>Guru Pendidikan Agama Islam</option>
+            <option>Guru Pendidikan Jasmani</option>
+            <option>Guru Bahasa Inggris</option>
+            <option>Guru Seni Budaya</option>
+            <option>Tenaga Administrasi</option>
+            <option>Pustakawan</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Tombol kirim -->
+      <button class="btn-daftar" id="btn-daftar" type="button">
+        <span class="teks-btn">Kirim Permohonan</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </button>
+
+      <div class="login-link">
+        Sudah punya akun?
+        <a href="./login.html">Masuk di sini</a>
+      </div>
+    </div>
+
+    <a href="../" class="back-link">← Kembali ke Beranda</a>
+
+  </div>
+
+  <!-- ── Firebase ── -->
+  <script type="module">
+    import { db }        from '../js/firebase-config.js';
+    import { collection, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ── Expose fungsi pilihTipe ke window supaya bisa dipanggil dari onclick ──
+    window.pilihTipe = function(tipe) {
+      // Update tombol
+      document.getElementById('btn-tipe-ortu').classList.toggle('aktif', tipe === 'ortu');
+      document.getElementById('btn-tipe-guru').classList.toggle('aktif', tipe === 'guru');
+
+      // Tampilkan / sembunyikan field
+      document.getElementById('grup-ortu').style.display = tipe === 'ortu' ? 'block' : 'none';
+      document.getElementById('grup-guru').style.display = tipe === 'guru' ? 'block' : 'none';
+
+      // Simpan pilihan
+      document.getElementById('btn-daftar').dataset.tipe = tipe;
+    };
+
+    // Set default
+    pilihTipe('ortu');
+
+    // ── Elemen ──
+    const btnDaftar   = document.getElementById('btn-daftar');
+    const pesanError  = document.getElementById('pesan-error');
+    const pesanSukses = document.getElementById('pesan-sukses');
+
+    function tampilError(pesan) {
+      pesanError.textContent = pesan;
+      pesanError.classList.add('tampil');
+      pesanSukses.classList.remove('tampil');
+    }
+
+    function tampilSukses(pesan) {
+      pesanSukses.textContent = pesan;
+      pesanSukses.classList.add('tampil');
+      pesanError.classList.remove('tampil');
+    }
+
+    function sembunyikanPesan() {
+      pesanError.classList.remove('tampil');
+      pesanSukses.classList.remove('tampil');
+    }
+
+    // ── Proses kirim permohonan ──
+    btnDaftar.addEventListener('click', async () => {
+      sembunyikanPesan();
+
+      const tipe  = btnDaftar.dataset.tipe || 'ortu';
+      const nama  = document.getElementById('input-nama').value.trim();
+      const email = document.getElementById('input-email').value.trim();
+
+      // Validasi field bersama
+      if (!nama)  { tampilError('Nama lengkap wajib diisi.'); return; }
+      if (!email) { tampilError('Alamat email wajib diisi.'); return; }
+      if (!email.includes('@')) { tampilError('Format email tidak valid.'); return; }
+
+      // Data yang akan disimpan ke Firestore
+      const dataPendaftaran = {
+        tipe,
+        status      : 'menunggu',
+        namaLengkap : nama,
+        email       : email,
+        dibuatPada  : serverTimestamp(),
+        diprosesPada: null,
+        usernameHasil: null,
+      };
+
+      // Validasi & tambah field khusus orang tua
+      if (tipe === 'ortu') {
+        const namaAnak  = document.getElementById('input-nama-anak').value.trim();
+        const kelasAnak = document.getElementById('input-kelas-anak').value;
+        if (!namaAnak)  { tampilError('Nama anak wajib diisi.'); return; }
+        if (!kelasAnak) { tampilError('Kelas anak wajib dipilih.'); return; }
+        dataPendaftaran.namaAnak  = namaAnak;
+        dataPendaftaran.kelasAnak = kelasAnak;
+      }
+
+      // Validasi & tambah field khusus guru
+      if (tipe === 'guru') {
+        const jabatan = document.getElementById('input-jabatan').value;
+        if (!jabatan) { tampilError('Jabatan wajib dipilih.'); return; }
+        dataPendaftaran.jabatan = jabatan;
+      }
+
+      // Tampilkan loading
+      btnDaftar.classList.add('loading');
+      btnDaftar.disabled = true;
+
+      try {
+        // Simpan ke collection "pendaftaran" di Firestore
+        await addDoc(collection(db, 'pendaftaran'), dataPendaftaran);
+
+        tampilSukses(
+          'Permohonan Anda berhasil dikirim! ' +
+          'Admin sekolah akan meninjau dan mengirimkan akun ke email ' +
+          email + ' setelah disetujui.'
+        );
+
+        // Kosongkan form setelah berhasil
+        document.getElementById('input-nama').value       = '';
+        document.getElementById('input-email').value      = '';
+        document.getElementById('input-nama-anak').value  = '';
+        document.getElementById('input-kelas-anak').value = '';
+        document.getElementById('input-jabatan').value    = '';
+
+      } catch (err) {
+        console.error(err);
+        tampilError('Gagal mengirim permohonan. Periksa koneksi internet Anda dan coba lagi.');
+      } finally {
+        btnDaftar.classList.remove('loading');
+        btnDaftar.disabled = false;
+      }
+    });
+
+  </script>
+
+</body>
+</html>

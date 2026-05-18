@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Portal — SD Muhammadiyah 01 Kukusan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Global stylesheet -->
+  <link rel="stylesheet" href="../css/global.css">
+
+  <style>
+    /* ── Layout halaman login ── */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      padding: 24px 16px;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* ── Logo di atas form ── */
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 28px;
+      text-decoration: none;
+    }
+
+    .login-logo .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--blue-900);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-logo .logo-mark svg { width: 28px; height: 28px; }
+
+    .login-logo .logo-text strong {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-900);
+      line-height: 1.3;
+    }
+
+    .login-logo .logo-text small {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ── Kartu form ── */
+    .login-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(7, 30, 74, 0.08);
+      padding: 32px 28px;
+    }
+
+    .login-card h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin: 0 0 4px;
+    }
+
+    .login-card p.subtitle {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin: 0 0 24px;
+    }
+
+    /* ── Field input ── */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--gray-800);
+      background: var(--surface);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--blue-500);
+      background: white;
+    }
+
+    /* ── Pesan error ── */
+    .error-msg {
+      display: none;
+      background: #fff0f0;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #b91c1c;
+      margin-bottom: 16px;
+    }
+
+    .error-msg.tampil { display: block; }
+
+    /* ── Tombol login ── */
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: var(--blue-700);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-login:hover  { background: var(--blue-900); }
+    .btn-login:disabled {
+      background: var(--gray-300);
+      cursor: not-allowed;
+    }
+
+    /* ── Loading state ── */
+    .btn-login .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto;
+    }
+
+    .btn-login.loading .teks-btn { display: none; }
+    .btn-login.loading .spinner  { display: block; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Link daftar ── */
+    .daftar-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+
+    .daftar-link a {
+      color: var(--blue-700);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .daftar-link a:hover { text-decoration: underline; }
+
+    /* ── Link kembali ke beranda ── */
+    .back-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--gray-400);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: var(--blue-700); }
+  </style>
+</head>
+
+<body>
+  <div class="login-wrap">
+
+    <!-- Logo -->
+    <a href="../" class="login-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <text x="20" y="28" text-anchor="middle"
+            font-family="Georgia,serif" font-size="18"
+            font-weight="bold" fill="white">SD</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <strong id="logo-nama">SD Muhammadiyah 01 Kukusan</strong>
+        <small>Portal Sekolah</small>
+      </div>
+    </a>
+
+    <!-- Kartu login -->
+    <div class="login-card">
+      <h1>Masuk ke Portal</h1>
+      <p class="subtitle">Gunakan email dan password yang telah dikirim ke email Anda.</p>
+
+      <!-- Pesan error -->
+      <div class="error-msg" id="error-msg" role="alert"></div>
+
+      <!-- Form -->
+      <div class="form-group">
+        <label for="input-email">Alamat Email</label>
+        <input
+          type="email"
+          id="input-email"
+          placeholder="contoh@gmail.com"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="input-password">Password</label>
+        <input
+          type="password"
+          id="input-password"
+          placeholder="Masukkan password"
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button class="btn-login" id="btn-login" type="button">
+        <span class="teks-btn">Masuk</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </button>
+
+      <div class="daftar-link">
+        Belum punya akun?
+        <a href="./daftar.html">Daftar di sini</a>
+      </div>
+    </div>
+
+    <!-- Kembali ke beranda -->
+    <a href="../" class="back-link">
+      ← Kembali ke Beranda
+    </a>
+
+  </div>
+
+  <!-- ── Firebase (dimuat sebagai ES Module) ── -->
+  <script type="module">
+    // Impor fungsi yang kita butuhkan dari Firebase
+    import { auth, db } from '../js/firebase-config.js';
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { doc, getDoc }                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ── Ambil elemen halaman ──
+    const inputEmail    = document.getElementById('input-email');
+    const inputPassword = document.getElementById('input-password');
+    const btnLogin      = document.getElementById('btn-login');
+    const errorMsg      = document.getElementById('error-msg');
+
+    // ── Isi nama sekolah dari data.js jika tersedia ──
+    // (data.js dimuat terpisah — ini opsional)
+    if (typeof DATA !== 'undefined') {
+      document.getElementById('logo-nama').textContent = DATA.sekolah.nama;
+    }
+
+    // ── Fungsi tampilkan pesan error ──
+    function tampilkanError(pesan) {
+      errorMsg.textContent = pesan;
+      errorMsg.classList.add('tampil');
+    }
+
+    function sembunyikanError() {
+      errorMsg.textContent = '';
+      errorMsg.classList.remove('tampil');
+    }
+
+    // ── Fungsi terjemah kode error Firebase ──
+    function pesanError(kodeError) {
+      const tabel = {
+        'auth/user-not-found'    : 'Email tidak terdaftar.',
+        'auth/wrong-password'    : 'Password salah. Silakan coba lagi.',
+        'auth/invalid-email'     : 'Format email tidak valid.',
+        'auth/too-many-requests' : 'Terlalu banyak percobaan. Coba lagi nanti.',
+        'auth/invalid-credential': 'Email atau password salah.',
+      };
+      return tabel[kodeError] || 'Terjadi kesalahan. Silakan coba lagi.';
+    }
+
+    // ── Proses login saat tombol diklik ──
+    btnLogin.addEventListener('click', async () => {
+      const email    = inputEmail.value.trim();
+      const password = inputPassword.value;
+
+      // Validasi sederhana
+      if (!email || !password) {
+        tampilkanError('Email dan password wajib diisi.');
+        return;
+      }
+
+      sembunyikanError();
+
+      // Tampilkan loading
+      btnLogin.classList.add('loading');
+      btnLogin.disabled = true;
+
+      try {
+        // 1. Login ke Firebase Auth
+        const hasil = await signInWithEmailAndPassword(auth, email, password);
+        const uid   = hasil.user.uid;
+
+        // 2. Baca role user dari Firestore
+        const dokumen = await getDoc(doc(db, 'users', uid));
+
+        if (!dokumen.exists()) {
+          tampilkanError('Akun belum diaktifkan. Hubungi admin sekolah.');
+          await auth.signOut();
+          return;
+        }
+
+        const data = dokumen.data();
+
+        // 3. Redirect sesuai role
+        if (data.role === 'ortu') {
+          window.location.href = './portal-ortu.html';
+        } else if (data.role === 'guru') {
+          window.location.href = './portal-guru.html';
+        } else if (data.role === 'admin') {
+          window.location.href = './admin.html';
+        } else {
+          tampilkanError('Role akun tidak dikenali. Hubungi admin.');
+        }
+
+      } catch (error) {
+        tampilkanError(pesanError(error.code));
+      } finally {
+        // Sembunyikan loading (kecuali sedang redirect)
+        btnLogin.classList.remove('loading');
+        btnLogin.disabled = false;
+      }
+    });
+
+    // ── Login juga bisa dipicu dengan tekan Enter ──
+    inputPassword.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btnLogin.click();
+    });
+
+  </script>
+
+  <!-- data.js dimuat terakhir (opsional, untuk nama sekolah) -->
+  <script src="../js/data.js"></script>
+
+</body>
+</html>
