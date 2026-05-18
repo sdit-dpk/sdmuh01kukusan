@@ -921,4 +921,173 @@ const DATA = {
     },
   ],
 
+  // ══════════════════════════════════════════════════════════════
+  //  KESISWAAN  (pages/kesiswaan.html, tata-tertib.html, bk.html)
+  // ══════════════════════════════════════════════════════════════
+  kesiswaan: {
+
+    // Statistik ringkas siswa aktif
+    statistik: [
+      { angka:"487", label:"Siswa Aktif" },
+      { angka:"12",  label:"Rombongan Belajar" },
+      { angka:"3",   label:"Organisasi Siswa" },
+      { angka:"8",   label:"Ekstrakulikuler Pilihan" },
+    ],
+
+    // Organisasi siswa di sekolah
+    organisasi: [
+      {
+        nama:     "Ikatan Pelajar Muhammadiyah (IPM)",
+        deskripsi:"Organisasi pelajar di bawah naungan Muhammadiyah. Membina karakter, keimanan, dan kepemimpinan siswa melalui kegiatan dakwah, sosial, dan pengembangan diri.",
+        kegiatan: ["Kajian rutin keislaman", "Bakti sosial", "Pelatihan kepemimpinan pelajar", "Lomba dan kompetisi antar sekolah"],
+        pembina:  "Ustadz Irfan Maulana, S.Pd.I.",
+        ikon:     "🌙",
+      },
+      {
+        nama:     "Dewan Keamanan Kelas (DKK)",
+        deskripsi:"Perwakilan siswa per kelas yang bertugas menjaga ketertiban, membantu guru, dan menjadi penghubung aspirasi siswa kepada sekolah.",
+        kegiatan: ["Piket harian kelas", "Sidang kelas bulanan", "Penyampaian aspirasi siswa"],
+        pembina:  "Bapak Fahmi Ridwan, S.Pd.",
+        ikon:     "🏛️",
+      },
+      {
+        nama:     "UKS — Unit Kesehatan Sekolah",
+        deskripsi:"Mendukung kesehatan seluruh warga sekolah melalui pemeriksaan rutin, P3K, penyuluhan, dan pembiasaan hidup bersih dan sehat.",
+        kegiatan: ["Pemeriksaan kesehatan berkala", "Penyuluhan PHBS", "P3K dan penanganan siswa sakit", "Kelas dokter kecil"],
+        pembina:  "Ibu Yuni Astuti, S.Kep.",
+        ikon:     "🏥",
+      },
+    ],
+
+    // Tata Tertib Siswa
+    tataTertib: {
+      terakhirDiperbarui: "Juli 2025",
+      bab: [
+        {
+          judul: "Ketentuan Umum",
+          pasal: [
+            {
+              nomor: 1,
+              judul: "Kehadiran dan Ketepatan Waktu",
+              poin: [
+                "Siswa wajib hadir di sekolah setiap hari efektif pukul 06.30 WIB.",
+                "Siswa yang terlambat lebih dari 15 menit wajib melapor ke guru piket sebelum masuk kelas.",
+                "Ketidakhadiran karena sakit wajib disertai surat keterangan dokter atau surat izin orang tua.",
+                "Ketidakhadiran tanpa keterangan lebih dari 3 hari berturut-turut akan ditindaklanjuti oleh wali kelas.",
+                "Siswa tidak diperkenankan meninggalkan sekolah sebelum jam pelajaran selesai tanpa izin tertulis.",
+              ],
+            },
+            {
+              nomor: 2,
+              judul: "Pakaian dan Penampilan",
+              poin: [
+                "Senin–Selasa: Seragam putih-merah lengkap dengan atribut sekolah.",
+                "Rabu–Kamis: Seragam batik khas SD Muhammadiyah 01 Kukusan.",
+                "Jumat: Pakaian muslim/muslimah (busana taqwa) berwarna putih.",
+                "Olahraga: Seragam PJOK sesuai jadwal pelajaran.",
+                "Siswa putra wajib berambut pendek, rapi, tidak disemir, dan tidak bergaya tidak Islami.",
+                "Siswa putri wajib berjilbab rapi menutup aurat di lingkungan sekolah.",
+                "Kuku harus pendek dan bersih. Tidak diperkenankan memakai aksesori berlebihan.",
+              ],
+            },
+          ],
+        },
+        {
+          judul: "Kewajiban Siswa",
+          pasal: [
+            {
+              nomor: 3,
+              judul: "Ibadah dan Akhlak",
+              poin: [
+                "Siswa wajib mengikuti sholat Dhuha dan Dzuhur berjamaah di sekolah.",
+                "Siswa wajib mengikuti Tadarus Al-Qur'an dan program Tahfidz sesuai jadwal.",
+                "Siswa wajib bersikap sopan santun kepada semua warga sekolah.",
+                "Siswa wajib mengucapkan salam ketika bertemu guru dan sesama siswa.",
+                "Siswa wajib menjaga kebersihan diri, kelas, dan lingkungan sekolah.",
+              ],
+            },
+            {
+              nomor: 4,
+              judul: "Proses Pembelajaran",
+              poin: [
+                "Siswa wajib mengikuti seluruh mata pelajaran sesuai jadwal yang ditetapkan.",
+                "Siswa wajib menyelesaikan tugas dan pekerjaan rumah tepat waktu.",
+                "Siswa wajib membawa buku dan perlengkapan belajar yang diperlukan.",
+                "Siswa dilarang menggunakan telepon genggam selama KBM tanpa izin guru.",
+                "Siswa wajib mengikuti kegiatan kokurikuler dan ekstrakurikuler wajib (HW).",
+              ],
+            },
+          ],
+        },
+        {
+          judul: "Larangan",
+          pasal: [
+            {
+              nomor: 5,
+              judul: "Perilaku yang Dilarang",
+              poin: [
+                "Membawa dan mengonsumsi makanan atau minuman tidak halal di lingkungan sekolah.",
+                "Membawa benda berbahaya, senjata tajam, atau bahan yang dapat membahayakan.",
+                "Melakukan perundungan (bullying) dalam bentuk apapun kepada sesama siswa.",
+                "Berkata kasar, kotor, atau tidak sopan kepada siapapun.",
+                "Merusak atau mencuri milik sekolah atau warga sekolah lainnya.",
+                "Membawa atau menyebarkan konten yang bertentangan dengan nilai Islam.",
+                "Berkelahi atau melakukan tindakan kekerasan fisik.",
+              ],
+            },
+          ],
+        },
+        {
+          judul: "Sanksi",
+          pasal: [
+            {
+              nomor: 6,
+              judul: "Tingkatan Sanksi",
+              poin: [
+                "Peringatan lisan: diberikan oleh guru/wali kelas untuk pelanggaran pertama.",
+                "Peringatan tertulis: surat pernyataan bermaterai yang ditandatangani siswa dan orang tua.",
+                "Pemanggilan orang tua: untuk pelanggaran berulang atau berat.",
+                "Skorsing: tidak diperkenankan mengikuti KBM sementara, maksimal 3 hari.",
+                "Dikeluarkan dari sekolah: untuk pelanggaran sangat berat setelah melalui sidang dewan guru.",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    // Bimbingan Konseling
+    bk: {
+      visi: "Terwujudnya peserta didik yang mandiri, bertanggung jawab, beriman, dan memiliki kematangan pribadi dalam menghadapi tantangan kehidupan.",
+      misi: [
+        "Membantu peserta didik mengenali potensi diri dan mengembangkannya secara optimal.",
+        "Memberikan layanan konseling yang empatik, profesional, dan berlandaskan nilai Islam.",
+        "Memfasilitasi perkembangan akademik, sosial, emosional, dan karir peserta didik.",
+        "Membangun komunikasi yang harmonis antara siswa, orang tua, dan sekolah.",
+      ],
+      guru: {
+        nama:      "Ibu Reni Kusuma, S.Psi.",
+        jabatan:   "Guru Bimbingan Konseling",
+        pendidikan:"S1 Psikologi",
+        foto:      "https://picsum.photos/seed/g26/200/200",
+        jam:       "Senin–Jumat · 08.00–14.00 WIB",
+        ruangan:   "Ruang BK (sebelah Ruang UKS)",
+      },
+      layanan: [
+        { ikon:"🧭", nama:"Layanan Orientasi",      deskripsi:"Membantu siswa baru mengenal lingkungan sekolah, kurikulum, dan aturan yang berlaku agar cepat beradaptasi." },
+        { ikon:"📋", nama:"Layanan Informasi",       deskripsi:"Memberikan informasi tentang studi lanjut, potensi karir, dan berbagai hal yang berguna untuk perkembangan siswa." },
+        { ikon:"💬", nama:"Konseling Individual",    deskripsi:"Sesi tatap muka privat antara guru BK dan siswa untuk menangani masalah pribadi, akademik, atau sosial secara rahasia." },
+        { ikon:"👥", nama:"Konseling Kelompok",      deskripsi:"Bimbingan untuk sekelompok siswa yang menghadapi permasalahan serupa, melalui diskusi dan sharing pengalaman terbimbing." },
+        { ikon:"🏠", nama:"Konsultasi Orang Tua",    deskripsi:"Sesi khusus dengan orang tua/wali untuk mendiskusikan perkembangan, kendala, dan strategi mendukung belajar anak di rumah." },
+        { ikon:"🚨", nama:"Penanganan Kasus Khusus", deskripsi:"Penanganan segera untuk kasus perundungan, konflik antar siswa, atau masalah yang memerlukan intervensi cepat." },
+      ],
+      prosedur: [
+        "Siswa datang langsung ke Ruang BK atau minta diantar wali kelas.",
+        "Guru BK melakukan asesmen awal untuk memahami permasalahan.",
+        "Layanan konseling diberikan sesuai kebutuhan siswa.",
+        "Tindak lanjut dilakukan bersama orang tua dan wali kelas jika diperlukan.",
+        "Kerahasiaan informasi dijaga sepenuhnya oleh guru BK.",
+      ],
+    },
+  },
 };
